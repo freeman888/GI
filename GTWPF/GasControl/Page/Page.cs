@@ -25,7 +25,8 @@ namespace GTWPF.GasControl.Page
 
         internal StackPanel sp_tools = new StackPanel
         {
-            HorizontalAlignment = HorizontalAlignment.Right
+            HorizontalAlignment = HorizontalAlignment.Right,
+            Margin = new Thickness(10)
         };
         internal bool hastool = false;
 
@@ -42,8 +43,7 @@ namespace GTWPF.GasControl.Page
                         FontSize = 16
                     }
                 },
-                Background = Brushes.White,
-                Margin = new Thickness(10)
+                Background = Brushes.White
             };
             grid.MouseDown += (s, e) =>
             {
