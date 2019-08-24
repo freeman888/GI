@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GI
 {
@@ -16,6 +17,9 @@ namespace GI
 
         public class AsyncException:Exception
         {
+            internal Task task;
+            internal int id;
+            internal bool breakdone = false;
             internal IAsync reruner;
         }
     }

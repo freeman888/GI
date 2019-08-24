@@ -69,7 +69,7 @@ namespace GI
         public bool isreffunction = false;
 
         //以下为用户自定义函数
-        public class New_User_Function : Function
+        public class New_User_Function : Function,IAsync
         {
             public Sentence[] sentences;
             public string name;
@@ -94,16 +94,67 @@ namespace GI
 
             public override object Run(Hashtable htxc)
             {
+                var pos = 0;
                 try
                 {
                     foreach (Sentence s in sentences)
                     {
                         s.Run(htxc);
+                        pos++;
                     }
                 }
                 catch (MyExceptions.ReturnException ex)
                 {
                     return ex.toreturn;
+                }
+                catch(MyExceptions.AsyncException ex)
+                {
+                    states.Add(ex.id, new State { variables = htxc , nextsentence = pos , torerun = ex.reruner});
+                    ex.reruner = this;
+                    throw ex;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                return null;
+            }
+
+
+            class State
+            {
+                internal Hashtable variables;
+                internal IAsync torerun;
+                internal int nextsentence;
+            }
+
+            Dictionary<int, State> states = new Dictionary<int, State>();
+            public object IReRun(Hashtable xc, int id,Variable ret)
+            {
+                if (!states.ContainsKey(id))
+                    throw new Exception("异步错误");
+                var state = states[id];
+                states.Remove(id);  //移除方便销毁
+                var htxc = state.variables;
+                state.torerun.IReRun(htxc, id,ret);
+                var pos = state.nextsentence;
+                try
+                {
+                    while(pos < sentences.Length)
+                    {
+                        sentences[pos].Run(htxc);
+                        pos++;
+                    }
+                }
+                catch (MyExceptions.ReturnException ex)
+                {
+                    return ex.toreturn;
+                }
+                catch (MyExceptions.AsyncException ex)
+                {
+                    states.Add(ex.id, new State { variables = htxc, nextsentence = pos, torerun = ex.reruner });
+                    ex.reruner = this;
+                    throw ex;
                 }
                 catch (Exception ex)
                 {
@@ -152,7 +203,29 @@ namespace GI
             }
         }
 
+        public static void AsyncFuncStarter(IFunction function, Hashtable variable , out Variable ret)
+        {
+            try
+            {
+                ret = (Variable)function.IRun(variable);
+            }
+            catch(MyExceptions.AsyncException ex)
+            {
+                ex.reruner = function as IAsync;
+                ex.breakdone = true;
+                ret = new Variable(ex.task);
+            }
+            catch(Exception ex)
+            {
+                ret = new Variable(0);
+                Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
+            }
+        }
 
+        public static void ThrowAsync()
+        {
+
+        }
 
         public const string type = "function";
 

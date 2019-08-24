@@ -86,6 +86,9 @@ namespace GI
                 }
             }
         }
+        /// <summary>
+        /// 返回语句
+        /// </summary>
         public class New_Sentence_Return : Sentence
         {
             Variable.Resulter resulter;
@@ -111,6 +114,9 @@ namespace GI
                 }
             }
         }
+        /// <summary>
+        /// if语句
+        /// </summary>
         [Attribute.HasChildSentences]
         public class New_Sentence_if : Sentence
         {
@@ -196,6 +202,9 @@ namespace GI
                 }
             }
         }
+        /// <summary>
+        /// 赋值语句
+        /// </summary>
         public class New_Sentence_GiveResult : Sentence
         {
             Variable.Resulter resulter,togive;
@@ -206,21 +215,42 @@ namespace GI
                 resulter = new Variable.Resulter(me.ChildNodes[1] as XmlNode);
                 togive = new Variable.Resulter(me.ChildNodes[0] as XmlNode);
             }
+
             public override void Run(Hashtable h)
             {
                 try
                 {
-                    Variable result = resulter.Run(h);
-                    Variable togivee = togive.Run(h);
+                    Variable result = null, togivee = null;
+                    //等号右边的异步
+                    try
+                    {
+                        result = resulter.Run(h);
+                    }
+                    catch(MyExceptions.AsyncException ex)
+                    {
+
+                    }
+                    //等号左边的异步
+                    try
+                    {
+                        togivee = togive.Run(h);
+                    }
+                    catch
+                    {
+
+                    }
                     togivee.value = result.value;
-                 }   
-                catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
                 }
             }
-            
+
         }
+        /// <summary>
+        /// 调用函数语句
+        /// </summary>
         public class New_Sentence_Usefunction : Sentence
         {
             Variable.Resulter resulter;
@@ -242,6 +272,9 @@ namespace GI
                 }
             }
         }
+        /// <summary>
+        /// while语句
+        /// </summary>
         [Attribute.HasChildSentences]
         public class New_Sentence_while : Sentence
         {
@@ -281,6 +314,9 @@ namespace GI
                 }
             }
         }
+        /// <summary>
+        /// try-catch语句
+        /// </summary>
         [Attribute.HasChildSentences]
         public class New_Sentence_try : Sentence
         {
@@ -334,6 +370,9 @@ namespace GI
                 }
             }
         }
+        /// <summary>
+        /// foreach语句
+        /// </summary>
         [Attribute.HasChildSentences]
         public class New_Sentence_foreach : Sentence
         {

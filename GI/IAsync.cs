@@ -10,7 +10,7 @@ namespace GI
     /// </summary>
     internal interface IAsync
     {
-        object IReRun(Hashtable xc, int id);
+        object IReRun(Hashtable xc, int id,Variable ret);
     }
     
 }
