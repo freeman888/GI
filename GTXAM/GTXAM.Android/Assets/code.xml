@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code minversion="1902">
+  <get value="IO" />
+  <get value="System" />
+  <get value="Math" />
+  <get value="List" />
+  <get value="String" />
+  <get value="Page" />
+  <deffun funname="Main" params="args" isref="False">
+    <var_s varname="page" str="var page = Page.Creat(&quot;title&quot;);" />
+    <getres_s str="var page = Page.Creat(&quot;title&quot;);">
+      <arg value="page" con="var" />
+      <arg con="fun">
+        <fun>
+          <arg value="Page.Creat" con="var" />
+        </fun>
+        <params>
+          <arg value="title" con="str" />
+        </params>
+      </arg>
+    </getres_s>
+    <usefun_s str="Page.AddTool(page,&quot;more&quot;,Click);">
+      <arg con="fun">
+        <fun>
+          <arg value="Page.AddTool" con="var" />
+        </fun>
+        <params>
+          <arg value="page" con="var" />
+          <arg value="more" con="str" />
+          <arg value="Click" con="var" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="Page.Load(page);">
+      <arg con="fun">
+        <fun>
+          <arg value="Page.Load" con="var" />
+        </fun>
+        <params>
+          <arg value="page" con="var" />
+        </params>
+      </arg>
+    </usefun_s>
+    <var_s varname="page1" str="var page1 = Page.Creat(&quot;new&quot;);" />
+    <getres_s str="var page1 = Page.Creat(&quot;new&quot;);">
+      <arg value="page1" con="var" />
+      <arg con="fun">
+        <fun>
+          <arg value="Page.Creat" con="var" />
+        </fun>
+        <params>
+          <arg value="new" con="str" />
+        </params>
+      </arg>
+    </getres_s>
+    <usefun_s str="Page.Go(page1);">
+      <arg con="fun">
+        <fun>
+          <arg value="Page.Go" con="var" />
+        </fun>
+        <params>
+          <arg value="page1" con="var" />
+        </params>
+      </arg>
+    </usefun_s>
+  </deffun>
+  <deffun funname="Click" params="page,e" isref="False">
+    <usefun_s str="IO.Tip(&quot;hello&quot;);">
+      <arg con="fun">
+        <fun>
+          <arg value="IO.Tip" con="var" />
+        </fun>
+        <params>
+          <arg value="hello" con="str" />
+        </params>
+      </arg>
+    </usefun_s>
+  </deffun>
+</code>

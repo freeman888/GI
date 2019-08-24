@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<code minversion="1902">
+  <get value="IO" />
+  <get value="Page" />
+  <get value="Control" />
+  <get value="Socket" />
+  <get value="String" />
+  <deffun funname="SentMessage" params="page,arg" isref="False">
+    <var_s varname="text" str="var text = page(&quot;edit&quot;)(&quot;text&quot;);" />
+    <getres_s str="var text = page(&quot;edit&quot;)(&quot;text&quot;);">
+      <arg value="text" con="var" />
+      <arg con="fun">
+        <fun>
+          <arg con="fun">
+            <fun>
+              <arg value="page" con="var" />
+            </fun>
+            <params>
+              <arg value="edit" con="str" />
+            </params>
+          </arg>
+        </fun>
+        <params>
+          <arg value="text" con="str" />
+        </params>
+      </arg>
+    </getres_s>
+    <usefun_s str="page(&quot;edit&quot;)(&quot;text&quot;,&quot;&quot;);">
+      <arg con="fun">
+        <fun>
+          <arg con="fun">
+            <fun>
+              <arg value="page" con="var" />
+            </fun>
+            <params>
+              <arg value="edit" con="str" />
+            </params>
+          </arg>
+        </fun>
+        <params>
+          <arg value="text" con="str" />
+          <arg value="" con="str" />
+        </params>
+      </arg>
+    </usefun_s>
+    <var_s varname="res" str="var res = Socket.HttpGet(&quot;http://i.itpk.cn/api.php?question=&quot;&amp;text,&quot;&quot;);" />
+    <getres_s str="var res = Socket.HttpGet(&quot;http://i.itpk.cn/api.php?question=&quot;&amp;text,&quot;&quot;);">
+      <arg value="res" con="var" />
+      <arg con="fun">
+        <fun>
+          <arg value="Socket.HttpGet" con="var" />
+        </fun>
+        <params>
+          <arg con="fun">
+            <fun>
+              <arg value="String.Add" con="var" />
+            </fun>
+            <params>
+              <arg value="http://i.itpk.cn/api.php?question=" con="str" />
+              <arg value="text" con="var" />
+            </params>
+          </arg>
+          <arg value="" con="str" />
+        </params>
+      </arg>
+    </getres_s>
+    <usefun_s str="AddMessage(page,text);">
+      <arg con="fun">
+        <fun>
+          <arg value="AddMessage" con="var" />
+        </fun>
+        <params>
+          <arg value="page" con="var" />
+          <arg value="text" con="var" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="AddMessage(page,res);">
+      <arg con="fun">
+        <fun>
+          <arg value="AddMessage" con="var" />
+        </fun>
+        <params>
+          <arg value="page" con="var" />
+          <arg value="res" con="var" />
+        </params>
+      </arg>
+    </usefun_s>
+  </deffun>
+  <deffun funname="AddMessage" params="page,mess" isref="False">
+    <usefun_s str="page(&quot;messages&quot;)(&quot;text&quot;,page(&quot;messages&quot;)(&quot;text&quot;)&amp;&quot;\n&quot;&amp;mess);">
+      <arg con="fun">
+        <fun>
+          <arg con="fun">
+            <fun>
+              <arg value="page" con="var" />
+            </fun>
+            <params>
+              <arg value="messages" con="str" />
+            </params>
+          </arg>
+        </fun>
+        <params>
+          <arg value="text" con="str" />
+          <arg con="fun">
+            <fun>
+              <arg value="String.Add" con="var" />
+            </fun>
+            <params>
+              <arg con="fun">
+                <fun>
+                  <arg con="fun">
+                    <fun>
+                      <arg value="page" con="var" />
+                    </fun>
+                    <params>
+                      <arg value="messages" con="str" />
+                    </params>
+                  </arg>
+                </fun>
+                <params>
+                  <arg value="text" con="str" />
+                </params>
+              </arg>
+              <arg con="fun">
+                <fun>
+                  <arg value="String.Add" con="var" />
+                </fun>
+                <params>
+                  <arg value="&#xA;" con="str" />
+                  <arg value="mess" con="var" />
+                </params>
+              </arg>
+            </params>
+          </arg>
+        </params>
+      </arg>
+    </usefun_s>
+  </deffun>
+  <deffun funname="Main" params="args" isref="False">
+    <var_s varname="root" str="var root  = Page.Creat(&quot;Chat with 韩菲子&quot;);" />
+    <getres_s str="var root  = Page.Creat(&quot;Chat with 韩菲子&quot;);">
+      <arg value="root" con="var" />
+      <arg con="fun">
+        <fun>
+          <arg value="Page.Creat" con="var" />
+        </fun>
+        <params>
+          <arg value="Chat with 韩菲子" con="str" />
+        </params>
+      </arg>
+    </getres_s>
+    <var_s varname="grid" str="var grid = Control.GridFlat.Creat(&quot;grid&quot;);" />
+    <getres_s str="var grid = Control.GridFlat.Creat(&quot;grid&quot;);">
+      <arg value="grid" con="var" />
+      <arg con="fun">
+        <fun>
+          <arg value="Control.GridFlat.Creat" con="var" />
+        </fun>
+        <params>
+          <arg value="grid" con="str" />
+        </params>
+      </arg>
+    </getres_s>
+    <var_s varname="messages" str="var messages = Control.Tip.Creat(&quot;messages&quot;);" />
+    <getres_s str="var messages = Control.Tip.Creat(&quot;messages&quot;);">
+      <arg value="messages" con="var" />
+      <arg con="fun">
+        <fun>
+          <arg value="Control.Tip.Creat" con="var" />
+        </fun>
+        <params>
+          <arg value="messages" con="str" />
+        </params>
+      </arg>
+    </getres_s>
+    <var_s varname="edittext" str="var edittext = Control.EditText.Creat(&quot;edit&quot;);" />
+    <getres_s str="var edittext = Control.EditText.Creat(&quot;edit&quot;);">
+      <arg value="edittext" con="var" />
+      <arg con="fun">
+        <fun>
+          <arg value="Control.EditText.Creat" con="var" />
+        </fun>
+        <params>
+          <arg value="edit" con="str" />
+        </params>
+      </arg>
+    </getres_s>
+    <var_s varname="button" str="var button = Control.Bubble.Creat(&quot;send&quot;);" />
+    <getres_s str="var button = Control.Bubble.Creat(&quot;send&quot;);">
+      <arg value="button" con="var" />
+      <arg con="fun">
+        <fun>
+          <arg value="Control.Bubble.Creat" con="var" />
+        </fun>
+        <params>
+          <arg value="send" con="str" />
+        </params>
+      </arg>
+    </getres_s>
+    <usefun_s str="Control.GridFlat.SetRow(grid,&quot;1&quot;,&quot;rate&quot;);">
+      <arg con="fun">
+        <fun>
+          <arg value="Control.GridFlat.SetRow" con="var" />
+        </fun>
+        <params>
+          <arg value="grid" con="var" />
+          <arg value="1" con="str" />
+          <arg value="rate" con="str" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="Control.GridFlat.SetRow(grid,&quot;55&quot;,&quot;value&quot;);">
+      <arg con="fun">
+        <fun>
+          <arg value="Control.GridFlat.SetRow" con="var" />
+        </fun>
+        <params>
+          <arg value="grid" con="var" />
+          <arg value="55" con="str" />
+          <arg value="value" con="str" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="button(&quot;horizontalalignment&quot;,&quot;right&quot;);">
+      <arg con="fun">
+        <fun>
+          <arg value="button" con="var" />
+        </fun>
+        <params>
+          <arg value="horizontalalignment" con="str" />
+          <arg value="right" con="str" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="button(&quot;height&quot;,40);">
+      <arg con="fun">
+        <fun>
+          <arg value="button" con="var" />
+        </fun>
+        <params>
+          <arg value="height" con="str" />
+          <arg value="40" con="num" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="button(&quot;text&quot;,&quot;》&quot;);">
+      <arg con="fun">
+        <fun>
+          <arg value="button" con="var" />
+        </fun>
+        <params>
+          <arg value="text" con="str" />
+          <arg value="》" con="str" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="button(&quot;clickevent&quot;,SentMessage);">
+      <arg con="fun">
+        <fun>
+          <arg value="button" con="var" />
+        </fun>
+        <params>
+          <arg value="clickevent" con="str" />
+          <arg value="SentMessage" con="var" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="edittext(&quot;horizontalalignment&quot;,&quot;stretch&quot;);">
+      <arg con="fun">
+        <fun>
+          <arg value="edittext" con="var" />
+        </fun>
+        <params>
+          <arg value="horizontalalignment" con="str" />
+          <arg value="stretch" con="str" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="edittext(&quot;height&quot;,40);">
+      <arg con="fun">
+        <fun>
+          <arg value="edittext" con="var" />
+        </fun>
+        <params>
+          <arg value="height" con="str" />
+          <arg value="55" con="num" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="edittext(&quot;fontsize&quot;,24);">
+      <arg con="fun">
+        <fun>
+          <arg value="edittext" con="var" />
+        </fun>
+        <params>
+          <arg value="fontsize" con="str" />
+          <arg value="20" con="num" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="messages(&quot;horizontalalignment&quot;,&quot;stretch&quot;);">
+      <arg con="fun">
+        <fun>
+          <arg value="messages" con="var" />
+        </fun>
+        <params>
+          <arg value="horizontalalignment" con="str" />
+          <arg value="stretch" con="str" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="messages(&quot;verticalalignment&quot;,&quot;stretch&quot;);">
+      <arg con="fun">
+        <fun>
+          <arg value="messages" con="var" />
+        </fun>
+        <params>
+          <arg value="verticalalignment" con="str" />
+          <arg value="stretch" con="str" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="messages(&quot;fontsize&quot;,20);">
+      <arg con="fun">
+        <fun>
+          <arg value="messages" con="var" />
+        </fun>
+        <params>
+          <arg value="fontsize" con="str" />
+          <arg value="20" con="num" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="messages(&quot;text&quot;,&quot;韩菲子可想死你了&quot;);">
+      <arg con="fun">
+        <fun>
+          <arg value="messages" con="var" />
+        </fun>
+        <params>
+          <arg value="text" con="str" />
+          <arg value="韩菲子可想死你了" con="str" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="grid()(edittext,1,0);">
+      <arg con="fun">
+        <fun>
+          <arg con="fun">
+            <fun>
+              <arg value="grid" con="var" />
+            </fun>
+            <params />
+          </arg>
+        </fun>
+        <params>
+          <arg value="edittext" con="var" />
+          <arg value="1" con="num" />
+          <arg value="0" con="num" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="grid()(button,1,0);">
+      <arg con="fun">
+        <fun>
+          <arg con="fun">
+            <fun>
+              <arg value="grid" con="var" />
+            </fun>
+            <params />
+          </arg>
+        </fun>
+        <params>
+          <arg value="button" con="var" />
+          <arg value="1" con="num" />
+          <arg value="0" con="num" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="grid()(messages,0,0);">
+      <arg con="fun">
+        <fun>
+          <arg con="fun">
+            <fun>
+              <arg value="grid" con="var" />
+            </fun>
+            <params />
+          </arg>
+        </fun>
+        <params>
+          <arg value="messages" con="var" />
+          <arg value="0" con="num" />
+          <arg value="0" con="num" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="root()(grid);">
+      <arg con="fun">
+        <fun>
+          <arg con="fun">
+            <fun>
+              <arg value="root" con="var" />
+            </fun>
+            <params />
+          </arg>
+        </fun>
+        <params>
+          <arg value="grid" con="var" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="Page.Load(root);">
+      <arg con="fun">
+        <fun>
+          <arg value="Page.Load" con="var" />
+        </fun>
+        <params>
+          <arg value="root" con="var" />
+        </params>
+      </arg>
+    </usefun_s>
+  </deffun>
+</code>
