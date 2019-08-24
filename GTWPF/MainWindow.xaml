@@ -28,7 +28,7 @@
             
             
             
-            <Label Content="Console" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" FontSize="16" Name="GasTitle"/>
+            <Label Content="Console(async)" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" FontSize="16" Name="GasTitle"/>
             <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5" Click="Button_Click">
                 <Ellipse Width="15" Height="15" Fill="#FF6556"/>
             </Button>
