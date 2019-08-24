@@ -26,7 +26,7 @@ namespace GTWPF.GasControl.Page
         internal StackPanel sp_tools = new StackPanel
         {
             HorizontalAlignment = HorizontalAlignment.Right,
-            Margin = new Thickness(10)
+            Margin = new Thickness(10),
         };
         internal bool hastool = false;
 
