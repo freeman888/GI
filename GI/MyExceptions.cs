@@ -11,7 +11,12 @@ namespace GI
         /// </summary>
         public class ReturnException:Exception
         {
-            public object toreturn;
+            internal object toreturn;
+        }
+
+        public class AsyncException:Exception
+        {
+            internal IAsync reruner;
         }
     }
 }
