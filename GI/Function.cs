@@ -5,8 +5,7 @@ using System.Xml;
 
 namespace GI
 {
-
-    [Attribute.GasType("function")]
+    
     public interface IFunction:IType
     {
         object IRun(Hashtable xc);
@@ -14,7 +13,6 @@ namespace GI
         bool Iisreffunction { get; set; }
         string IInformation { get; set; }
     }
-    [Attribute.GasType("function")]
     public partial class Function:IFunction
     {
         //实现IFunction
