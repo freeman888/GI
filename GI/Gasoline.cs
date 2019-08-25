@@ -61,7 +61,7 @@ namespace GI
             foreach (string vv in vs)
                 arrayList.Add(new Variable(vv));
             ht.Add(str_name, new Variable((arrayList)));
-            Function.FuncStarter("Main", ht, out Variable v);
+            Function.AsyncFuncStarter("Main", ht,(v)=> { System.Diagnostics.Debug.WriteLine("maindone"); return 0; });
 
 
         }

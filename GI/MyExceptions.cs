@@ -17,10 +17,22 @@ namespace GI
 
         public class AsyncException:Exception
         {
-            internal Task task;
-            internal int id;
-            internal bool breakdone = false;
-            internal IAsync reruner;
+            public Task task;
+            public int id;
+            public bool breakdone = false;
+            public IAsync reruner;
+            static List<int> used = new List<int>();
+            static Random random = new Random();
+            public AsyncException()
+            {
+                int _id;
+                do
+                {
+                    _id = random.Next(0, 999999999);
+                }
+                while (used.Contains(_id));
+                id = _id;
+            }
         }
     }
 }

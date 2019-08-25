@@ -99,8 +99,8 @@ namespace GI
                 {
                     foreach (Sentence s in sentences)
                     {
-                        s.Run(htxc);
                         pos++;
+                        s.Run(htxc);
                     }
                 }
                 catch (MyExceptions.ReturnException ex)
@@ -124,19 +124,19 @@ namespace GI
             class State
             {
                 internal Hashtable variables;
-                internal IAsync torerun;
+                internal IAsync torerun;//类型是语句
                 internal int nextsentence;
             }
 
-            Dictionary<int, State> states = new Dictionary<int, State>();
-            public object IReRun(Hashtable xc, int id,Variable ret)
+            static Dictionary<int, State> states = new Dictionary<int, State>();
+            public object IReRun(Hashtable xc, int id)
             {
                 if (!states.ContainsKey(id))
                     throw new Exception("异步错误");
                 var state = states[id];
                 states.Remove(id);  //移除方便销毁
-                var htxc = state.variables;
-                state.torerun.IReRun(htxc, id,ret);
+                var htxc = state.variables; 
+                state.torerun.IReRun(htxc, id);  //拉起恢复
                 var pos = state.nextsentence;
                 try
                 {
@@ -203,30 +203,63 @@ namespace GI
             }
         }
 
-        public static void AsyncFuncStarter(IFunction function, Hashtable variable , out Variable ret)
+        public static void AsyncFuncStarter(string  funname, Hashtable variable, Func<Variable, int> completed)
         {
+            var function = (Gasoline.sarray_Sys_Variables[funname] as Variable).value as IFunction;
+            AsyncFuncStarter(function, variable, completed);
+        }
+
+        public static void AsyncFuncStarter(IFunction function, Hashtable variable ,Func<Variable,int> completed)
+        {
+            Variable ret = null;
             try
             {
-                ret = (Variable)function.IRun(variable);
+               ret =  function.IRun(variable) as Variable;
             }
             catch(MyExceptions.AsyncException ex)
             {
-                ex.reruner = function as IAsync;
+                var task = ex.task;
+                task.GetAwaiter().OnCompleted(() =>
+                {
+                    AsyncFuncReStarter(ex.reruner, variable,ex.id, completed);
+                });
                 ex.breakdone = true;
-                ret = new Variable(ex.task);
+                return;
             }
             catch(Exception ex)
             {
-                ret = new Variable(0);
                 Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
+                return;
             }
+            
+            completed?.Invoke(ret);
         }
 
-        public static void ThrowAsync()
+        internal static void AsyncFuncReStarter(IAsync _async,Hashtable variable,int id, Func<Variable, int> completed)
         {
-
+            Variable ret = null;
+            try
+            {
+               ret = (Variable)  _async.IReRun(variable, id);
+            }
+            catch(MyExceptions.AsyncException ex)
+            {
+                var task = ex.task;
+                task.GetAwaiter().OnCompleted(() =>
+                {
+                    AsyncFuncReStarter(ex.reruner, variable, ex.id, completed);
+                });
+                return;
+            }
+            catch(Exception ex)
+            {
+                Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
+                return;
+            }
+            completed?.Invoke(ret);
         }
 
+        
         public const string type = "function";
 
         public string IGetType()

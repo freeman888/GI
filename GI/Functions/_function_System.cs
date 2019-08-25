@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GI
 {
@@ -95,8 +98,42 @@ time",
                         return new Variable(0);
                     }
                 });
+                h.Add("Test", new System_Function_Test());
+
             }
             //注册结束
+
+            public class System_Function_Test : Function,IAsync
+            {
+                public System_Function_Test()
+                {
+                    IInformation = "";
+                    str_xcname = "";
+                }
+
+                static Dictionary<int, Variable> rets = new Dictionary<int, Variable>();
+
+                public object IReRun(Hashtable xc, int id)
+                {
+                    return rets[id];
+                }
+
+                public override object Run(Hashtable xc)
+                {
+                    var ex = new MyExceptions.AsyncException();
+                    ex.reruner = this;
+                    var task = Task.Run(() =>
+                    {
+                        while (!ex.breakdone) ;
+                        Thread.Sleep(5000);
+                        System.Diagnostics.Debug.WriteLine("asyncdone");
+                        rets.Add(ex.id, new Variable("done"));
+                    });
+                    ex.task = task;
+                    throw (ex);
+                }
+
+            }
 
             #region 获取类型
             public class System_Function_Gettype : Function

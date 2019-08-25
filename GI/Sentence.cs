@@ -205,7 +205,7 @@ namespace GI
         /// <summary>
         /// 赋值语句
         /// </summary>
-        public class New_Sentence_GiveResult : Sentence
+        public class New_Sentence_GiveResult : Sentence,IAsync
         {
             Variable.Resulter resulter,togive;
 
@@ -216,11 +216,16 @@ namespace GI
                 togive = new Variable.Resulter(me.ChildNodes[0] as XmlNode);
             }
 
+
+            static Dictionary<int, bool> states = new Dictionary<int, bool>();
+            //左为false右为true
+
+            Variable result = null, togivee = null;
             public override void Run(Hashtable h)
             {
                 try
                 {
-                    Variable result = null, togivee = null;
+                    
                     //等号右边的异步
                     try
                     {
@@ -228,23 +233,118 @@ namespace GI
                     }
                     catch(MyExceptions.AsyncException ex)
                     {
-
+                        states.Add(ex.id, true);
+                        ex.reruner = this;
+                        throw ex;
                     }
                     //等号左边的异步
                     try
                     {
                         togivee = togive.Run(h);
                     }
-                    catch
+                    catch(MyExceptions.AsyncException ex)
                     {
-
+                        states.Add(ex.id, false);
+                        ex.reruner = this;
+                        throw ex;
                     }
                     togivee.value = result.value;
+                }
+                catch(MyExceptions.AsyncException)
+                {
+                    throw;
                 }
                 catch (Exception ex)
                 {
                     throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
                 }
+            }
+
+            public object IReRun(Hashtable xc,int id)
+            {
+                if(states.ContainsKey(id))
+                {
+                    if (states[id])
+                    {
+                        
+
+                        try
+                        {
+
+                            //等号右边的异步
+                            try
+                            {
+                                result = resulter.ReRun(xc,id);
+                            }
+                            catch (MyExceptions.AsyncException ex)
+                            {
+                                states.Add(ex.id, true);
+                                ex.reruner = this;
+                                throw ex;
+                            }
+                            //等号左边的异步
+                            try
+                            {
+                                togivee = togive.Run(xc);
+                            }
+                            catch (MyExceptions.AsyncException ex)
+                            {
+                                states.Add(ex.id, false);
+                                ex.reruner = this;
+                                throw ex;
+                            }
+                            togivee.value = result.value;
+                        }
+                        catch (MyExceptions.AsyncException)
+                        {
+                            throw;
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
+                        }
+                    }
+                    else
+                    {
+
+                        try
+                        {
+
+                            //等号右边的异步
+                            try
+                            {
+                                result = resulter.Run(xc);
+                            }
+                            catch (MyExceptions.AsyncException ex)
+                            {
+                                states.Add(ex.id, true);
+                                ex.reruner = this;
+                                throw ex;
+                            }
+                            //等号左边的异步
+                            try
+                            {
+                                togivee = togive.ReRun(xc,id);
+                            }
+                            catch (MyExceptions.AsyncException ex)
+                            {
+                                states.Add(ex.id, false);
+                                ex.reruner = this;
+                                throw ex;
+                            }
+                            togivee.value = result.value;
+                        }
+                        catch (MyExceptions.AsyncException)
+                        {
+                            throw;
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
+                        }
+                    }
+                }
+                return null;
             }
 
         }

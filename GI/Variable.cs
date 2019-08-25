@@ -106,7 +106,37 @@ namespace GI
                     return new Variable(-1);
                 }
             }
+            public Variable ReRun(Hashtable basehashtable,int id)
+            {
+                if (condition == 3)
+                {
+                    Variable var_func = functionresulter.Run(basehashtable);
+                    IFunction truefunction = var_func.value as IFunction;
 
+                    string xcname = truefunction.Istr_xcname;
+
+                    Hashtable temphashtable;
+                    ArrayList tempavariables = new ArrayList();
+                    foreach (Resulter resulter in childresulters)
+                    {
+                        tempavariables.Add(resulter.Run(basehashtable));
+                    }
+
+                    if (truefunction.Iisreffunction)
+                    {
+                        temphashtable = SetvariablesnameByRef(xcname, tempavariables);
+                    }
+                    else
+                    {
+                        temphashtable = Setvariablesname(xcname, tempavariables);
+                    }
+                    return (Variable)(truefunction as IAsync).IReRun(temphashtable,id);
+                }
+                else
+                {
+                    return new Variable(-1);
+                }
+            }
            
 
             public static Hashtable Setvariablesname(string xcname, ArrayList tempvariables)
