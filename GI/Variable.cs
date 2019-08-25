@@ -69,6 +69,9 @@ namespace GI
                     condition = 3;
                 }
             }
+
+            bool where;//左为false右为true
+
             public Variable Run(Hashtable basehashtable)
             {
                 if (condition == 1)
@@ -79,7 +82,15 @@ namespace GI
                 { return (Variable)basehashtable[ret_variablename]; }
                 else if (condition == 3)
                 {
-                    Variable var_func = functionresulter.Run(basehashtable);
+                    Variable var_func = null;
+                    try
+                    {
+                        var_func = functionresulter.Run(basehashtable);
+                    }
+                    catch (MyExceptions.AsyncException)
+                    {
+                        where = false;
+                    }
                     IFunction truefunction = var_func.value as IFunction;
 
                     string xcname = truefunction.Istr_xcname;
@@ -99,7 +110,17 @@ namespace GI
                     {
                         temphashtable = Setvariablesname(xcname, tempavariables);
                     }
-                    return (Variable)(truefunction as IFunction).IRun(temphashtable);
+                    Variable res = null;
+                    try
+                    {
+                        res = (Variable)(truefunction as IFunction).IRun(temphashtable);
+                    }
+                    catch (MyExceptions.AsyncException)
+                    {
+                        where = true;
+                        throw;
+                    }
+                    return res;
                 }
                 else
                 {
@@ -110,27 +131,92 @@ namespace GI
             {
                 if (condition == 3)
                 {
-                    Variable var_func = functionresulter.Run(basehashtable);
-                    IFunction truefunction = var_func.value as IFunction;
-
-                    string xcname = truefunction.Istr_xcname;
-
-                    Hashtable temphashtable;
-                    ArrayList tempavariables = new ArrayList();
-                    foreach (Resulter resulter in childresulters)
+                    if (!where)
                     {
-                        tempavariables.Add(resulter.Run(basehashtable));
-                    }
+                        Variable var_func = null;
+                        try
+                        {
+                            var_func = functionresulter.ReRun(basehashtable,id);
+                        }
+                        catch (MyExceptions.AsyncException)
+                        {
+                            where = false;
+                        }
 
-                    if (truefunction.Iisreffunction)
-                    {
-                        temphashtable = SetvariablesnameByRef(xcname, tempavariables);
+                        IFunction truefunction = var_func.value as IFunction;
+
+                        string xcname = truefunction.Istr_xcname;
+
+                        Hashtable temphashtable;
+                        ArrayList tempavariables = new ArrayList();
+                        foreach (Resulter resulter in childresulters)
+                        {
+                            tempavariables.Add(resulter.Run(basehashtable));
+                        }
+
+                        if (truefunction.Iisreffunction)
+                        {
+                            temphashtable = SetvariablesnameByRef(xcname, tempavariables);
+                        }
+                        else
+                        {
+                            temphashtable = Setvariablesname(xcname, tempavariables);
+                        }
+                        Variable res = null;
+                        try
+                        {
+                            res = (Variable)(truefunction as IFunction).IRun(temphashtable);
+                        }
+                        catch (MyExceptions.AsyncException)
+                        {
+                            where = true;
+                            throw;
+                        }
+                        return res;
                     }
                     else
                     {
-                        temphashtable = Setvariablesname(xcname, tempavariables);
+                        Variable var_func = null;
+                        try
+                        {
+                            var_func = functionresulter.Run(basehashtable);
+                        }
+                        catch (MyExceptions.AsyncException)
+                        {
+                            where = false;
+                        }
+
+                        IFunction truefunction = var_func.value as IFunction;
+
+                        string xcname = truefunction.Istr_xcname;
+
+                        Hashtable temphashtable;
+                        ArrayList tempavariables = new ArrayList();
+                        foreach (Resulter resulter in childresulters)
+                        {
+                            tempavariables.Add(resulter.Run(basehashtable));
+                        }
+
+                        if (truefunction.Iisreffunction)
+                        {
+                            temphashtable = SetvariablesnameByRef(xcname, tempavariables);
+                        }
+                        else
+                        {
+                            temphashtable = Setvariablesname(xcname, tempavariables);
+                        }
+                        Variable res = null;
+                        try
+                        {
+                            res = (Variable)(truefunction as IAsync).IReRun(temphashtable,id);
+                        }
+                        catch (MyExceptions.AsyncException)
+                        {
+                            where = true;
+                            throw;
+                        }
+                        return res;
                     }
-                    return (Variable)(truefunction as IAsync).IReRun(temphashtable,id);
                 }
                 else
                 {

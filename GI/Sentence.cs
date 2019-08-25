@@ -7,7 +7,7 @@ namespace GI
 {
     public class Sentence
     {
-        
+
 
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace GI
         }
 
         public virtual void Run(Hashtable h) { }
-        
+
         public string mycode = "";
 
 
@@ -82,7 +82,7 @@ namespace GI
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(ex.Message+Environment.NewLine+"位置:"+mycode);
+                    throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace GI
                 }
                 catch (Exception ex)
                 {
-                    if(ex.GetType() == typeof(MyExceptions.ReturnException))
+                    if (ex.GetType() == typeof(MyExceptions.ReturnException))
                     {
                         throw ex;
                     }
@@ -158,8 +158,8 @@ namespace GI
                 }
             }
 
-            
-            
+
+
             public override void Run(Hashtable h)
             {
                 try
@@ -196,7 +196,7 @@ namespace GI
                 {
                     throw ex;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
                 }
@@ -205,9 +205,9 @@ namespace GI
         /// <summary>
         /// 赋值语句
         /// </summary>
-        public class New_Sentence_GiveResult : Sentence,IAsync
+        public class New_Sentence_GiveResult : Sentence, IAsync
         {
-            Variable.Resulter resulter,togive;
+            Variable.Resulter resulter, togive;
 
             public New_Sentence_GiveResult(XmlNode me)
             {
@@ -216,8 +216,7 @@ namespace GI
                 togive = new Variable.Resulter(me.ChildNodes[0] as XmlNode);
             }
 
-
-            static Dictionary<int, bool> states = new Dictionary<int, bool>();
+            bool where;
             //左为false右为true
 
             Variable result = null, togivee = null;
@@ -225,15 +224,15 @@ namespace GI
             {
                 try
                 {
-                    
+
                     //等号右边的异步
                     try
                     {
                         result = resulter.Run(h);
                     }
-                    catch(MyExceptions.AsyncException ex)
+                    catch (MyExceptions.AsyncException ex)
                     {
-                        states.Add(ex.id, true);
+                        where = true;
                         ex.reruner = this;
                         throw ex;
                     }
@@ -242,15 +241,15 @@ namespace GI
                     {
                         togivee = togive.Run(h);
                     }
-                    catch(MyExceptions.AsyncException ex)
+                    catch (MyExceptions.AsyncException ex)
                     {
-                        states.Add(ex.id, false);
+                        where = false;
                         ex.reruner = this;
                         throw ex;
                     }
                     togivee.value = result.value;
                 }
-                catch(MyExceptions.AsyncException)
+                catch (MyExceptions.AsyncException)
                 {
                     throw;
                 }
@@ -260,90 +259,88 @@ namespace GI
                 }
             }
 
-            public object IReRun(Hashtable xc,int id)
+            public object IReRun(Hashtable xc, int id)
             {
-                if(states.ContainsKey(id))
+                if (where)
                 {
-                    if (states[id])
-                    {
-                        
 
+
+                    try
+                    {
+
+                        //等号右边的异步
                         try
                         {
-
-                            //等号右边的异步
-                            try
-                            {
-                                result = resulter.ReRun(xc,id);
-                            }
-                            catch (MyExceptions.AsyncException ex)
-                            {
-                                states.Add(ex.id, true);
-                                ex.reruner = this;
-                                throw ex;
-                            }
-                            //等号左边的异步
-                            try
-                            {
-                                togivee = togive.Run(xc);
-                            }
-                            catch (MyExceptions.AsyncException ex)
-                            {
-                                states.Add(ex.id, false);
-                                ex.reruner = this;
-                                throw ex;
-                            }
-                            togivee.value = result.value;
+                            result = resulter.ReRun(xc, id);
                         }
-                        catch (MyExceptions.AsyncException)
+                        catch (MyExceptions.AsyncException ex)
                         {
-                            throw;
+                            where = true;
+                            ex.reruner = this;
+                            throw ex;
                         }
-                        catch (Exception ex)
+                        //等号左边的异步
+                        try
                         {
-                            throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
+                            togivee = togive.Run(xc);
                         }
+                        catch (MyExceptions.AsyncException ex)
+                        {
+                            where = false;
+                            ex.reruner = this;
+                            throw ex;
+                        }
+                        togivee.value = result.value;
                     }
-                    else
+                    catch (MyExceptions.AsyncException)
                     {
-
-                        try
-                        {
-
-                            //等号右边的异步
-                            try
-                            {
-                                result = resulter.Run(xc);
-                            }
-                            catch (MyExceptions.AsyncException ex)
-                            {
-                                states.Add(ex.id, true);
-                                ex.reruner = this;
-                                throw ex;
-                            }
-                            //等号左边的异步
-                            try
-                            {
-                                togivee = togive.ReRun(xc,id);
-                            }
-                            catch (MyExceptions.AsyncException ex)
-                            {
-                                states.Add(ex.id, false);
-                                ex.reruner = this;
-                                throw ex;
-                            }
-                            togivee.value = result.value;
-                        }
-                        catch (MyExceptions.AsyncException)
-                        {
-                            throw;
-                        }
-                        catch (Exception ex)
-                        {
-                            throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
-                        }
+                        throw;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
                     }
                 }
+                else
+                {
+
+                    try
+                    {
+
+                        //等号右边的异步
+                        try
+                        {
+                            result = resulter.Run(xc);
+                        }
+                        catch (MyExceptions.AsyncException ex)
+                        {
+                            where = true;
+                            ex.reruner = this;
+                            throw ex;
+                        }
+                        //等号左边的异步
+                        try
+                        {
+                            togivee = togive.ReRun(xc, id);
+                        }
+                        catch (MyExceptions.AsyncException ex)
+                        {
+                            where = false;
+                            ex.reruner = this;
+                            throw ex;
+                        }
+                        togivee.value = result.value;
+                    }
+                    catch (MyExceptions.AsyncException)
+                    {
+                        throw;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
+                    }
+                }
+
                 return null;
             }
 
@@ -366,7 +363,7 @@ namespace GI
                 {
                     Variable result = resulter.Run(h);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
                 }
@@ -393,16 +390,16 @@ namespace GI
                 {
                     Hashtable hashtable = h;
                     bool realif = Convert.ToBoolean(resulter.Run(hashtable).value);
-                    while(realif)
+                    while (realif)
                     {
                         Hashtable hh = Variable.GetOwnVariables(hashtable);
-                        foreach(Sentence s in childsentences)
+                        foreach (Sentence s in childsentences)
                         {
                             s.Run(hh);
                         }
                         realif = Convert.ToBoolean(resulter.Run(hashtable).value);
                     }
-                    
+
                 }
                 catch (MyExceptions.ReturnException ex)
                 {
@@ -441,7 +438,7 @@ namespace GI
                     Hashtable hashtable = Variable.GetOwnVariables(h);
                     try
                     {
-                        foreach(var s in trysentences)
+                        foreach (var s in trysentences)
                         {
                             s.Run(hashtable);
                         }

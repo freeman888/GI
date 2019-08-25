@@ -113,9 +113,9 @@ namespace GI
                     ex.reruner = this;
                     throw ex;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    throw ex;
+                    throw;
                 }
                 return null;
             }
