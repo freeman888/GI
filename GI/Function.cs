@@ -128,7 +128,7 @@ namespace GI
                 internal int nextsentence;
             }
 
-            static Dictionary<int, State> states = new Dictionary<int, State>();
+            Dictionary<int, State> states = new Dictionary<int, State>();
             public object IReRun(Hashtable xc, int id)
             {
                 if (!states.ContainsKey(id))
