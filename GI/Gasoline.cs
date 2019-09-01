@@ -22,6 +22,7 @@ namespace GI
 
         public static void StartGas(Dictionary<string, Function.Head> heads, XmlDocument codes)
         {
+            Del.Delate();
             try
             {
                 // 1 添加自己的Head
