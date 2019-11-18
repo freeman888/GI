@@ -22,6 +22,7 @@ namespace GTXAM
                 Thread.Sleep(10);
                 Device.BeginInvokeOnMainThread(() =>
                 {
+                    _function_Thread_override_.Load();
                     var res = new System.Collections.Generic.Dictionary<string, GI.Function.Head>
                         {
                             {"IO" ,new GTXAMFunctions.GTXAMFunction.IO_Head()},
@@ -38,20 +39,14 @@ namespace GTXAM
 
 
 
-        public async void ConsoleWrite(string str)
+        public  void ConsoleWrite(string str)
         {
-            OutputLabel.Text += str;
-            await OutputScroll.ScrollToAsync(OutputLabel, ScrollToPosition.End, true);
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                OutputLabel.Text += str;
+                OutputScroll.ScrollToAsync(OutputLabel, ScrollToPosition.End, true);
+            });
         }
-
-        private void ToolbarItem_Clicked(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ToolbarItem_Clicked_1(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

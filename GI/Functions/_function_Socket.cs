@@ -32,13 +32,14 @@ namespace GI
                     return new Variable(res);
                 }
 
-                public string HttpGet(string Url, string postDataStr)
+                public static  string HttpGet(string Url, string postDataStr)
                 {
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url + (postDataStr == "" ? "" : "?") + postDataStr);
                     request.Method = "GET";
                     request.ContentType = "text/html;charset=UTF-8";
-
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    
+                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    
                     Stream myResponseStream = response.GetResponseStream();
                     StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
                     string retString = myStreamReader.ReadToEnd();
@@ -63,7 +64,7 @@ namespace GI
                     return new Variable(res);
                 }
 
-                private string HttpPost(string Url, string postDataStr)
+                private static  string HttpPost(string Url, string postDataStr)
                 {
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
                     request.Method = "POST";

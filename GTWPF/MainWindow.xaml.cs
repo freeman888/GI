@@ -58,8 +58,10 @@ namespace GTWPF
         {
             //获取GIInfo
             system_outputbox.Text += "Gasoline for GTWPF version " + GIInfo.GIVersion.ToString()+Environment.NewLine;
-            //加载特异性函数
-
+            
+            //加载重写函数
+            _function_Thread_override_.Load();
+            //加载自定义函数
             System.Collections.Generic.Dictionary<string, Function.Head> heads = new System.Collections.Generic.Dictionary<string, Function.Head>
             {
                 {"Control",new GTWPFFunction.Control_Head() },

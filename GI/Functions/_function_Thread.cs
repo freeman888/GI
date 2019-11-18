@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace GI
@@ -10,23 +11,22 @@ namespace GI
         {
             public override void AddFunctions(System.Collections.Generic.Dictionary<string, IFunction> h)
             {
-                h.Add("Thread.Start", new Thead_Function_Start());
+                h.Add("Thread.Start", new Thread_Function_Start());
+                h.Add("Thread.Sleep", new Thread_Function_Sleep());
+                h.Add("Thread.RunOnUI", new Thread_Function_RunOnUI());
             }
 
             #region 开始
 
-            public class Thead_Function_Start : Function
+            public class Thread_Function_Start : Function
             {
-                public Thead_Function_Start()
+                public Thread_Function_Start()
                 {
                     IInformation = "Start a new thread .When not in UI thread ,you cannot change the UI Control";
-                    str_xcname = "params";
+                    str_xcname = "fun";
                 }
                 public override object Run(Hashtable xc)
                 {
-                    //ArrayList arrayList = Variable.GetTrueVariable<Array_Head.Array_Function_CreatNew.Array_Function_MyArray>(xc, "params").array;
-                    //FuncAnalyse.ParamsAnalyser.ParamsAnalyse();
-
                     Thread thread = new Thread(new ThreadStart(() =>
                     {
                         object fun = Variable.GetTrueVariable<object>(xc, "fun");
@@ -40,8 +40,37 @@ namespace GI
                 }
             }
 
-
             #endregion
+            public class Thread_Function_Sleep : Function
+            {
+                public Thread_Function_Sleep()
+                {
+                    IInformation = "Sleep ms";
+                    str_xcname = "time";
+                }
+                public override object Run(Hashtable xc)
+                {
+                    var time = Convert.ToInt32(xc.GetCSVariable<object>("time"));
+                    Thread.Sleep(time);
+                    return new Variable(0);
+                }
+            }
+            public class Thread_Function_RunOnUI : Function
+            {
+                public static Func<Hashtable, int> runonui;
+                public Thread_Function_RunOnUI()
+                {
+                    IInformation = "run on ui thread";
+                    str_xcname = "fun";
+                }
+                public override object Run(Hashtable xc)
+                {
+                    runonui?.Invoke(xc);
+                    return new Variable(0);
+                }
+                
+            }
+
         }
     }
 }

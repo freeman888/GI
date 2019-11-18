@@ -9,12 +9,13 @@ using Xamarin.Forms.Platform.UWP;
 [assembly:ExportRenderer(typeof(GTXAM.GasControl.Control.Bubble),typeof(GTXAM.UWP.Renderers.BubbleRenderer))]
 namespace GTXAM.UWP.Renderers
 {
-    public class BubbleRenderer:ButtonRenderer
+    public class BubbleRenderer: ButtonRenderer
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
         {
             base.OnElementChanged(e);
-            Control.Style = GTXAM.UWP.Demo_Style.All_Styles.Bubble_Style;
+            if (Control != null)
+                Control.Style = GTXAM.UWP.Demo_Style.All_Styles.Bubble_Style;
         }
 
     }

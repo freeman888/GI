@@ -9,6 +9,6 @@ namespace GTXAM.UWP.Demo_Style
 {
     public static class All_Styles
     {
-        public static Style Bubble_Style = new Bubble_Style().GetBubbleStyle();
+        public static readonly Style Bubble_Style = new Bubble_Style().GetBubbleStyle();
     }
 }

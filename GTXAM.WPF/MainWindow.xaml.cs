@@ -1,12 +1,17 @@
-﻿using System.Xml;
+﻿using GTXAM;
+using System.Xml;
+using Xamarin.Forms.Platform.WPF;
 
-namespace GTXAM.UWP
+namespace HelloWPF.WPF
 {
-    public sealed partial class MainPage
+    /// <summary>
+    /// Logique d'interaction pour MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : FormsApplicationPage
     {
-        public MainPage()
+        public MainWindow()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.LoadXml(@"<?xml version=""1.0"" encoding=""utf-8""?>
 <code minversion=""1902"">
@@ -1299,9 +1304,9 @@ namespace GTXAM.UWP
   </deffun>
 </code>");
             GTXAMInfo.Codes = xmlDocument;
-            GTXAMInfo.SetPlatform("UWP_Xamarin");
+            GTXAMInfo.SetPlatform("WPF_Xamarin");
+            Xamarin.Forms.Forms.Init();
             LoadApplication(new GTXAM.App());
         }
-
     }
 }

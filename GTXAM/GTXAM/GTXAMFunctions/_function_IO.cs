@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using GI;
+using Xamarin.Forms;
 using static GI.Function;
 
 namespace GTXAM.GTXAMFunctions
@@ -69,9 +70,12 @@ namespace GTXAM.GTXAMFunctions
                 }
                 public override object Run(Hashtable xc)
                 {
-                    string text = Variable.GetTrueVariable<object>(xc, "tip").ToString();
-                    App.MainApp.MainPage.DisplayAlert("提示", xc.GetVariable<object>("tip").ToString(), "确定");
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        string text = Variable.GetTrueVariable<object>(xc, "tip").ToString();
+                        App.MainApp.MainPage.DisplayAlert("提示", xc.GetVariable<object>("tip").ToString(), "确定");
 
+                    });
                     return new Variable(0);
                 }
             }

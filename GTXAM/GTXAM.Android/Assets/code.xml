@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <code minversion="1902">
   <get value="IO" />
-  <get value="System" />
   <get value="Math" />
-  <get value="List" />
   <get value="String" />
+  <get value="System" />
+  <get value="Thread" />
   <get value="Page" />
+  <get value="Control" />
+  <var value="tip" />
   <deffun funname="Main" params="args" isref="False">
     <var_s varname="page" str="var page = Page.Creat(&quot;title&quot;);" />
     <getres_s str="var page = Page.Creat(&quot;title&quot;);">
@@ -19,15 +21,50 @@
         </params>
       </arg>
     </getres_s>
-    <usefun_s str="Page.AddTool(page,&quot;more&quot;,Click);">
+    <getres_s str="tip = Control.Tip.Creat(&quot;tip&quot;);">
+      <arg value="tip" con="var" />
       <arg con="fun">
         <fun>
-          <arg value="Page.AddTool" con="var" />
+          <arg value="Control.Tip.Creat" con="var" />
         </fun>
         <params>
-          <arg value="page" con="var" />
-          <arg value="more" con="str" />
-          <arg value="Click" con="var" />
+          <arg value="tip" con="str" />
+        </params>
+      </arg>
+    </getres_s>
+    <usefun_s str="tip(&quot;text&quot;,0);">
+      <arg con="fun">
+        <fun>
+          <arg value="tip" con="var" />
+        </fun>
+        <params>
+          <arg value="text" con="str" />
+          <arg value="0" con="num" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="Thread.Start(CheckTime);">
+      <arg con="fun">
+        <fun>
+          <arg value="Thread.Start" con="var" />
+        </fun>
+        <params>
+          <arg value="CheckTime" con="var" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="page()(tip);">
+      <arg con="fun">
+        <fun>
+          <arg con="fun">
+            <fun>
+              <arg value="page" con="var" />
+            </fun>
+            <params />
+          </arg>
+        </fun>
+        <params>
+          <arg value="tip" con="var" />
         </params>
       </arg>
     </usefun_s>
@@ -41,37 +78,60 @@
         </params>
       </arg>
     </usefun_s>
-    <var_s varname="page1" str="var page1 = Page.Creat(&quot;new&quot;);" />
-    <getres_s str="var page1 = Page.Creat(&quot;new&quot;);">
-      <arg value="page1" con="var" />
-      <arg con="fun">
-        <fun>
-          <arg value="Page.Creat" con="var" />
-        </fun>
-        <params>
-          <arg value="new" con="str" />
-        </params>
-      </arg>
-    </getres_s>
-    <usefun_s str="Page.Go(page1);">
-      <arg con="fun">
-        <fun>
-          <arg value="Page.Go" con="var" />
-        </fun>
-        <params>
-          <arg value="page1" con="var" />
-        </params>
-      </arg>
-    </usefun_s>
   </deffun>
-  <deffun funname="Click" params="page,e" isref="False">
-    <usefun_s str="IO.Tip(&quot;hello&quot;);">
+  <deffun funname="CheckTime" params="" isref="False">
+    <while_s str="while(true):">
+      <express>
+        <arg value="true" con="var" />
+      </express>
+      <run>
+        <usefun_s str="Thread.Sleep(1000);">
+          <arg con="fun">
+            <fun>
+              <arg value="Thread.Sleep" con="var" />
+            </fun>
+            <params>
+              <arg value="1000" con="num" />
+            </params>
+          </arg>
+        </usefun_s>
+        <usefun_s str="Thread.RunOnUI(SetTime);">
+          <arg con="fun">
+            <fun>
+              <arg value="Thread.RunOnUI" con="var" />
+            </fun>
+            <params>
+              <arg value="SetTime" con="var" />
+            </params>
+          </arg>
+        </usefun_s>
+      </run>
+    </while_s>
+  </deffun>
+  <deffun funname="SetTime" params="" isref="False">
+    <usefun_s str="tip(&quot;text&quot;,tip(&quot;text&quot;)+1);">
       <arg con="fun">
         <fun>
-          <arg value="IO.Tip" con="var" />
+          <arg value="tip" con="var" />
         </fun>
         <params>
-          <arg value="hello" con="str" />
+          <arg value="text" con="str" />
+          <arg con="fun">
+            <fun>
+              <arg value="Math.Sum" con="var" />
+            </fun>
+            <params>
+              <arg con="fun">
+                <fun>
+                  <arg value="tip" con="var" />
+                </fun>
+                <params>
+                  <arg value="text" con="str" />
+                </params>
+              </arg>
+              <arg value="1" con="num" />
+            </params>
+          </arg>
         </params>
       </arg>
     </usefun_s>

@@ -126,6 +126,10 @@ namespace GTWPF
                 {
                     GasControl.Page.GasPage page = Variable.GetTrueVariable<GasControl.Page.GasPage>(xc, "page");
                     string title = Variable.GetTrueVariable<object>(xc, "title").ToString();
+                    if(MainWindow.MainApp.PageBase.Children.Contains(page))
+                    {
+                        MainWindow.MainApp.GasTitle.Content = title;
+                    }
                     page.title = title;
                     return new Variable(0);
                 }

@@ -71,6 +71,7 @@
     <Compile Include="GTWPFFunctions\_function_Control.cs" />
     <Compile Include="GTWPFFunctions\_function_IO.cs" />
     <Compile Include="GTWPFFunctions\_function_Page.cs" />
+    <Compile Include="GTWPFFunctions\_function_Thread%28override%29.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

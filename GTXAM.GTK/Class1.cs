@@ -1,12 +1,20 @@
-﻿using System.Xml;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.GTK;
 
-namespace GTXAM.UWP
+namespace GTXAM.GTK
 {
-    public sealed partial class MainPage
+    class Program 
     {
-        public MainPage()
+        [STAThread]
+        public static void Main(string[] args)
         {
-            this.InitializeComponent();
+
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.LoadXml(@"<?xml version=""1.0"" encoding=""utf-8""?>
 <code minversion=""1902"">
@@ -1299,9 +1307,19 @@ namespace GTXAM.UWP
   </deffun>
 </code>");
             GTXAMInfo.Codes = xmlDocument;
-            GTXAMInfo.SetPlatform("UWP_Xamarin");
-            LoadApplication(new GTXAM.App());
-        }
+            GTXAMInfo.SetPlatform("WPF_Xamarin");
 
+            Gtk.Application.Init();
+            Forms.Init();
+
+            var app = new App();
+            var window = new FormsWindow();
+            window.LoadApplication(app);
+            window.SetApplicationTitle("Game of Life");
+            
+            window.Show();
+
+            Gtk.Application.Run();
+        }
     }
 }
