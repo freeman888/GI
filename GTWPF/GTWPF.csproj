@@ -70,6 +70,9 @@
     <Compile Include="GasControl\Page\Page.cs" />
     <Compile Include="GTWPFFunctions\_function_Control.cs" />
     <Compile Include="GTWPFFunctions\_function_IO.cs" />
+    <Compile Include="GTWPFFunctions\_function_IO\Input.xaml.cs">
+      <DependentUpon>Input.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GTWPFFunctions\_function_Page.cs" />
     <Compile Include="GTWPFFunctions\_function_Thread%28override%29.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -99,6 +102,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="GTWPFFunctions\_function_IO\Input.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

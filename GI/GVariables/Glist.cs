@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using static GI.Function;
 
 namespace GI
@@ -41,6 +42,13 @@ namespace GI
                 return new Variable(this);
             }
             throw new Exception("参数错误");
+        }
+
+        public bool Iisasync { get { return false; } set { } }
+
+        public Task<object> IAsyncRun(Hashtable xc)
+        {
+            throw new Exception();
         }
         #endregion
         #region 实现Ityoe

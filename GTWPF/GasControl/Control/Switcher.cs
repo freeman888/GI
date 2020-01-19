@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows;
 using System.Collections;
 using GI;
+using System.Threading.Tasks;
 
 namespace GTWPF.GasControl.Control
 {
@@ -278,6 +279,12 @@ namespace GTWPF.GasControl.Control
         }
         #endregion
         #region 实现IFunction
+        public bool Iisasync { get { return false; } set { } }
+
+        public Task<object> IAsyncRun(Hashtable xc)
+        {
+            throw new Exception();
+        }
         object IFunction.IRun(Hashtable xc)
         {
             var arrayList = Variable.GetTrueVariable<Glist>(xc, "params");

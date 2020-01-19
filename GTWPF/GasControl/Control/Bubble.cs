@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -62,6 +63,12 @@ namespace GTWPF.GasControl.Control
             }
         }
         #region 实现IFunction
+        public bool Iisasync { get { return false; } set { } }
+
+        public Task<object> IAsyncRun(Hashtable xc)
+        {
+            throw new Exception();
+        }
         string IFunction.Istr_xcname
         {
             get { return "params"; }

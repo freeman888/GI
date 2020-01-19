@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GI
+{
+    partial class Function
+    {
+        public class AFunction : IFunction
+        {
+            public string Istr_xcname { get ; set ; }
+            public bool Iisreffunction { get ; set ; }
+            public string IInformation { get ; set; }
+            public bool Iisasync { get { return true;    }   set { }    }
+
+            public Task<object> IAsyncRun(Hashtable xc)
+            {
+                return Run(xc);
+            }
+
+            public object IGetCSValue()
+            {
+                return this;
+            }
+
+            public string IGetType()
+            {
+                throw new NotImplementedException();
+            }
+
+            public object IRun(Hashtable xc)
+            {
+                throw new NotImplementedException();
+            }
+
+            public virtual Task<object> Run(Hashtable xc)
+            {
+                return null;
+            }
+
+            
+
+        }
+    }
+}

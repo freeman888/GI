@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace GI
@@ -56,7 +57,7 @@ namespace GI
             return list;
         }
 
-        public virtual void Run(Hashtable h) { }
+        public async virtual    Task Run(Hashtable h) { }
         
         public string mycode = "";
 
@@ -74,7 +75,7 @@ namespace GI
                 refname = me.GetAttribute("varname");
 
             }
-            public override void Run(Hashtable htxc)
+            public  override Task Run(Hashtable htxc)
             {
                 try
                 {
@@ -84,6 +85,7 @@ namespace GI
                 {
                     throw new Exception(ex.Message+Environment.NewLine+"位置:"+mycode);
                 }
+                return Task.Run(() => { });
             }
         }
         public class New_Sentence_Return : Sentence
@@ -95,11 +97,11 @@ namespace GI
                 resulter = new Variable.Resulter(me.FirstChild as XmlNode);
 
             }
-            public override void Run(Hashtable htcs)
+            public async override Task Run(Hashtable htcs)
             {
                 try
                 {
-                    throw new MyExceptions.ReturnException() { toreturn = resulter.Run(htcs) };
+                    throw new MyExceptions.ReturnException() { toreturn = await resulter.Run(htcs) };
                 }
                 catch (Exception ex)
                 {
@@ -154,23 +156,23 @@ namespace GI
 
             
             
-            public override void Run(Hashtable h)
+            public async override Task Run(Hashtable h)
             {
                 try
                 {
                     Hashtable hashtable = Variable.GetOwnVariables(h);
-                    realif = Convert.ToBoolean(resulter.Run(h).value);
+                    realif = Convert.ToBoolean(( await resulter.Run(h)).value);
                     if (realif)
                     {
                         foreach (Sentence then in thensentences)
                         {
-                            then.Run(hashtable);
+                            await then.Run(hashtable);
                         }
                         return;
                     }
                     foreach (New_Sentence_if s in elseifsentences)
                     {
-                        s.Run(h);
+                        await s.Run(h);
                         if (s.realif)
                         {
                             return;
@@ -181,7 +183,7 @@ namespace GI
                     {
                         foreach (Sentence e in elsesentences)
                         {
-                            e.Run(hashtable);
+                            await e.Run(hashtable);
                         }
                     }
 
@@ -206,12 +208,12 @@ namespace GI
                 resulter = new Variable.Resulter(me.ChildNodes[1] as XmlNode);
                 togive = new Variable.Resulter(me.ChildNodes[0] as XmlNode);
             }
-            public override void Run(Hashtable h)
+            public async override Task Run(Hashtable h)
             {
                 try
                 {
-                    Variable result = resulter.Run(h);
-                    Variable togivee = togive.Run(h);
+                    Variable result = await resulter.Run(h);
+                    Variable togivee = await togive.Run(h);
                     togivee.value = result.value;
                  }   
                 catch(Exception ex)
@@ -230,11 +232,11 @@ namespace GI
                 mycode = me.GetAttribute("str");
                 resulter = new Variable.Resulter(me.FirstChild as XmlNode);
             }
-            public override void Run(Hashtable h)
+            public async override Task Run(Hashtable h)
             {
                 try
                 {
-                    Variable result = resulter.Run(h);
+                    Variable result = await resulter.Run(h);
                 }
                 catch(Exception ex)
                 {
@@ -254,20 +256,20 @@ namespace GI
                 resulter = new Variable.Resulter(me.FirstChild.FirstChild as XmlNode);
                 childsentences = Sentence.GetSentencesFormXml(me.ChildNodes[1].ChildNodes).ToArray();
             }
-            public override void Run(Hashtable h)
+            public async override Task Run(Hashtable h)
             {
                 try
                 {
                     Hashtable hashtable = h;
-                    bool realif = Convert.ToBoolean(resulter.Run(hashtable).value);
+                    bool realif = Convert.ToBoolean((await resulter.Run(hashtable)).value);
                     while(realif)
                     {
                         Hashtable hh = Variable.GetOwnVariables(hashtable);
                         foreach(Sentence s in childsentences)
                         {
-                            s.Run(hh);
+                            await s.Run(hh);
                         }
-                        realif = Convert.ToBoolean(resulter.Run(hashtable).value);
+                        realif = Convert.ToBoolean((await resulter.Run(hashtable)).value);
                     }
                     
                 }
@@ -298,7 +300,7 @@ namespace GI
 
 
             }
-            public override void Run(Hashtable h)
+            public async override Task Run(Hashtable h)
             {
                 try
                 {
@@ -307,7 +309,7 @@ namespace GI
                     {
                         foreach(var s in trysentences)
                         {
-                            s.Run(hashtable);
+                            await s.Run(hashtable);
                         }
                     }
                     catch (MyExceptions.ReturnException ex)
@@ -321,7 +323,7 @@ namespace GI
                         else
                             hashtable[exname] = new Variable(ex.Message);
                         foreach (var s in catchsentences)
-                            s.Run(hashtable);
+                            await s.Run(hashtable);
                     }
                 }
                 catch (MyExceptions.ReturnException ex)
@@ -350,12 +352,12 @@ namespace GI
                 resulter = new Variable.Resulter(me.FirstChild.FirstChild as XmlNode);
                 childsentences = GetSentencesFormXml(me.ChildNodes[1].ChildNodes).ToArray();
             }
-            public override void Run(Hashtable h)
+            public async override Task Run(Hashtable h)
             {
                 try
                 {
                     Hashtable hashtable = Variable.GetOwnVariables(h);
-                    Variable ss = resulter.Run(hashtable);
+                    Variable ss = await resulter.Run(hashtable);
                     foreach (var item in (ss.value as Glist))
                     {
                         Hashtable nhashtable = Variable.GetOwnVariables(h);
@@ -364,7 +366,7 @@ namespace GI
                         else
                             nhashtable[fzvar] = item;
                         foreach (Sentence s in childsentences)
-                            s.Run(nhashtable);
+                            await s.Run(nhashtable);
                     }
                 }
                 catch (MyExceptions.ReturnException ex)

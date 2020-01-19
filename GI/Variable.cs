@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml;
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GI
 {
@@ -69,7 +70,7 @@ namespace GI
                     condition = 3;
                 }
             }
-            public Variable Run(Hashtable basehashtable)
+            public async Task<Variable> Run(Hashtable basehashtable)
             {
                 if (condition == 1)
                 {
@@ -79,7 +80,7 @@ namespace GI
                 { return (Variable)basehashtable[ret_variablename]; }
                 else if (condition == 3)
                 {
-                    Variable var_func = functionresulter.Run(basehashtable);
+                    Variable var_func = await functionresulter.Run(basehashtable);
                     IFunction truefunction = var_func.value as IFunction;
 
                     string xcname = truefunction.Istr_xcname;
@@ -88,7 +89,7 @@ namespace GI
                     ArrayList tempavariables = new ArrayList();
                     foreach (Resulter resulter in childresulters)
                     {
-                        tempavariables.Add(resulter.Run(basehashtable));
+                        tempavariables.Add(await resulter.Run(basehashtable));
                     }
 
                     if (truefunction.Iisreffunction)
@@ -99,6 +100,10 @@ namespace GI
                     {
                         temphashtable = Setvariablesname(xcname, tempavariables);
                     }
+                    if(truefunction.Iisasync)
+                    {
+                        return (Variable) await (truefunction as IFunction).IAsyncRun(temphashtable);
+                    }
                     return (Variable)(truefunction as IFunction).IRun(temphashtable);
                 }
                 else
@@ -107,7 +112,6 @@ namespace GI
                 }
             }
 
-           
 
             public static Hashtable Setvariablesname(string xcname, ArrayList tempvariables)
             {

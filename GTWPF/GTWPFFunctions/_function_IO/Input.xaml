@@ -1,0 +1,13 @@
+﻿<Window x:Class="GTWPF.GTWPFFunctions._function_IO.Input"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GTWPF.GTWPFFunctions._function_IO"
+        mc:Ignorable="d"
+        Title="Input" Height="200" Width="300" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Closed="Window_Closed">
+    <Grid>
+        <TextBox x:Name="InputBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="" Margin="5"/>
+        <Button Content="OK" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Padding="10,1,10,1" Click="Button_Click"/>
+    </Grid>
+</Window>

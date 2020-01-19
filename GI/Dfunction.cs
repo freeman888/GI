@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GI
 {
     partial class Function
     {
+
+
         public class DFunction : IFunction
         {
             const string type = "function";
@@ -35,8 +38,13 @@ namespace GI
             {
                 return this;
             }
+            public bool Iisasync { get { return false; } set { } }
 
-            
+            public Task<object> IAsyncRun(Hashtable xc)
+            {
+                throw new Exception();
+            }
+
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using GI;
+using GTWPF.GTWPFFunctions._function_IO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using static GI.Function;
@@ -20,7 +22,7 @@ namespace GTWPF
                 h.Add("IO.Write", new IO_Function_Write());
                 h.Add("IO.Tip", new IO_Function_Tip());
                 h.Add("IO.WriteLine", new IO_Function_WriteLine());
-
+                h.Add("IO.Input", new IO_Function_Input());
             }
             public class IO_Function_WriteLine : Function
             {
@@ -60,6 +62,19 @@ namespace GTWPF
                 }
             }
 
+            public class IO_Function_Input:AFunction
+            {
+                public IO_Function_Input()
+                {
+                    Istr_xcname = "";
+                    IInformation = "";
+                }
+
+                public async override Task<object> Run(Hashtable xc)
+                {
+                    return new Variable( await new Input().GetInput());
+                }
+            }
             public class IO_Function_Tip : Function
             {
                 public IO_Function_Tip()

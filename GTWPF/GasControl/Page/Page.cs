@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -93,8 +94,13 @@ namespace GTWPF.GasControl.Page
         }
 
         #region
-        
-public string IInformation { get => "to be added"; set => throw new NotImplementedException(); }
+        public bool Iisasync { get { return false; } set { } }
+
+        public Task<object> IAsyncRun(Hashtable xc)
+        {
+            throw new Exception();
+        }
+        public string IInformation { get => "to be added"; set => throw new NotImplementedException(); }
         string IFunction.Istr_xcname
         {
             get { return "params"; }

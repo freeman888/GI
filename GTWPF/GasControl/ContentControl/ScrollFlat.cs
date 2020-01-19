@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Collections;
 using GI;
+using System.Threading.Tasks;
 
 namespace GTWPF.GasControl.ContentControl
 {
@@ -118,7 +119,12 @@ namespace GTWPF.GasControl.ContentControl
 
 
         #region 实现IFunction
+        public bool Iisasync { get { return false; } set { } }
 
+        public Task<object> IAsyncRun(Hashtable xc)
+        {
+            throw new Exception();
+        }
         public string IInformation { get => "to be added"; set => throw new NotImplementedException(); }
         string IFunction.Istr_xcname
         {

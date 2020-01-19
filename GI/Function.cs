@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace GI
@@ -10,11 +11,15 @@ namespace GI
     public interface IFunction:IType
     {
         object IRun(Hashtable xc);
+        Task<object> IAsyncRun(Hashtable xc);
         string Istr_xcname { get; set; }
         bool Iisreffunction { get; set; }
         string IInformation { get; set; }
+        bool Iisasync { get; set; }
     }
     [Attribute.GasType("function")]
+
+    
     public partial class Function:IFunction
     {
         //实现IFunction
@@ -48,12 +53,15 @@ namespace GI
                 isreffunction = value;
             }
         }
-
         public string IInformation
         { get ; set; }
 
-        
+        public bool Iisasync { get { return false; } set { }}
 
+        public Task<object> IAsyncRun(Hashtable xc)
+        {
+            throw new Exception();
+        }
 
         /// <summary>
         /// 父类
@@ -71,20 +79,20 @@ namespace GI
         public bool isreffunction = false;
 
         //以下为用户自定义函数
-        public class New_User_Function : Function
+        public class New_User_Function : AFunction
         {
             public Sentence[] sentences;
             public string name;
             public New_User_Function(string fname, string fxc)
             {
-                str_xcname = fxc; name = fname;
+                Istr_xcname = fxc; name = fname;
             }
 
             public New_User_Function(XmlNode code)
             {
                 name = code.GetAttribute("funname");
-                str_xcname = code.GetAttribute("params");
-                isreffunction = Convert.ToBoolean(code.GetAttribute("isref"));
+                Istr_xcname = code.GetAttribute("params");
+                Iisreffunction = Convert.ToBoolean(code.GetAttribute("isref"));
                 List<Sentence> list =Sentence. GetSentencesFormXml(code.ChildNodes);
 
                 sentences = list.ToArray();
@@ -94,24 +102,24 @@ namespace GI
 
             }
 
-            public override object Run(Hashtable htxc)
+            public async override Task< object> Run(Hashtable htxc)
             {
                 try
                 {
                     foreach (Sentence s in sentences)
                     {
-                        s.Run(htxc);
+                        await s.Run(htxc);
                     }
                 }
                 catch (MyExceptions.ReturnException ex)
                 {
-                    return ex.toreturn;
+                    return new Task<object>(()=> ex.toreturn);
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
-                return null;
+                return Task.Run(() => new object());
             }
         }
         
@@ -154,7 +162,20 @@ namespace GI
             }
         }
 
-
+        public  static Task<object>  AsyncFuncStarter(string funname, Hashtable variable)
+        {
+            Task<object> ret;
+            try
+            {
+                ret =  ((Gasoline.sarray_Sys_Variables[funname] as Variable).value as IFunction).IAsyncRun(variable);
+            }
+            catch (Exception ex)
+            {
+                ret = new Task<object>(() => new Variable(0));
+                Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
+            }
+            return ret;
+        }
 
         public const string type = "function";
 

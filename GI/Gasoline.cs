@@ -20,7 +20,7 @@ namespace GI
 
 
 
-        public static void StartGas(Dictionary<string, Function.Head> heads, XmlDocument codes)
+        public async static void StartGas(Dictionary<string, Function.Head> heads, XmlDocument codes)
         {
             Del.Delate();
             try
@@ -56,14 +56,14 @@ namespace GI
             // 5 拉起Main
 
             Hashtable ht = Variable.GetOwnVariables(sarray_Sys_Variables);
-            string str_name = ((sarray_Sys_Variables["Main"] as Variable).value as Function).str_xcname;
+            string str_name = ((sarray_Sys_Variables["Main"] as Variable).value as IFunction).Istr_xcname;
             string[] vs = Environment.GetCommandLineArgs();
             var arrayList = new Glist();
             foreach (string vv in vs)
                 arrayList.Add(new Variable(vv));
             ht.Add(str_name, new Variable((arrayList)));
-            Function.FuncStarter("Main", ht, out Variable v);
-
+            await Function.AsyncFuncStarter("Main", ht);
+            
 
         }
 
