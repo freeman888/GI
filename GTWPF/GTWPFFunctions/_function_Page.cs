@@ -69,7 +69,7 @@ namespace GTWPF
                     MainWindow mainWindow = MainWindow.MainApp;
                     if (mainWindow. Pages.Count == 0)
                     {
-                        throw new Exception("请先通过  Page.LoadApp(page)   方法确定主页面，然后再使用本方法");
+                        throw new Exceptions.RunException( Exceptions.EXID.逻辑错误,"请先通过  Page.LoadApp(page)   方法确定主页面，然后再使用本方法");
                     }
                     lock (mainWindow)
                     {
@@ -92,7 +92,7 @@ namespace GTWPF
                     MainWindow mainWindow = MainWindow.MainApp;
                     if(mainWindow.Pages.Count >1)
                     {
-                        throw new Exception("请勿多次调用本方法");
+                        throw new Exceptions.RunException( Exceptions.EXID.逻辑错误,"请勿多次调用本方法");
                     }
                     GasControl.Page.GasPage page = Variable.GetTrueVariable<GasControl.Page.GasPage>(xc, "page");
                     mainWindow.GotoPage(page);

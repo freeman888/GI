@@ -50,7 +50,7 @@ namespace GI
                     list.Add(new Sentence.New_Sentence_Return(sentence));
                     break;
                     default:
-                    throw new Exception("bug");
+                    throw new Exceptions.RunException( Exceptions.EXID.未知,"bug");
                 }
             }
 

@@ -70,18 +70,18 @@ namespace GTWPF.GasControl.ContentControl
 
         object IGetter.IGetText()
         {
-            throw new Exception("没有 text 属性");
+            throw new Exceptions.RunException( Exceptions.EXID.无对应属性 , "没有 text 属性");
         }
 
         object IGetter.IGetFontSize()
         {
-            throw new Exception("没有 fontsize 属性");
+            throw new Exceptions.RunException( Exceptions.EXID.无对应属性,"没有 fontsize 属性");
         }
 
         object IGetter.IGetPadding()
         {
             
-            throw new Exception("没有 padding 属性");
+            throw new Exceptions.RunException( Exceptions.EXID.无对应属性,"没有 padding 属性");
         }
 
         object IGetter.IGetBackgroundColor()
@@ -92,7 +92,7 @@ namespace GTWPF.GasControl.ContentControl
         object IGetter.IGetForegroundColor()
         {
             
-            throw new Exception("没有 foregroundcolor 属性");
+            throw new Exceptions.RunException( Exceptions.EXID.无对应属性,"没有 foregroundcolor 属性");
         }
 
         object IGetter.IFindID(string id)
@@ -113,12 +113,12 @@ namespace GTWPF.GasControl.ContentControl
 
         public object IGetScrollPosition()
         {
-            throw new Exception("没有 scrollposition 属性");
+            throw new Exceptions.RunException( Exceptions.EXID.无对应属性,"没有 scrollposition 属性");
         }
 
         object IGetter.IGetTogged()
         {
-            throw new Exception("没有 togged 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 togged 属性");
         }
         #endregion
 
@@ -297,17 +297,17 @@ namespace GTWPF.GasControl.ContentControl
 
         void ISetter.ISetText(object value)
         {
-            throw new Exception("GridFlat 不包含 text 属性");
+            throw new  Exceptions.RunException(Exceptions.EXID.无对应属性, "GridFlat 不包含 text 属性");
         }
 
         void ISetter.ISetFontSize(object value)
         {
-            throw new Exception("GridFlat 不包含 fontsize 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "GridFlat 不包含 fontsize 属性");
         }
 
         void ISetter.ISetPadding(object value)
         {
-            throw new Exception("GridFlat 不包含 padding 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "GridFlat 不包含 padding 属性");
         }
 
         void ISetter.ISetBackgroundColor(object value)
@@ -317,23 +317,23 @@ namespace GTWPF.GasControl.ContentControl
 
         void ISetter.ISetForegroundColor(object value)
         {
-            throw new Exception("GridFlat 不包含 foreground 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "GridFlat 不包含 foreground 属性");
         }
 
         void ISetter.ISetClickEvent(object value)
         {
-            throw new Exception("此控件没有 click 事件");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "此控件没有 click 事件");
         }
 
 
         void ISetter.ISetScrollPosition(object value)
         {
-            throw new Exception("没有 scrollposition 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 scrollposition 属性");
         }
 
         void ISetter.ISetTogged(object value)
         {
-            throw new Exception("没有 togged 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 togged 属性");
         }
         #endregion
 

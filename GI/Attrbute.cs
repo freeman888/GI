@@ -22,7 +22,7 @@ namespace GI
                 if(rtype != null)
                 {
                     if (types.Contains(rtype))
-                        throw new Exception("类型冲突:" + rtype);
+                        throw new Exceptions.RunException( Exceptions.EXID.类型冲突,"类型冲突:" + rtype);
                     types.Add(rtype);
                     mytype.Add(rtype);
                 }

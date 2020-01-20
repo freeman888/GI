@@ -95,7 +95,6 @@ time",
                         return new Variable(0);
                     }
                 });
-                h.Add("System.Async", new System_Function_Async());
             }
             //注册结束
 
@@ -146,16 +145,7 @@ time",
             }
             #endregion
 
-            #region 全异步
-            public class System_Function_Async:Function
-            {
-                public System_Function_Async()
-                {
-                    str_xcname = "res";
-                }
-
-            }
-            #endregion
+            
         }
     }
 }

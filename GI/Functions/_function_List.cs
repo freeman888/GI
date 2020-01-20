@@ -140,7 +140,7 @@ when three
                         }
                         return new Variable(-1);
                     }
-                    else throw new Exception("参数错误");
+                    else throw new Exceptions.RunException( Exceptions.EXID.参数错误, "参数错误");
                 }
             }
             public class List_Function_Remove : Function

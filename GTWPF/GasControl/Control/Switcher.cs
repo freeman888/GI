@@ -140,7 +140,7 @@ namespace GTWPF.GasControl.Control
 
         void ISetter.ISetText(object value)
         {
-            throw new Exception("没有 text 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 text 属性");
         }
 
         void ISetter.ISetFontSize(object value)
@@ -150,7 +150,7 @@ namespace GTWPF.GasControl.Control
 
         void ISetter.ISetPadding(object value)
         {
-            throw new Exception("没有padding 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有padding 属性");
         }
 
         void ISetter.ISetBackgroundColor(object value)
@@ -172,7 +172,7 @@ namespace GTWPF.GasControl.Control
 
         void ISetter.ISetScrollPosition(object value)
         {
-            throw new Exception("没有 scrollposition 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 scrollposition 属性");
         }
 
         void ISetter.ISetTogged(object value)
@@ -224,17 +224,17 @@ namespace GTWPF.GasControl.Control
 
         object IGetter.IGetText()
         {
-            throw new Exception("没有 text 属性");
+            throw new Exceptions.RunException( Exceptions.EXID.无对应属性,"没有 text 属性");
         }
 
         object IGetter.IGetFontSize()
         {
-            throw new Exception("没有 fontsize 属性");
+            throw new Exceptions.RunException( Exceptions.EXID.无对应属性,"没有 fontsize 属性");
         }
 
         object IGetter.IGetPadding()
         {
-            throw new Exception("没有 padding 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 padding 属性");
         }
 
         object IGetter.IGetBackgroundColor()
@@ -244,12 +244,12 @@ namespace GTWPF.GasControl.Control
 
         object IGetter.IGetForegroundColor()
         {
-            throw new Exception("没有 foregroundcolor 属性");
+            throw new Exceptions.RunException( Exceptions.EXID.无对应属性,"没有 foregroundcolor 属性");
         }
         
         object IGetter.IGetScrollPosition()
         {
-            throw new Exception("没有 scrollposition 属性");
+            throw new Exceptions.RunException( Exceptions.EXID.无对应属性,"没有 scrollposition 属性");
         }
 
         object IGetter.IFindID(string id)

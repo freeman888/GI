@@ -99,12 +99,12 @@ namespace GTWPF.GasControl.Control
 
         public object IGetScrollPosition()
         {
-            throw new Exception("没有 scrollposition 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 scrollposition 属性");
         }
 
         object IGetter.IGetTogged()
         {
-            throw new Exception("没有 togged 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 togged 属性");
         }
         #endregion
 
@@ -260,18 +260,18 @@ namespace GTWPF.GasControl.Control
 
         void ISetter.ISetClickEvent(object value)
         {
-            throw new Exception("此控件没有 click 事件");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "此控件没有 click 事件");
         }
 
 
         void ISetter.ISetScrollPosition(object value)
         {
-            throw new Exception("没有 scrollposition 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 scrollposition 属性");
         }
 
         void ISetter.ISetTogged(object value)
         {
-            throw new Exception("没有 togged 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 togged 属性");
         }
         #endregion
 

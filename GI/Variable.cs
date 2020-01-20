@@ -136,7 +136,7 @@ namespace GI
                 }
                 string[] xc_names = xcname.Split(',');
                 if (xc_names.Length != tempvariables.Count)
-                    throw new Exception("参数传递错误");
+                    throw new Exceptions.RunException(Exceptions.EXID.参数错误,"参数传递错误");
                 for (int i = 0; i < xc_names.Length; i++)
                 {
                     hashtable.Add(xc_names[i], newvariables[i]);
@@ -232,6 +232,8 @@ namespace GI
                 value = new Gstring(o.ToString());
             else if (o is bool)
                 value = new Gbool(Convert.ToBoolean(o));
+            else if (o is Task)
+                value = new GTask(o as Task);
             else
                 value = new Gunknown(o);
         }
@@ -250,7 +252,7 @@ namespace GI
             {
                 if (isconst)
                 {
-                    throw new Exception("常量不允许赋值");
+                    throw new Exceptions.RunException(Exceptions.EXID.更改常量,"常量不允许赋值");
                 }
                 else
                 {

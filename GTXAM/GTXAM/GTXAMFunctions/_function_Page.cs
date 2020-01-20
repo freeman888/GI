@@ -118,7 +118,7 @@ namespace GTXAM.GTXAMFunctions
                     GasControl.Page.Page page = Variable.GetTrueVariable<GasControl.Page.Page>(xc, "page");
                     if((App.MainApp.MainPage as NavigationPage).CurrentPage .GetType() != typeof(ConsolePage))
                     {
-                        throw new Exception("请勿多次调用本方法");
+                        throw new Exceptions.RunException(Exceptions.EXID.逻辑错误, "请勿多次调用本方法");
                     }
 
                     Task.Run(() =>

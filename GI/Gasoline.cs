@@ -95,7 +95,7 @@ namespace GI
                 }
                 else
                 {
-                    throw new Exception("未知外围标签");
+                    throw new Exceptions.RunException( Exceptions.EXID.未知,"未知外围标签");
                 }
 
             }

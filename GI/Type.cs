@@ -10,7 +10,7 @@ namespace GI
         public static bool Sign(string type)
         {
             if (types.Contains(type))
-                throw new Exception("类型冲突 :" + type);
+                throw new Exceptions.RunException( Exceptions.EXID.类型冲突,"类型冲突 :" + type);
             types.Add(type);
             return true;
         }

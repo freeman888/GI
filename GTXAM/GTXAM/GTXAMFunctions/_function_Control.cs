@@ -144,7 +144,7 @@ namespace GTXAM.GTXAMFunctions
                         case "scrollposition": ret = getter.IGetScrollPosition();break;
 
 
-                        default: throw new Exception("没有 " + config + " 属性");
+                        default: throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 " + config + " 属性");
                     }
                     return new Variable(ret);
                 }

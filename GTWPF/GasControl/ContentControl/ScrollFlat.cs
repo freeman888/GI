@@ -73,12 +73,12 @@ namespace GTWPF.GasControl.ContentControl
 
         object IGetter.IGetText()
         {
-            throw new Exception("没有 text 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 text 属性");
         }
 
         object IGetter.IGetFontSize()
         {
-            throw new Exception("没有 fontsize 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 fontsize 属性");
         }
 
         object IGetter.IGetPadding()
@@ -113,7 +113,7 @@ namespace GTWPF.GasControl.ContentControl
 
         object IGetter.IGetTogged()
         {
-            throw new Exception("没有 togged 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 togged 属性");
         }
         #endregion
 
@@ -287,12 +287,12 @@ namespace GTWPF.GasControl.ContentControl
 
         void ISetter.ISetText(object value)
         {
-            throw new Exception("ScrollFlat 不包含 text 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "ScrollFlat 不包含 text 属性");
         }
 
         void ISetter.ISetFontSize(object value)
         {
-            throw new Exception("ScrollFlat 不包含 fontsize 属性");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "ScrollFlat 不包含 fontsize 属性");
         }
 
         void ISetter.ISetPadding(object value)
@@ -319,17 +319,16 @@ namespace GTWPF.GasControl.ContentControl
 
         void ISetter.ISetClickEvent(object value)
         {
-            throw new Exception("此控件没有 click 事件");
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "此控件没有 click 事件");
         }
 
         void ISetter.ISetTogged(object value)
         {
-            throw new Exception("没有 togged 属性");
-        }
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,
         #endregion
 
-        #region 实现IType
-        const string type = "scrollflat,function";
+            #region 实现IType
+            const string type = "scrollflat,function";
         public string IGetType()
         {
             return type;

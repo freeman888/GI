@@ -41,7 +41,7 @@ namespace GI
                 this[index] = obj;
                 return new Variable(this);
             }
-            throw new Exception("参数错误");
+            throw new Exceptions.RunException( Exceptions.EXID.参数错误,"参数错误");
         }
 
         public bool Iisasync { get { return false; } set { } }
