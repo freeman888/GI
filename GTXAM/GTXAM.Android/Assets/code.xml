@@ -2,136 +2,26 @@
 <code minversion="1902">
   <get value="IO" />
   <get value="Math" />
-  <get value="String" />
-  <get value="System" />
-  <get value="Thread" />
-  <get value="Page" />
   <get value="Control" />
-  <var value="tip" />
-  <deffun funname="Main" params="args" isref="False">
-    <var_s varname="page" str="var page = Page.Creat(&quot;title&quot;);" />
-    <getres_s str="var page = Page.Creat(&quot;title&quot;);">
-      <arg value="page" con="var" />
+  <get value="Page" />
+  <deffun funname="Main" params="a" isref="False">
+    <usefun_s str="IO.Tip(123);">
       <arg con="fun">
         <fun>
-          <arg value="Page.Creat" con="var" />
+          <arg value="IO.Tip" con="var" />
         </fun>
         <params>
-          <arg value="title" con="str" />
-        </params>
-      </arg>
-    </getres_s>
-    <getres_s str="tip = Control.Tip.Creat(&quot;tip&quot;);">
-      <arg value="tip" con="var" />
-      <arg con="fun">
-        <fun>
-          <arg value="Control.Tip.Creat" con="var" />
-        </fun>
-        <params>
-          <arg value="tip" con="str" />
-        </params>
-      </arg>
-    </getres_s>
-    <usefun_s str="tip(&quot;text&quot;,0);">
-      <arg con="fun">
-        <fun>
-          <arg value="tip" con="var" />
-        </fun>
-        <params>
-          <arg value="text" con="str" />
-          <arg value="0" con="num" />
+          <arg value="123" con="num" />
         </params>
       </arg>
     </usefun_s>
-    <usefun_s str="Thread.Start(CheckTime);">
+    <usefun_s str="IO.Tip(456);">
       <arg con="fun">
         <fun>
-          <arg value="Thread.Start" con="var" />
+          <arg value="IO.Tip" con="var" />
         </fun>
         <params>
-          <arg value="CheckTime" con="var" />
-        </params>
-      </arg>
-    </usefun_s>
-    <usefun_s str="page()(tip);">
-      <arg con="fun">
-        <fun>
-          <arg con="fun">
-            <fun>
-              <arg value="page" con="var" />
-            </fun>
-            <params />
-          </arg>
-        </fun>
-        <params>
-          <arg value="tip" con="var" />
-        </params>
-      </arg>
-    </usefun_s>
-    <usefun_s str="Page.Load(page);">
-      <arg con="fun">
-        <fun>
-          <arg value="Page.Load" con="var" />
-        </fun>
-        <params>
-          <arg value="page" con="var" />
-        </params>
-      </arg>
-    </usefun_s>
-  </deffun>
-  <deffun funname="CheckTime" params="" isref="False">
-    <while_s str="while(true):">
-      <express>
-        <arg value="true" con="var" />
-      </express>
-      <run>
-        <usefun_s str="Thread.Sleep(1000);">
-          <arg con="fun">
-            <fun>
-              <arg value="Thread.Sleep" con="var" />
-            </fun>
-            <params>
-              <arg value="1000" con="num" />
-            </params>
-          </arg>
-        </usefun_s>
-        <usefun_s str="Thread.RunOnUI(SetTime);">
-          <arg con="fun">
-            <fun>
-              <arg value="Thread.RunOnUI" con="var" />
-            </fun>
-            <params>
-              <arg value="SetTime" con="var" />
-            </params>
-          </arg>
-        </usefun_s>
-      </run>
-    </while_s>
-  </deffun>
-  <deffun funname="SetTime" params="" isref="False">
-    <usefun_s str="tip(&quot;text&quot;,tip(&quot;text&quot;)+1);">
-      <arg con="fun">
-        <fun>
-          <arg value="tip" con="var" />
-        </fun>
-        <params>
-          <arg value="text" con="str" />
-          <arg con="fun">
-            <fun>
-              <arg value="Math.Sum" con="var" />
-            </fun>
-            <params>
-              <arg con="fun">
-                <fun>
-                  <arg value="tip" con="var" />
-                </fun>
-                <params>
-                  <arg value="text" con="str" />
-                </params>
-              </arg>
-              <arg value="1" con="num" />
-            </params>
-          </arg>
+          <arg value="456" con="num" />
         </params>
       </arg>
     </usefun_s>

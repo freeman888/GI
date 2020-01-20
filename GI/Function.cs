@@ -111,15 +111,15 @@ namespace GI
                         await s.Run(htxc);
                     }
                 }
-                catch (MyExceptions.ReturnException ex)
+                catch (Exceptions.ReturnException ex)
                 {
-                    return new Task<object>(()=> ex.toreturn);
+                    return ex.toreturn;
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
-                return Task.Run(() => new object());
+                return new Variable(0);
             }
         }
         
@@ -162,6 +162,12 @@ namespace GI
             }
         }
 
+        /// <summary>
+        /// 异步函数启动 从函数名
+        /// </summary>
+        /// <param name="funname"></param>
+        /// <param name="variable"></param>
+        /// <returns></returns>
         public  static Task<object>  AsyncFuncStarter(string funname, Hashtable variable)
         {
             Task<object> ret;
@@ -176,6 +182,28 @@ namespace GI
             }
             return ret;
         }
+
+        /// <summary>
+        /// 异步函数启动 从函数
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="variable"></param>
+        /// <returns></returns>
+        public async static Task<object>  AsyncFuncStarter(IFunction function, Hashtable variable)
+        {
+            Variable ret;
+            try
+            {
+                  ret =   (Variable) await function.IAsyncRun(variable);
+            }
+            catch (Exception ex)
+            {
+                ret = new Variable(0);
+                Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
+            }
+            return ret;
+        }
+
 
         public const string type = "function";
 

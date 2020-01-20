@@ -101,11 +101,11 @@ namespace GI
             {
                 try
                 {
-                    throw new MyExceptions.ReturnException() { toreturn = await resulter.Run(htcs) };
+                    throw new Exceptions.ReturnException() { toreturn = await resulter.Run(htcs) };
                 }
                 catch (Exception ex)
                 {
-                    if(ex.GetType() == typeof(MyExceptions.ReturnException))
+                    if(ex.GetType() == typeof(Exceptions.ReturnException))
                     {
                         throw ex;
                     }
@@ -188,7 +188,7 @@ namespace GI
                     }
 
                 }
-                catch (MyExceptions.ReturnException ex)
+                catch (Exceptions.ReturnException ex)
                 {
                     throw ex;
                 }
@@ -273,7 +273,7 @@ namespace GI
                     }
                     
                 }
-                catch (MyExceptions.ReturnException ex)
+                catch (Exceptions.ReturnException ex)
                 {
                     throw ex;
                 }
@@ -312,7 +312,7 @@ namespace GI
                             await s.Run(hashtable);
                         }
                     }
-                    catch (MyExceptions.ReturnException ex)
+                    catch (Exceptions.ReturnException ex)
                     {
                         throw ex;
                     }
@@ -326,7 +326,7 @@ namespace GI
                             await s.Run(hashtable);
                     }
                 }
-                catch (MyExceptions.ReturnException ex)
+                catch (Exceptions.ReturnException ex)
                 {
                     throw ex;
                 }
@@ -369,7 +369,7 @@ namespace GI
                             await s.Run(nhashtable);
                     }
                 }
-                catch (MyExceptions.ReturnException ex)
+                catch (Exceptions.ReturnException ex)
                 {
                     throw ex;
                 }

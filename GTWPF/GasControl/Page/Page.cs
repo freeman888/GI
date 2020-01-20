@@ -46,7 +46,7 @@ namespace GTWPF.GasControl.Page
                 },
                 Background = Brushes.White
             };
-            grid.MouseDown += (s, e) =>
+            grid.MouseDown +=async (s, e) =>
             {
                 if (click_event != null)
                 {
@@ -59,7 +59,7 @@ namespace GTWPF.GasControl.Page
                         {
                             hashtable.Add(sss[0], new Variable(this));
                             hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
-                            Function.FuncStarter(function, hashtable, out Variable v);
+                            await Function.AsyncFuncStarter(function, hashtable);
                         }
                     }
                     else
@@ -71,7 +71,7 @@ namespace GTWPF.GasControl.Page
                         {
                             hashtable.Add(sss[0], new Variable(this));
                             hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
-                            Function.FuncStarter(function, hashtable, out Variable v);
+                            await Function.AsyncFuncStarter(function, hashtable);
                         }
                     }
                 };

@@ -8,8 +8,18 @@ namespace GI
 {
     partial class Function
     {
+        /// <summary>
+        /// 默认为异步函数，且非引用传递
+        /// </summary>
         public class AFunction : IFunction
         {
+            public AFunction()
+            {
+                Iisasync = true;
+                Iisreffunction = false;
+                Istr_xcname = "";
+                IInformation = "Async Function\n";
+            }
             public string Istr_xcname { get ; set ; }
             public bool Iisreffunction { get ; set ; }
             public string IInformation { get ; set; }

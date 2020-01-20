@@ -27,7 +27,7 @@ namespace GTWPF.GasControl.Control
             Click += Bubble_Click;
             Padding = new Thickness(12, 7, 12, 7);
         }
-        private void Bubble_Click(object sender, RoutedEventArgs e)
+        private async void Bubble_Click(object sender, RoutedEventArgs e)
         {
             var p = Parent;
             while(!(p is Page.GasPage))
@@ -45,7 +45,7 @@ namespace GTWPF.GasControl.Control
                     {
                         hashtable.Add(sss[0], new Variable(p));
                         hashtable.Add(sss[1], new Variable(new Glist { new Variable(this),new Variable(e)}));
-                        Function.FuncStarter(function, hashtable, out Variable v);
+                        await Function.AsyncFuncStarter(function, hashtable);
                     }
                 }
                 else
@@ -57,7 +57,7 @@ namespace GTWPF.GasControl.Control
                     {
                         hashtable.Add(sss[0], new Variable(p));
                         hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
-                        Function.FuncStarter(function, hashtable, out Variable v);
+                        await Function.AsyncFuncStarter(function, hashtable);
                     }
                 }
             }

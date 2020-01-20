@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 using GI;
+using System.Threading.Tasks;
 
 namespace GTXAM.GasControl.Control
 {
@@ -19,7 +20,7 @@ namespace GTXAM.GasControl.Control
             Clicked += Bubble_Clicked;
         }
 
-        private void Bubble_Clicked(object sender, EventArgs e)
+        private async void Bubble_Clicked(object sender, EventArgs e)
         {
             
 
@@ -41,7 +42,7 @@ namespace GTXAM.GasControl.Control
                     {
                         hashtable.Add(sss[0], new Variable(p));
                         hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
-                        Function.FuncStarter(function, hashtable, out Variable v);
+                        await Function.AsyncFuncStarter(function, hashtable);
                     }
                 }
                 else
@@ -53,7 +54,7 @@ namespace GTXAM.GasControl.Control
                     {
                         hashtable.Add(sss[0], new Variable(p));
                         hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
-                        Function.FuncStarter(function, hashtable, out Variable v);
+                        await Function.AsyncFuncStarter(function, hashtable);
                     }
                 }
             }
@@ -143,6 +144,12 @@ namespace GTXAM.GasControl.Control
         #endregion
 
         #region 实现IFunction
+        public bool Iisasync { get { return false; } set { } }
+
+        public Task<object> IAsyncRun(Hashtable xc)
+        {
+            throw new Exception();
+        }
         string IFunction.Istr_xcname
         {
             get { return "params"; }

@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using GTXAM.GasControl.Control;
 using System.Collections;
 using GI;
+using System.Threading.Tasks;
 
 namespace GTXAM.GasControl.ContentControl
 {/// <summary>
@@ -115,6 +116,12 @@ namespace GTXAM.GasControl.ContentControl
         #endregion
 
         #region 实现IFunction
+        public bool Iisasync { get { return false; } set { } }
+
+        public Task<object> IAsyncRun(Hashtable xc)
+        {
+            throw new Exception();
+        }
         string IFunction.Istr_xcname
         {
             get { return "params"; }

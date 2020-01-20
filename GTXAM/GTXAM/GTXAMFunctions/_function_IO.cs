@@ -18,7 +18,34 @@ namespace GTXAM.GTXAMFunctions
                 h.Add("IO.Write", new IO_Function_Write());
                 h.Add("IO.Tip", new IO_Function_Tip());
                 h.Add("IO.WriteLine", new IO_Function_WriteLine());
+                h.Add("IO.Input", new IO_Function_Input());
+            }
 
+            public class IO_Function_Input:AFunction
+            {
+                public IO_Function_Input()
+                {
+                    IInformation += @"params:
+1 title
+2 title tips
+return:
+when tap 'ok' return what was inputed
+when tap 'cancel' or close the inputwindow , return a empty string";
+                    Istr_xcname = "params";
+                }
+                public async override Task<object> Run(Hashtable xc)
+                {
+                    var list = xc.GetCSVariable<Glist>("params");
+                    Variable ret;
+                    if (list.Count == 0)
+                        ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync("Input", ""));
+                    else if (list.Count == 1)
+                        ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync(list[0].value.IGetCSValue().ToString(), ""));
+                    else if (list.Count == 2)
+                        ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync(list[0].value.IGetCSValue().ToString(), list[1].value.IGetCSValue().ToString()));
+                    else throw new Exceptions.RunException(Exceptions.EXID.参数错误);
+                    return ret;
+                }
             }
             public class IO_Function_WriteLine : Function
             {
@@ -35,7 +62,7 @@ namespace GTXAM.GTXAMFunctions
                     }
                     catch
                     {
-                        throw new Exception("控制台已被销毁");
+                        throw new Exceptions.RunException(Exceptions.EXID.逻辑错误,"控制台已被销毁");
                     }
                     return new Variable(this);
                 }
@@ -56,24 +83,24 @@ namespace GTXAM.GTXAMFunctions
                     }
                     catch
                     {
-                        throw new Exception("控制台已被销毁");
+                        throw new Exceptions.RunException(Exceptions.EXID.逻辑错误, "控制台已被销毁");
                     }
                     return new Variable(this);
                 }
             }
 
-            public class IO_Function_Tip : Function
+            public class IO_Function_Tip : AFunction
             {
                 public IO_Function_Tip()
                 {
-                    str_xcname = "tip";
+                    Istr_xcname = "tip";
                 }
-                public override object Run(Hashtable xc)
+                public async override Task<object> Run(Hashtable xc)
                 {
-                    Device.BeginInvokeOnMainThread(() =>
+                    await Device.InvokeOnMainThreadAsync(async () =>
                     {
                         string text = Variable.GetTrueVariable<object>(xc, "tip").ToString();
-                        App.MainApp.MainPage.DisplayAlert("提示", xc.GetVariable<object>("tip").ToString(), "确定");
+                        await App.MainApp.MainPage.DisplayAlert("提示", xc.GetVariable<object>("tip").ToString(), "确定");
 
                     });
                     return new Variable(0);

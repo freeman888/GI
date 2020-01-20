@@ -19,30 +19,35 @@ namespace GTWPF.GTWPFFunctions._function_IO
     /// </summary>
     public partial class Input : Window
     {
+
         public Input()
         {
             InitializeComponent();
         }
+        string content = "";
         bool done = false;
-        public async Task<string> GetInput()
+        public async Task<string> GetInput(string title = "Input",string tips = "")
         {
             Show();
+            Title = title;
+            Tips.Content = tips;
+            
             await Task.Run(() =>
                 {
                     while (!done) ;
                 });
-            return InputBox.Text;
+            return content;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            content = InputBox.Text;
             Close();
 
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            InputBox.Text = "";
             done = true;
         }
     }

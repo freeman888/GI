@@ -47,7 +47,7 @@ namespace GTWPF.GasControl.Control
             Children.Add(pic);
             Children.Add(label);
 
-            MouseDown += (s, e) =>
+            MouseDown += async (s, e) =>
             {
                 IsToggled = !IsToggled;
 
@@ -64,7 +64,7 @@ namespace GTWPF.GasControl.Control
                 {
                     hashtable.Add(sss[0], new Variable(p));
                     hashtable.Add(sss[1], new Variable(e));
-                    Function.FuncStarter(function_Click, hashtable, out Variable v);
+                    await Function.AsyncFuncStarter(function_Click, hashtable);
                 }
             };
 

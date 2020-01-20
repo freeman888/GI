@@ -66,35 +66,51 @@ namespace GTWPF
             {
                 public IO_Function_Input()
                 {
-                    Istr_xcname = "";
-                    IInformation = "";
+
+                    IInformation += @"params:
+1 title
+2 title tips
+return:
+when tap 'ok' return what was inputed
+when tap 'cancel' or close the inputwindow , return a empty string";
+                    Istr_xcname = "params";
                 }
 
                 public async override Task<object> Run(Hashtable xc)
                 {
-                    return new Variable( await new Input().GetInput());
+
+                    var input = new Input();
+
+                    var list = xc.GetCSVariable<Glist>("params");
+                    Variable ret;
+                    if (list.Count == 0)
+                        ret = new Variable(await input.GetInput());
+                    else if (list.Count == 1)
+                        ret = new Variable(await input.GetInput(list[0].value.IGetCSValue().ToString(), ""));
+                    else if (list.Count == 2)
+                        ret = new Variable(await input.GetInput(list[0].value.IGetCSValue().ToString(), list[1].value.IGetCSValue().ToString()));
+                    else throw new Exceptions.RunException(Exceptions.EXID.参数错误);
+                    return ret;
                 }
             }
-            public class IO_Function_Tip : Function
+            public class IO_Function_Tip : AFunction
             {
                 public IO_Function_Tip()
                 {
-                    str_xcname = "tip";
+                    Istr_xcname = "tip";
                     IInformation = "[tip]:the text to be tipped to the user.\nusing this methord to tip user.";
 
                 }
-                public override object Run(Hashtable xc)
+                public async override Task<object> Run(Hashtable xc)
                 {
                     string text = Variable.GetTrueVariable<object>(xc, "tip").ToString();
-                    Thread thread = new Thread(new ParameterizedThreadStart(Show));
-                    thread.Start(text);
+                    await Task.Run(() =>
+                    {
+                        MessageBox.Show(text);
+                    });
                     return new Variable(0);
                 }
 
-                public void Show(object a)
-                {
-                    MessageBox.Show(a.ToString());
-                }
             }
         }
 

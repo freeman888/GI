@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GTWPF.GTWPFFunctions._function_IO"
         mc:Ignorable="d"
-        Title="Input" Height="200" Width="300" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Closed="Window_Closed">
+        Title="Input" Height="207" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closed="Window_Closed" Topmost="True">
     <Grid>
-        <TextBox x:Name="InputBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="" Margin="5"/>
-        <Button Content="OK" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Padding="10,1,10,1" Click="Button_Click"/>
+        <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20" FontSize="15" Name="Tips"/>
+        
+        <TextBox x:Name="InputBox" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="" Margin="5,0,5,20" Height="26" FontSize="18"/>
+        <Button Content="OK" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Padding="20,5,20,5" Click="Button_Click"/>
     </Grid>
 </Window>

@@ -28,7 +28,7 @@ namespace GTXAM.GasControl.Page
                 Text = text,
                 Order = ToolbarItemOrder.Secondary
             };
-            toolbar.Clicked += (s, e) =>
+            toolbar.Clicked += async (s, e) =>
             {
                 if (click_event != null)
                 {
@@ -41,7 +41,7 @@ namespace GTXAM.GasControl.Page
                         {
                             hashtable.Add(sss[0], new Variable(this));
                             hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
-                            Function.FuncStarter(function, hashtable, out Variable v);
+                            await Function.AsyncFuncStarter(function, hashtable);
                         }
                     }
                     else
@@ -53,7 +53,7 @@ namespace GTXAM.GasControl.Page
                         {
                             hashtable.Add(sss[0], new Variable(this));
                             hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
-                            Function.FuncStarter(function, hashtable, out Variable v);
+                            await Function.AsyncFuncStarter(function, hashtable);
                         }
                     }
                 }
@@ -64,6 +64,13 @@ namespace GTXAM.GasControl.Page
         public void SetContent(Xamarin.Forms.View control)
         {
             Content = control;
+        }
+
+        public bool Iisasync { get { return false; } set { } }
+
+        public Task<object> IAsyncRun(Hashtable xc)
+        {
+            throw new Exception();
         }
         #region
         string IFunction.Istr_xcname
