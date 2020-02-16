@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace GI
 {
@@ -14,6 +15,7 @@ namespace GI
                 h.Add("Thread.Start", new Thread_Function_Start());
                 h.Add("Thread.Sleep", new Thread_Function_Sleep());
                 h.Add("Thread.RunOnUI", new Thread_Function_RunOnUI());
+                h.Add("Task.Run", new Task_Function_TaskRun());
             }
 
             #region 开始
@@ -23,17 +25,23 @@ namespace GI
                 public Thread_Function_Start()
                 {
                     IInformation = "Start a new thread .When not in UI thread ,you cannot change the UI Control";
-                    str_xcname = "fun";
+                    str_xcname = "params";
                 }
                 public override object Run(Hashtable xc)
                 {
+                    var param = xc.GetCSVariable<Glist>("params");
+                    var fun = param[0].value;
+                    Variable[] variables = new Variable[param.Count - 1];
+                    for (int i = 1; i < param.Count; i++)
+                    {
+                        variables[i-1] = param[i];
+                    }
                     Thread thread = new Thread(new ThreadStart(() =>
                     {
-                        object fun = Variable.GetTrueVariable<object>(xc, "fun");
                         if(fun is IFunction)
-                            FuncStarter(fun as IFunction, Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables),out var v);
+                            _ = AsyncFuncStarter(fun as IFunction, Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables),variables);
                         else
-                            FuncStarter(fun.ToString(), Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables), out Variable v);
+                            _ = AsyncFuncStarter(fun.ToString(), Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables),variables);
                     }));
                     thread.Start();
                     return new Variable(thread);
@@ -61,7 +69,7 @@ namespace GI
                 public Thread_Function_RunOnUI()
                 {
                     IInformation = "run on ui thread";
-                    str_xcname = "fun";
+                    str_xcname = "params";
                 }
                 public override object Run(Hashtable xc)
                 {
@@ -70,7 +78,33 @@ namespace GI
                 }
                 
             }
+            
+            public class Task_Function_TaskRun:AFunction
+            {
+                public Task_Function_TaskRun()
+                {
+                    IInformation = "this is an async function.it will not block the current thread while you will wait the result";
+                    Istr_xcname = "params";
+                }
 
+                public async override Task<object> Run(Hashtable xc)
+                {
+                    var param = xc.GetCSVariable<Glist>("params");
+                    var fun = param[0].value;
+                    Variable[] variables = new Variable[param.Count - 1];
+                    for (int i = 1; i < param.Count; i++)
+                    {
+                        variables[i-1] = param[i];
+                    }
+                    return await Task.Run(async () =>
+                    {
+                        if (fun is IFunction)
+                           return await AsyncFuncStarter(fun as IFunction, Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables),variables);
+                        else
+                           return await AsyncFuncStarter(fun.ToString(), Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables),variables);
+                    });
+                }
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace GI
 {
@@ -95,8 +97,13 @@ time",
                         return new Variable(0);
                     }
                 });
+                h.Add("async", new Asyncfunc());
+                h.Add("await", new System_Function_Await());
+                h.Add("wait", new System_Function_Wait());
             }
             //注册结束
+            public class Asyncfunc:AFunction
+            { }
 
             #region 获取类型
             public class System_Function_Gettype : Function
@@ -144,8 +151,47 @@ time",
                 }
             }
             #endregion
+            public class System_Function_Await:AFunction
+            {
+                public System_Function_Await()
+                {
+                    Istr_xcname = "task";
+                    IInformation = "wait the task while not block the current thread";
+                }
 
-            
+                public async override Task<object> Run(Hashtable xc)
+                {
+                    
+                    try
+                    {
+                        var task = xc.GetCSVariable<Task<Variable>>("task");
+                        return(await task);
+                    }
+                    catch
+                    {
+                        throw new Exceptions.RunException(Exceptions.EXID.异步异常);
+                    }
+                }
+            }
+                
+            public class System_Function_Wait:Function
+            {
+                public System_Function_Wait()
+                {
+                    str_xcname = "task";
+                    IInformation = "block the current thread to wait the task done";
+                }
+                public override object Run(Hashtable xc)
+                {
+                    var res = xc.GetCSVariable<Task<Variable>>("task");
+                    res.Wait();
+                    Debug.WriteLine("done");
+                    return new Variable(0);
+                    //return xc.GetCSVariable<Task<Variable>>("task").Result;
+                }
+            }
         }
     }
+
+    
 }

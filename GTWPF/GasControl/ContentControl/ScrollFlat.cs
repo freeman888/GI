@@ -324,9 +324,9 @@ namespace GTWPF.GasControl.ContentControl
 
         void ISetter.ISetTogged(object value)
         {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,
-        #endregion
-
+            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "此控件没有 togged 事件");
+            #endregion
+        }
             #region 实现IType
             const string type = "scrollflat,function";
         public string IGetType()
@@ -337,6 +337,9 @@ namespace GTWPF.GasControl.ContentControl
         {
             return IGetType();
         }
+
+       
+
         static ScrollFlat()
         {
             GType.Sign("scrollflat");

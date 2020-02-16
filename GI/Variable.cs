@@ -5,6 +5,7 @@ using System.Xml;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace GI
 {
@@ -82,6 +83,14 @@ namespace GI
                 {
                     Variable var_func = await functionresulter.Run(basehashtable);
                     IFunction truefunction = var_func.value as IFunction;
+
+                    if(truefunction is Function.System_Head.Asyncfunc)
+                    {
+                        var a = childresulters[0].Run(basehashtable);
+                        Debug.Write(a);
+                        return new Variable( a);
+
+                    }
 
                     string xcname = truefunction.Istr_xcname;
 
@@ -232,8 +241,8 @@ namespace GI
                 value = new Gstring(o.ToString());
             else if (o is bool)
                 value = new Gbool(Convert.ToBoolean(o));
-            else if (o is Task)
-                value = new GTask(o as Task);
+            else if (o is Task<Variable>)
+                value = new GTask(o as Task<Variable>);
             else
                 value = new Gunknown(o);
         }

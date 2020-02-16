@@ -9,8 +9,8 @@ namespace GI
     {
         public const string type = "task";
 
-        public Task value;
-        public GTask(Task o)
+        public Task<Variable> value;
+        public GTask(Task<Variable> o)
         {
             value = o;
         }
@@ -27,7 +27,7 @@ namespace GI
 
         public override string ToString()
         {
-            return ToString();
+            return "task";
         }
     }
 }

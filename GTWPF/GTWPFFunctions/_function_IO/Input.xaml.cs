@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 
 namespace GTWPF.GTWPFFunctions._function_IO
 {
+   
     /// <summary>
     /// Input.xaml 的交互逻辑
     /// </summary>
@@ -35,6 +36,7 @@ namespace GTWPF.GTWPFFunctions._function_IO
             await Task.Run(() =>
                 {
                     while (!done) ;
+                    return 1;
                 });
             return content;
         }

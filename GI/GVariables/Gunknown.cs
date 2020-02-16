@@ -26,7 +26,7 @@ namespace GI
 
         public override string ToString()
         {
-            return ToString();
+            return value.ToString();
         }
     }
 }

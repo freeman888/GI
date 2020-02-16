@@ -14,13 +14,19 @@ namespace GTWPF
             //重写runonui 函数
             GI.Function.Thread_Head.Thread_Function_RunOnUI.runonui = (xc) =>
             {
-                MainWindow.MainApp.Dispatcher.Invoke(() =>
+                MainWindow.MainApp.Dispatcher.Invoke(async () =>
                 {
-                    object fun = Variable.GetTrueVariable<object>(xc, "fun");
+                    var param = xc.GetCSVariable<Glist>("params");
+                    var fun = param[0].value;
+                    Variable[] variables = new Variable[param.Count - 1];
+                    for (int i = 1; i < param.Count; i++)
+                    {
+                        variables[i-1] = param[i];
+                    }
                     if (fun is IFunction)
-                        Function.FuncStarter(fun as IFunction, Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables), out var v);
+                        await Function.AsyncFuncStarter(fun as IFunction, Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables),variables);
                     else
-                        Function.FuncStarter(fun.ToString(), Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables), out Variable v);
+                        await Function.AsyncFuncStarter(fun.ToString(), Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables),variables);
                     
                 });
                 return 0;

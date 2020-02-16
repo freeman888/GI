@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -122,7 +123,9 @@ namespace GI
                 return new Variable(0);
             }
         }
-        
+
+
+
         /// <summary>
         /// 函数启动器（安全）
         /// </summary>
@@ -130,11 +133,17 @@ namespace GI
         /// <param name="variable"></param>
         /// <param name="ret"></param>
         /// 
-        public static void FuncStarter(string funname, Hashtable variable,out Variable ret)
+        public static void FuncStarter(string funname, Hashtable variable, out Variable ret, params Variable[] variables)
         {
+
             try
             {
-                ret = (Variable) ((Gasoline.sarray_Sys_Variables[funname] as Variable).value as IFunction).IRun(variable);
+                IFunction function = ((Gasoline.sarray_Sys_Variables[funname] as Variable).value as IFunction);
+                if (variables.Length != 0)
+                {
+                    variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
+                }
+                ret = (Variable)function.IRun(variable);
             }
             catch (Exception ex)
             {
@@ -149,10 +158,14 @@ namespace GI
         /// <param name="function"></param>
         /// <param name="variable"></param>
         /// <param name="ret"></param>
-        public static void FuncStarter(IFunction function, Hashtable variable, out Variable ret)
+        public static void FuncStarter(IFunction function, Hashtable variable, out Variable ret,params Variable[] variables)
         {
             try
             {
+                if (variables.Length != 0)
+                {
+                    variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
+                }
                 ret = (Variable)function.IRun(variable);
             }
             catch (Exception ex)
@@ -168,12 +181,18 @@ namespace GI
         /// <param name="funname"></param>
         /// <param name="variable"></param>
         /// <returns></returns>
-        public  static Task<object>  AsyncFuncStarter(string funname, Hashtable variable)
+        public async static Task<object>  AsyncFuncStarter(string funname, Hashtable variable,params Variable[] variables)
         {
-            Task<object> ret;
+            IFunction function = ((Gasoline.sarray_Sys_Variables[funname] as Variable).value as IFunction);
+            
+            object ret;
             try
             {
-                ret =  ((Gasoline.sarray_Sys_Variables[funname] as Variable).value as IFunction).IAsyncRun(variable);
+                if (variables.Length != 0)
+                {
+                    variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
+                }
+                ret = await function.IAsyncRun(variable);
             }
             catch (Exception ex)
             {
@@ -189,12 +208,16 @@ namespace GI
         /// <param name="function"></param>
         /// <param name="variable"></param>
         /// <returns></returns>
-        public async static Task<object>  AsyncFuncStarter(IFunction function, Hashtable variable)
+        public async static Task<object>  AsyncFuncStarter(IFunction function, Hashtable variable,params Variable[] variables)
         {
             Variable ret;
             try
             {
-                  ret =   (Variable) await function.IAsyncRun(variable);
+                if (variables.Length != 0)
+                {
+                    variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
+                }
+                ret =   (Variable) await function.IAsyncRun(variable);
             }
             catch (Exception ex)
             {
@@ -204,6 +227,7 @@ namespace GI
             return ret;
         }
 
+         
 
         public const string type = "function";
 

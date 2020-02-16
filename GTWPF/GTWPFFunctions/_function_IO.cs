@@ -3,6 +3,7 @@ using GTWPF.GTWPFFunctions._function_IO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,7 +14,7 @@ namespace GTWPF
 {
     partial class GTWPFFunction
     {
-
+       
         public class IO_Head : Head
         {
             //注册
@@ -35,6 +36,7 @@ namespace GTWPF
                 public override object Run(Hashtable xc)
                 {
                     string text = ((Variable)xc["text"]).value.ToString();
+                    
                     MainWindow page = MainWindow.MainApp;
                     page.Dispatcher.Invoke(() =>
                     {
@@ -79,17 +81,33 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                 public async override Task<object> Run(Hashtable xc)
                 {
 
-                    var input = new Input();
 
                     var list = xc.GetCSVariable<Glist>("params");
-                    Variable ret;
-                    if (list.Count == 0)
-                        ret = new Variable(await input.GetInput());
-                    else if (list.Count == 1)
-                        ret = new Variable(await input.GetInput(list[0].value.IGetCSValue().ToString(), ""));
-                    else if (list.Count == 2)
-                        ret = new Variable(await input.GetInput(list[0].value.IGetCSValue().ToString(), list[1].value.IGetCSValue().ToString()));
-                    else throw new Exceptions.RunException(Exceptions.EXID.参数错误);
+                    Variable ret = new Variable(0);
+                    object done = false;
+                    try
+                    {
+                        await MainWindow.MainApp.Dispatcher.InvokeAsync(async () =>
+                        {
+                            var input = new Input();
+                            if (list.Count == 0)
+                                ret = new Variable(await input.GetInput());
+                            else if (list.Count == 1)
+                                ret = new Variable(await input.GetInput(list[0].value.IGetCSValue().ToString(), ""));
+                            else if (list.Count == 2)
+                                ret = new Variable(await input.GetInput(list[0].value.IGetCSValue().ToString(), list[1].value.IGetCSValue().ToString()));
+                            else throw new Exceptions.RunException(Exceptions.EXID.参数错误);
+                            done = true;
+                        });
+                        await Task.Run(() =>
+                        {
+                            while (!Convert.ToBoolean(done)) ;
+                        });
+                    }
+                    catch
+                    {
+                        throw new Exceptions.RunException(Exceptions.EXID.未知);
+                    }
                     return ret;
                 }
             }
