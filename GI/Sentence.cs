@@ -57,7 +57,7 @@ namespace GI
             return list;
         }
 
-        public async virtual    Task Run(Hashtable h) { }
+        public  virtual  Task Run(Hashtable h) { return null; }
         
         public string mycode = "";
 
@@ -75,7 +75,7 @@ namespace GI
                 refname = me.GetAttribute("varname");
 
             }
-            public  override Task Run(Hashtable htxc)
+            public async override Task Run(Hashtable htxc)
             {
                 try
                 {
@@ -85,7 +85,7 @@ namespace GI
                 {
                     throw new Exception(ex.Message+Environment.NewLine+"位置:"+mycode);
                 }
-                return Task.Run(() => { });
+                return ;
             }
         }
         public class New_Sentence_Return : Sentence

@@ -84,6 +84,7 @@ namespace GI
                     Variable var_func = await functionresulter.Run(basehashtable);
                     IFunction truefunction = var_func.value as IFunction;
 
+                    //判断使用async 关键字
                     if(truefunction is Function.System_Head.Asyncfunc)
                     {
                         var a = childresulters[0].Run(basehashtable);
