@@ -87,7 +87,7 @@ namespace GTXAM.GasControl.Control
 
         object IGetter.IGetMarin()
         {
-            string s = String.Format("{0},{0},{0},{0}", Margin.Left, Margin.Top, Margin.Right, Margin.Bottom);
+            string s = string.Format("{0},{0},{0},{0}", Margin.Left, Margin.Top, Margin.Right, Margin.Bottom);
             return s;
         }
 
