@@ -114,7 +114,7 @@ namespace GTXAM.GasControl.Control
 
         object IGetter.IGetPadding()
         {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 padding 属性");
+            return $"{Padding.Left},{Padding.Top},{Padding.Right},{Padding.Bottom}";
         }
 
         object IGetter.IGetBackgroundColor()
@@ -272,7 +272,13 @@ namespace GTXAM.GasControl.Control
 
         void ISetter.ISetPadding(object value)
         {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 padding 属性");
+            double a1, a2, a3, a4;
+            string[] vs = value.ToString().Split(',');
+            a1 = Convert.ToDouble(vs[0]);
+            a2 = Convert.ToDouble(vs[1]);
+            a3 = Convert.ToDouble(vs[2]);
+            a4 = Convert.ToDouble(vs[3]);
+            Padding = new Thickness(a1, a2, a3, a4);
         }
 
         void ISetter.ISetBackgroundColor(object value)

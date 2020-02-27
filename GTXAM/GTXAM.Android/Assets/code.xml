@@ -5,6 +5,7 @@
   <get value="Page" />
   <get value="Control" />
   <get value="String" />
+  <get value="System" />
   <deffun funname="Main" params="args" isref="False">
     <var_s varname="page" str="var page = Page.Creat(&quot;随机模拟计算PI（Gasoline异步实例）&quot;);" />
     <getres_s str="var page = Page.Creat(&quot;随机模拟计算PI（Gasoline异步实例）&quot;);">
@@ -100,17 +101,26 @@
     </usefun_s>
   </deffun>
   <deffun funname="Cacu" params="page,e" isref="False">
-    <var_s varname="jqd" str="var jqd = IO.Input(&quot;请输入计算精度&quot;,&quot;不要超过4位，不然你会以为程序没有运行&quot;);" />
-    <getres_s str="var jqd = IO.Input(&quot;请输入计算精度&quot;,&quot;不要超过4位，不然你会以为程序没有运行&quot;);">
+    <var_s varname="t1" str="var t1 = System.GetTime(&quot;time&quot;);" />
+    <getres_s str="var t1 = System.GetTime(&quot;time&quot;);">
+      <arg value="t1" con="var" />
+      <arg con="fun">
+        <fun>
+          <arg value="System.GetTime" con="var" />
+        </fun>
+        <params>
+          <arg value="time" con="str" />
+        </params>
+      </arg>
+    </getres_s>
+    <var_s varname="jqd" str="var jqd =IO.Input();" />
+    <getres_s str="var jqd =IO.Input();">
       <arg value="jqd" con="var" />
       <arg con="fun">
         <fun>
           <arg value="IO.Input" con="var" />
         </fun>
-        <params>
-          <arg value="请输入计算精度" con="str" />
-          <arg value="不要超过4位，不然你会以为程序没有运行" con="str" />
-        </params>
+        <params />
       </arg>
     </getres_s>
     <var_s varname="i" str="var i = 0;" />
@@ -295,6 +305,31 @@
         </run>
       </then>
     </if_s>
+    <usefun_s str="IO.Tip(System.GetTime(&quot;time&quot;)&amp;t1);">
+      <arg con="fun">
+        <fun>
+          <arg value="IO.Tip" con="var" />
+        </fun>
+        <params>
+          <arg con="fun">
+            <fun>
+              <arg value="String.Add" con="var" />
+            </fun>
+            <params>
+              <arg con="fun">
+                <fun>
+                  <arg value="System.GetTime" con="var" />
+                </fun>
+                <params>
+                  <arg value="time" con="str" />
+                </params>
+              </arg>
+              <arg value="t1" con="var" />
+            </params>
+          </arg>
+        </params>
+      </arg>
+    </usefun_s>
     <usefun_s str="IO.Tip(String.SubString(4*counter/s,0,jqd));">
       <arg con="fun">
         <fun>
