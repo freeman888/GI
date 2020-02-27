@@ -41,11 +41,11 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                     await Device.InvokeOnMainThreadAsync(async () =>
                     {
                         if (list.Count == 0)
-                            ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync("Input", ""));
+                            ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync("Input", "",initialValue:""));
                         else if (list.Count == 1)
-                            ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync(list[0].value.IGetCSValue().ToString(), ""));
+                            ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync(list[0].value.IGetCSValue().ToString(), "",initialValue:""));
                         else if (list.Count == 2)
-                            ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync(list[0].value.IGetCSValue().ToString(), list[1].value.IGetCSValue().ToString()));
+                            ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync(list[0].value.IGetCSValue().ToString(), list[1].value.IGetCSValue().ToString(),initialValue:""));
                         else throw new Exceptions.RunException(Exceptions.EXID.参数错误);
                     });
                     

@@ -28,6 +28,8 @@ namespace GTXAM
                             {"IO" ,new GTXAMFunctions.GTXAMFunction.IO_Head()},
                             {"Page",new GTXAMFunctions. GTXAMFunction.Page_Head()},
                             {"Control",new GTXAMFunctions.GTXAMFunction.Control_Head() },
+                            {"Alien",new GTXAMFunctions.GTXAMFunction.Alien_Head() }
+                        
 
                         };
                     GI.Gasoline.StartGas(res, GTXAM.GTXAMInfo.Codes);
