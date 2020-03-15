@@ -44,7 +44,7 @@
         </fun>
         <params>
           <arg value="text" con="str" />
-          <arg value="clickme!" con="str" />
+          <arg value="点点看!" con="str" />
         </params>
       </arg>
     </usefun_s>

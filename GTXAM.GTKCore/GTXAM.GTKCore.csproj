@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GtkSharp" Version="3.22.25.56" />
+    <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
+    <PackageReference Include="Xamarin.Forms.Platform.GTK" Version="4.5.0.356" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GI\GI.csproj" />
+    <ProjectReference Include="..\GTXAM\GTXAM\GTXAM.csproj" />
+  </ItemGroup>
+
+</Project>
