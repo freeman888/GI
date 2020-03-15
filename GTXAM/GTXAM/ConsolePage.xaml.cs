@@ -46,6 +46,7 @@ namespace GTXAM
         {
             Device.BeginInvokeOnMainThread(() =>
             {
+
                 OutputLabel.Text += str;
                 OutputScroll.ScrollToAsync(OutputLabel, ScrollToPosition.End, true);
             });
