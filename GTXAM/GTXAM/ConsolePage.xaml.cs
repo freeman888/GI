@@ -17,6 +17,7 @@ namespace GTXAM
         {
 
             InitializeComponent();
+            
             Task.Run(() =>
             {
                 Thread.Sleep(10);

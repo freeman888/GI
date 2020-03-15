@@ -9,6 +9,10 @@
   <get value="List" />
   <get value="Alien" />
   <deffun funname="Main" params="args" isref="False">
+    <getres_s str="open  = false;">
+      <arg value="open" con="var" />
+      <arg value="false" con="var" />
+    </getres_s>
     <var_s varname="page" str="var page = Page.Creat(&quot;page1&quot;);" />
     <getres_s str="var page = Page.Creat(&quot;page1&quot;);">
       <arg value="page" con="var" />
@@ -110,14 +114,47 @@
       </arg>
     </usefun_s>
   </deffun>
+  <var value="open" />
   <deffun funname="Click" params="page,e" isref="False">
-    <usefun_s str="Alien.FlashLight.Open();">
+    <if_s str="if(open):">
+      <then>
+        <express>
+          <arg value="open" con="var" />
+        </express>
+        <run>
+          <usefun_s str="Alien.FlashLight.Close();">
+            <arg con="fun">
+              <fun>
+                <arg value="Alien.FlashLight.Close" con="var" />
+              </fun>
+              <params />
+            </arg>
+          </usefun_s>
+        </run>
+      </then>
+      <else>
+        <run>
+          <usefun_s str="Alien.FlashLight.Open();">
+            <arg con="fun">
+              <fun>
+                <arg value="Alien.FlashLight.Open" con="var" />
+              </fun>
+              <params />
+            </arg>
+          </usefun_s>
+        </run>
+      </else>
+    </if_s>
+    <getres_s str="open = !open;">
+      <arg value="open" con="var" />
       <arg con="fun">
         <fun>
-          <arg value="Alien.FlashLight.Open" con="var" />
+          <arg value="Math.Not" con="var" />
         </fun>
-        <params />
+        <params>
+          <arg value="open" con="var" />
+        </params>
       </arg>
-    </usefun_s>
+    </getres_s>
   </deffun>
 </code>
