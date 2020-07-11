@@ -21,7 +21,7 @@ namespace GTWPF
         public static MainWindow MainApp;
         
     
-        
+        //432432
         public MainWindow()
         {
             InitializeComponent();
