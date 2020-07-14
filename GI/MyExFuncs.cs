@@ -30,7 +30,7 @@ namespace GI
         public static T GetCSVariableFromSpeType<T>(this Hashtable hashtable, string varname,string typename)
         {
             IOBJ io = ((Variable)hashtable[varname]).value;
-            return (T) io.IGetMember(typename).IGetCSValue();
+            return (T) (io.IGetMember(typename).value).IGetCSValue();
 
 
         }

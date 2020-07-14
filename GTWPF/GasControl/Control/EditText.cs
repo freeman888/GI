@@ -291,8 +291,8 @@ namespace GTWPF.GasControl.Control
         }
         #endregion
         #region
-        Dictionary<string, IOBJ> members = new Dictionary<string, IOBJ>();
-        public IOBJ IGetMember(string name)
+        Dictionary<string, Variable> members = new Dictionary<string, Variable>();
+        public Variable IGetMember(string name)
         {
             if (members.ContainsKey(name))
                 return members[name];
