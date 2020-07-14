@@ -17,13 +17,15 @@ namespace GI
         bool Iisreffunction { get; set; }
         string IInformation { get; set; }
         bool Iisasync { get; set; }
+
+        string poslib { get; set; }
     }
-    [Attribute.GasType("function")]
 
     
     public partial class Function:IFunction
     {
         //实现IFunction
+        public string poslib { get => "System"; set => throw new Exceptions.RunException(Exceptions.EXID.未知); }
         public object IRun(Hashtable xc)
         {
             return Run(xc);
@@ -82,15 +84,16 @@ namespace GI
         //以下为用户自定义函数
         public class New_User_Function : AFunction
         {
+            /// <summary>
+            /// 自己所在的lib
+            /// </summary>
             public Sentence[] sentences;
             public string name;
-            public New_User_Function(string fname, string fxc)
-            {
-                Istr_xcname = fxc; name = fname;
-            }
+            
 
-            public New_User_Function(XmlNode code)
+            public New_User_Function(XmlNode code,string poslib)
             {
+                this.poslib = poslib;
                 name = code.GetAttribute("funname");
                 Istr_xcname = code.GetAttribute("params");
                 Iisreffunction = Convert.ToBoolean(code.GetAttribute("isref"));
@@ -126,108 +129,135 @@ namespace GI
 
 
 
-        /// <summary>
-        /// 函数启动器（安全）
-        /// </summary>
-        /// <param name="funname"></param>
-        /// <param name="variable"></param>
-        /// <param name="ret"></param>
-        /// 
-        public static void FuncStarter(string funname, Hashtable variable, out Variable ret, params Variable[] variables)
-        {
+        ///// <summary>
+        ///// 函数启动器（安全）
+        ///// </summary>
+        ///// <param name="funname"></param>
+        ///// <param name="variable"></param>
+        ///// <param name="ret"></param>
+        ///// 
+        //public static void FuncStarter(string funname, Hashtable variable, out Variable ret, params Variable[] variables)
+        //{
 
-            try
-            {
-                IFunction function = ((Gasoline.sarray_Sys_Variables[funname] as Variable).value as IFunction);
-                if (variables.Length != 0)
-                {
-                    variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
-                }
-                ret = (Variable)function.IRun(variable);
-            }
-            catch (Exception ex)
-            {
-                ret = new Variable(0);
-                Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
-            }
-        }
+        //    try
+        //    {
+        //        IFunction function = ((Gasoline.sarray_Sys_Variables[funname] as Variable).value as IFunction);
+        //        if (variables.Length != 0)
+        //        {
+        //            variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
+        //        }
+        //        ret = (Variable)function.IRun(variable);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ret = new Variable(0);
+        //        Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
+        //    }
+        //}
 
-        /// <summary>
-        /// 函数直接启动器（安全）
-        /// </summary>
-        /// <param name="function"></param>
-        /// <param name="variable"></param>
-        /// <param name="ret"></param>
-        public static void FuncStarter(IFunction function, Hashtable variable, out Variable ret,params Variable[] variables)
-        {
-            try
-            {
-                if (variables.Length != 0)
-                {
-                    variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
-                }
-                ret = (Variable)function.IRun(variable);
-            }
-            catch (Exception ex)
-            {
-                ret = new Variable(0);
-                Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
-            }
-        }
+        ///// <summary>
+        ///// 函数直接启动器（安全）
+        ///// </summary>
+        ///// <param name="function"></param>
+        ///// <param name="variable"></param>
+        ///// <param name="ret"></param>
+        //public static void FuncStarter(IFunction function, Hashtable variable, out Variable ret,params Variable[] variables)
+        //{
+        //    try
+        //    {
+        //        if (variables.Length != 0)
+        //        {
+        //            variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
+        //        }
+        //        ret = (Variable)function.IRun(variable);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ret = new Variable(0);
+        //        Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
+        //    }
+        //}
 
-        /// <summary>
-        /// 异步函数启动 从函数名
-        /// </summary>
-        /// <param name="funname"></param>
-        /// <param name="variable"></param>
-        /// <returns></returns>
-        public async static Task<object>  AsyncFuncStarter(string funname, Hashtable variable,params Variable[] variables)
-        {
-            IFunction function = ((Gasoline.sarray_Sys_Variables[funname] as Variable).value as IFunction);
+        ///// <summary>
+        ///// 异步函数启动 从函数名
+        ///// </summary>
+        ///// <param name="funname"></param>
+        ///// <param name="variable"></param>
+        ///// <returns></returns>
+        //public async static Task<object>  AsyncFuncStarter(string funname, Hashtable variable,params Variable[] variables)
+        //{
+        //    IFunction function = ((Gasoline.sarray_Sys_Variables[funname] as Variable).value as IFunction);
             
-            object ret;
-            try
-            {
-                if (variables.Length != 0)
-                {
-                    variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
-                }
-                ret = await function.IAsyncRun(variable);
-            }
-            catch (Exception ex)
-            {
-                ret = new Task<object>(() => new Variable(0));
-                Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
-            }
-            return ret;
-        }
+        //    object ret;
+        //    try
+        //    {
+        //        if (variables.Length != 0)
+        //        {
+        //            variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
+        //        }
+        //        ret = await function.IAsyncRun(variable);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ret = new Task<object>(() => new Variable(0));
+        //        Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
+        //    }
+        //    return ret;
+        //}
 
-        /// <summary>
-        /// 异步函数启动 从函数
-        /// </summary>
-        /// <param name="function"></param>
-        /// <param name="variable"></param>
-        /// <returns></returns>
-        public async static Task<object>  AsyncFuncStarter(IFunction function, Hashtable variable,params Variable[] variables)
+        ///// <summary>
+        ///// 异步函数启动 从函数
+        ///// </summary>
+        ///// <param name="function"></param>
+        ///// <param name="variable"></param>
+        ///// <returns></returns>
+        //public async static Task<object>  AsyncFuncStarter(IFunction function, Hashtable variable,params Variable[] variables)
+        //{
+        //    Variable ret;
+        //    try
+        //    {
+        //        if (variables.Length != 0)
+        //        {
+        //            variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
+        //        }
+        //        ret =   (Variable) await function.IAsyncRun(variable);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ret = new Variable(0);
+        //        Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
+        //    }
+        //    return ret;
+        //}
+
+        public static void NewFuncStarter(IFunction function, out Variable ret, params Variable[] variables)
         {
-            Variable ret;
             try
             {
-                if (variables.Length != 0)
-                {
-                    variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
-                }
-                ret =   (Variable) await function.IAsyncRun(variable);
+                Hashtable variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables),function.poslib);
+                ret = (Variable)function.IRun(variable);
             }
-            catch (Exception ex)
+            catch
             {
-                ret = new Variable(0);
-                Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
+                throw new Exceptions.RunException(Exceptions.EXID.参数错误);
             }
-            return ret;
         }
 
-         
+        public async static Task<object> NewAsyncFuncStarter(IFunction function, params Variable[] variables)
+        {
+            try
+            {
+                Hashtable variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
+                return await function.IAsyncRun(variable);
+                
+            }
+            catch
+            {
+                throw new Exceptions.RunException(Exceptions.EXID.参数错误);
+            }
+        }
+
+
 
         public const string type = "function";
 

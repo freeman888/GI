@@ -50,6 +50,7 @@ namespace GI
         {
             throw new Exception();
         }
+        public string poslib { get => "System"; set => throw new Exceptions.RunException(Exceptions.EXID.未知); }
         #endregion
         #region 实现Ityoe
         static Glist()

@@ -105,14 +105,16 @@ namespace GI
             GType.Sign("ClassTemplate");
         }
         internal string classname, parentclassname;
+        public string poslib { get => "System"; set => throw new Exceptions.RunException(Exceptions.EXID.未知); }
         internal List<string> membernames = new List<string>();
         internal Dictionary<string,IFunction> memberfuncs = new Dictionary<string,IFunction>();
         internal IFunction ctor;
-        public GClassTemplate(string _type,string _parent = "") 
+        public GClassTemplate(string _type,string poslib,string _parent = "") 
             
         {
             classname = _type;
             parentclassname = _parent;
+            this.poslib = poslib;
         }
 
         /// <summary>
@@ -127,12 +129,12 @@ namespace GI
                     membernames.Add(i.GetAttribute("value"));
                 else if (i.Name == "memfun" && i.GetAttribute("funname") == "init")
                 {
-                    Function.New_User_Function new_User_Function = new Function.New_User_Function(i);
+                    Function.New_User_Function new_User_Function = new Function.New_User_Function(i,poslib);
                     ctor = new_User_Function;
                 }
                 else if (i.Name == "memfun")
                 {
-                    Function.New_User_Function new_User_Function = new Function.New_User_Function(i);
+                    Function.New_User_Function new_User_Function = new Function.New_User_Function(i,poslib);
                     memberfuncs.Add(i.GetAttribute("funname"), new_User_Function);
                 }
                 else throw new Exceptions.RunException(Exceptions.EXID.未知);

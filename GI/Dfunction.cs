@@ -15,6 +15,7 @@ namespace GI
             const string type = "function";
             public string str_xcname = "";
             public bool isreffunction = false;
+            public string poslib { get => "System"; set => throw new Exceptions.RunException(Exceptions.EXID.未知); }
             string IFunction.Istr_xcname { get => str_xcname; set => str_xcname = value; }
             bool IFunction.Iisreffunction { get => isreffunction; set => isreffunction = value; }
             public delegate object DRun(Hashtable xc);

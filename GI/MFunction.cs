@@ -35,7 +35,7 @@ namespace GI
                 return null;
             }
 
-
+            public string poslib { get => "System"; set => throw new Exceptions.RunException(Exceptions.EXID.未知); }
             public string IGetType()
             {
                 return function.IGetType();

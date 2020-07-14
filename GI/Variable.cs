@@ -111,11 +111,11 @@ namespace GI
 
                     if (truefunction.Iisreffunction)
                     {
-                        temphashtable = SetvariablesnameByRef(xcname, tempavariables);
+                        temphashtable = SetvariablesnameByRef(xcname, tempavariables,truefunction.poslib);
                     }
                     else
                     {
-                        temphashtable = Setvariablesname(xcname, tempavariables);
+                        temphashtable = Setvariablesname(xcname, tempavariables,truefunction.poslib);
                     }
                     if(truefunction.Iisasync)
                     {
@@ -135,10 +135,10 @@ namespace GI
             }
 
 
-            public static Hashtable Setvariablesname(string xcname, ArrayList tempvariables)
+            public static Hashtable Setvariablesname(string xcname, ArrayList tempvariables,string poslib)
             {
 
-                var hashtable = GetOwnVariables(Gasoline.sarray_Sys_Variables);
+                var hashtable = GetOwnVariables(poslib);
                 ArrayList newvariables = new ArrayList();
                 foreach (Variable v in tempvariables)
                 {
@@ -167,10 +167,10 @@ namespace GI
 
             }
 
-            public static Hashtable SetvariablesnameByRef(string xcname, ArrayList tempvariables)
+            public static Hashtable SetvariablesnameByRef(string xcname, ArrayList tempvariables,string poslib)
             {
 
-                var hashtable = GetOwnVariables(Gasoline.sarray_Sys_Variables);
+                var hashtable = GetOwnVariables(poslib);
 
                 if (xcname == "")
                 {
@@ -201,16 +201,23 @@ namespace GI
         /// </summary>
         /// <param name="basehashtable">原变量表</param>
         /// <returns>新变量表</returns>
-        public static Hashtable GetOwnVariables(Hashtable basehashtable)
+        public static Hashtable GetOwnVariables(string poslib)
         {
+            var basehashtable = Gasoline.libs[poslib];
             var hashtable = new Hashtable();
-            foreach (DictionaryEntry inbase in basehashtable)
-            {
+            foreach (var inbase in basehashtable.myThing)
                 hashtable.Add(inbase.Key, inbase.Value);
-            }
+            foreach (var inbase in basehashtable.otherThing)
+                hashtable.Add(inbase.Key, inbase.Value);
             return hashtable;
         }
         
+        public static Hashtable GetOwnVariables(Hashtable h)
+        {
+            var hash = new Hashtable();
+            foreach(var i in h)
+                hash.Add(i.)
+        }
         
         
 

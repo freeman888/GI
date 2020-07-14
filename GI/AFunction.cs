@@ -20,6 +20,7 @@ namespace GI
                 Istr_xcname = "";
                 IInformation = "Async Function\n";
             }
+            public string poslib { get => "System"; set => throw new Exceptions.RunException(Exceptions.EXID.未知); }
             public string Istr_xcname { get ; set ; }
             public bool Iisreffunction { get ; set ; }
             public string IInformation { get ; set; }
