@@ -9,7 +9,7 @@ namespace GI
 {
 
     [Attribute.GasType("function")]
-    public interface IFunction:IType
+    public interface IFunction:IOBJ
     {
         object IRun(Hashtable xc);
         Task<object> IAsyncRun(Hashtable xc);
@@ -239,6 +239,20 @@ namespace GI
         public override string ToString()
         {
             return IGetType();
+        }
+
+
+        Dictionary<string, Variable> members = new Dictionary<string, Variable>();
+        public Variable IGetMember(string name)
+        {
+            if (members.ContainsKey(name))
+                return members[name];
+            else return null;
+        }
+
+        public IOBJ IGetParent()
+        {
+            return null;
         }
     }
 }

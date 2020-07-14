@@ -3,6 +3,7 @@ using System.Collections;
 using System.Xml;
 using System.Collections.Generic;
 using System.Threading;
+using System.Diagnostics.Tracing;
 
 namespace GI
 {
@@ -13,7 +14,8 @@ namespace GI
         public static Hashtable sarray_Sys_Variables = new Hashtable();
         public static Dictionary<string, Function.Head> sHeads = new Dictionary<string, Function.Head>();
 
-
+        public static Dictionary<string, Lib> libs = new Dictionary<string, Lib>();
+        public static Dictionary<string, Lib> heads = new Dictionary<string, Lib>();
 
 
         
@@ -22,7 +24,7 @@ namespace GI
 
         public async static void StartGas(Dictionary<string, Function.Head> heads, XmlDocument codes)
         {
-            Del.Delate();
+            //Del.Delate();
             try
             {
                 // 1 添加自己的Head
@@ -33,6 +35,7 @@ namespace GI
                 sHeads.Add("File", new Function.File_Head());
                 sHeads.Add("String", new Function.String_Head());
                 sHeads.Add("List", new Function.List_Head());
+
 
 
                 // 2 添加其他的Head
@@ -64,6 +67,11 @@ namespace GI
             ht.Add(str_name, new Variable((arrayList)));
             await Function.AsyncFuncStarter("Main", ht);
             
+
+        }
+
+        public async static void StartGas(Dictionary<string,Lib> heads,XmlDocument codes)
+        {
 
         }
 
@@ -99,6 +107,40 @@ namespace GI
                 }
 
             }
+
+            foreach(XmlNode i in root.ChildNodes)
+            {
+                var code = i;
+                string name = code.Name;
+                if (name == "lib")
+                {
+                    string libname = code.GetAttribute("name");
+                    if (!libs.ContainsKey(libname))
+                        libs.Add(libname, new Lib());
+                    foreach(XmlNode libcontent in code.ChildNodes)
+                    {
+                        if (libcontent.Name == "get")
+                        {
+                            libs[libname].waittoadd.Add(libcontent.GetAttribute("value"));
+
+                        }
+                        else if (libcontent.Name == "cls")
+                        {
+                            var x_cls = libcontent;
+                            GClassTemplate gClassTemplate = new GClassTemplate(x_cls.GetAttribute("name"));
+                            gClassTemplate.LoadContent(x_cls.ChildNodes);
+                        }
+                        else if (libcontent.Name == "deffun")
+                        {
+
+                        }
+                        else throw new Exceptions.RunException(Exceptions.EXID.未知);
+
+                    }
+                }
+                else throw new Exceptions.RunException(Exceptions.EXID.未知);
+            }
+
 
             return functions;
 

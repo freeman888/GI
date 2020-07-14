@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GI
 {
-    public class Gnumber : IType,IConvertible
+    public class Gnumber : IOBJ,IConvertible
     {
         public const string type = "number";
         double value;
@@ -16,7 +16,7 @@ namespace GI
         {
             value = v;
         }
-        string IType.IGetType()
+        string IOBJ.IGetType()
         {
             return type;
         }
@@ -112,6 +112,18 @@ namespace GI
         public ulong ToUInt64(IFormatProvider provider)
         {
             return ((IConvertible)value).ToUInt64(provider);
+        }
+        Dictionary<string, Variable> members = new Dictionary<string, Variable>();
+        public Variable IGetMember(string name)
+        {
+            if (members.ContainsKey(name))
+                return members[name];
+            else return null;
+        }
+
+        public IOBJ IGetParent()
+        {
+            return null;
         }
     }
 }

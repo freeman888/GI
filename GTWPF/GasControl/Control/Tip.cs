@@ -285,6 +285,20 @@ namespace GTWPF.GasControl.Control
             GType.Sign("tip");
         }
         #endregion
+        #region
+        Dictionary<string, IOBJ> members = new Dictionary<string, IOBJ>();
+        public IOBJ IGetMember(string name)
+        {
+            if (members.ContainsKey(name))
+                return members[name];
+            else return null;
+        }
 
+        public IOBJ IGetParent()
+        {
+            return null;
+        }
+
+        #endregion
     }
 }

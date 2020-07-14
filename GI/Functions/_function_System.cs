@@ -116,7 +116,7 @@ time",
                 public override object Run(Hashtable xc)
                 {
                     object obj = (xc["variable"] as Variable).value;
-                    return new Variable((obj as IType).IGetType());
+                    return new Variable((obj as IOBJ).IGetType());
                 }
             }
             #endregion

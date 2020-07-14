@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GI
 {
-    public class Gbool:IType,IConvertible
+    public class Gbool:IOBJ,IConvertible
     {
         public const string type = "bool";
         bool value;
@@ -114,6 +114,19 @@ namespace GI
         public ulong ToUInt64(IFormatProvider provider)
         {
             return ((IConvertible)value).ToUInt64(provider);
+        }
+
+        Dictionary<string, Variable> members = new Dictionary<string, Variable>();
+        public Variable IGetMember(string name)
+        {
+            if (members.ContainsKey(name))
+                return members[name];
+            else return null;
+        }
+
+        public IOBJ IGetParent()
+        {
+            return null;
         }
     }
 }

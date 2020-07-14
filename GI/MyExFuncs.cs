@@ -21,8 +21,18 @@ namespace GI
 
         public static T GetCSVariable<T>(this Hashtable hashtable,string varname)
         {
-            IType io = ((Variable)hashtable[varname]).value;
+            IOBJ io = ((Variable)hashtable[varname]).value;
             return (T)io.IGetCSValue();
+
+
+        }
+
+        public static T GetCSVariableFromSpeType<T>(this Hashtable hashtable, string varname,string typename)
+        {
+            IOBJ io = ((Variable)hashtable[varname]).value;
+            return (T) io.IGetMember(typename).IGetCSValue();
+
+
         }
     }
-}
+}  

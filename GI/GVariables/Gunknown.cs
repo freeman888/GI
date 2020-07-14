@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GI
 {
-    class Gunknown : IType
+    class Gunknown : IOBJ
     {
         public const string type = "unknown";
 
@@ -27,6 +27,17 @@ namespace GI
         public override string ToString()
         {
             return value.ToString();
+        }
+        Dictionary<string, Variable> members = new Dictionary<string, Variable>();
+        public Variable IGetMember(string name)
+        {
+            if (members.ContainsKey(name))
+                return members[name];
+            else return null;
+        }
+        public IOBJ IGetParent()
+        {
+            return null;
         }
     }
 }

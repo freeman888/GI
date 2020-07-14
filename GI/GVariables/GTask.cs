@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GI
 {
-    class GTask :  IType
+    class GTask :  IOBJ
     {
         public const string type = "task";
 
@@ -28,6 +28,18 @@ namespace GI
         public override string ToString()
         {
             return "task";
+        }
+        Dictionary<string, Variable> members = new Dictionary<string, Variable>();
+        public Variable IGetMember(string name)
+        {
+            if (members.ContainsKey(name))
+                return members[name];
+            else return null;
+        }
+
+        public IOBJ IGetParent()
+        {
+            return null;
         }
     }
 }

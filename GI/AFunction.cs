@@ -50,7 +50,18 @@ namespace GI
                 return null;
             }
 
-            
+            Dictionary<string, Variable> members = new Dictionary<string, Variable>();
+            public Variable IGetMember(string name)
+            {
+                if (members.ContainsKey(name))
+                    return members[name];
+                else return null;
+            }
+
+            public IOBJ IGetParent()
+            {
+                return null;
+            }
 
         }
     }

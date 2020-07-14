@@ -7,7 +7,7 @@ using static GI.Function;
 
 namespace GI
 {
-    public class Glist : List<Variable>,IType,IFunction
+    public class Glist : List<Variable>,IOBJ,IFunction
     {
         const string type = "list,function";
         #region
@@ -69,6 +69,18 @@ namespace GI
             return IGetType();
         }
         #endregion
+        Dictionary<string, Variable> members = new Dictionary<string, Variable>();
+        public Variable IGetMember(string name)
+        {
+            if (members.ContainsKey(name))
+                return members[name];
+            else return null;
+        }
+       
 
+        public IOBJ IGetParent()
+        {
+            return null;
+        }
     }
 }

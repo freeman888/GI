@@ -27,7 +27,8 @@ namespace GI
             Resulter[] childresulters;
             Resulter functionresulter;
             string  ret_variablename;
-            
+
+            Resulter memfrom;string memname;
 
             /// <summary>
             /// 构造Resulter 从Xml
@@ -69,6 +70,12 @@ namespace GI
                     }
                     childresulters = list.ToArray();
                     condition = 3;
+                }
+                else if(con == "mem")
+                {
+                    memfrom = new Resulter(me.FirstChild);
+                    memname = me.GetAttribute("value");
+                    condition = 4;
                 }
             }
             public async Task<Variable> Run(Hashtable basehashtable)
@@ -112,9 +119,14 @@ namespace GI
                     }
                     if(truefunction.Iisasync)
                     {
-                        return (Variable) await (truefunction as IFunction).IAsyncRun(temphashtable);
+                        return (Variable) await truefunction.IAsyncRun(temphashtable);
                     }
-                    return (Variable)(truefunction as IFunction).IRun(temphashtable);
+                    return (Variable)truefunction.IRun(temphashtable);
+                }
+                else if(condition == 4)
+                {
+                    Variable from = await memfrom.Run(basehashtable);
+                    return from.value.IGetMember(memname);
                 }
                 else
                 {
@@ -209,7 +221,7 @@ namespace GI
             return t;
         }
 
-        public Variable(IType o)
+        public Variable(IOBJ o)
         {
             value = o;
         }
@@ -232,8 +244,8 @@ namespace GI
         public Variable(object o)
         {
 
-            if (o is IType)
-                value = o as IType;
+            if (o is IOBJ)
+                value = o as IOBJ;
             else if (o is int)
                 value = new Gnumber(Convert.ToDouble(o));
             else if (o is double)
@@ -250,9 +262,9 @@ namespace GI
 
         public bool isconst = false;
 
-        private IType m_value;
+        private IOBJ m_value;
 
-        public IType value
+        public IOBJ value
         {
             get
             {

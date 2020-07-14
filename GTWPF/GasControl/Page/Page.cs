@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -156,6 +157,20 @@ namespace GTWPF.GasControl.Page
             GType.Sign("page");
         }
         #endregion
+        #region
+        Dictionary<string, IOBJ> members = new Dictionary<string, IOBJ>();
+        public IOBJ IGetMember(string name)
+        {
+            if (members.ContainsKey(name))
+                return members[name];
+            else return null;
+        }
 
+        public IOBJ IGetParent()
+        {
+            return null;
+        }
+
+        #endregion
     }
 }
