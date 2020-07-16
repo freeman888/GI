@@ -79,6 +79,9 @@ namespace GI
             libs.Add("System", new System_Lib());
             libs.Add("String",new String_Lib());
             libs.Add("Math", new Math_Lib());
+            libs.Add("List", new List_Lib());
+            libs.Add("Socket", new Socket_Lib());
+            libs.Add("Thread", new Thread_Lib());
             //2加载平台Lib
             foreach (var i in heads)
                 libs.Add(i.Key, i.Value);

@@ -14,27 +14,32 @@ namespace GI
         {
             GType.Sign(type);
         }
+
+        IFunction find = new String_Function_Find();
+        IFunction split = new String_Function_Find();
+        IFunction sub = new String_Function_SubString();
+        IFunction replace = new DFunction
+        {
+            IInformation = "replace the old string with the new in the str",
+            str_xcname = "old,new",
+            dRun = (xc) =>
+            {
+                var str = xc.GetCSVariable<object>("this").ToString();
+                var old = xc.GetCSVariable<object>("old").ToString();
+                var _new = xc.GetCSVariable<object>("new").ToString();
+                return new Variable(str.Replace(old, _new));
+            }
+        };
         public Gstring(string v)
         {
             value = v;
             members = new Dictionary<string, Variable>
             {
 
-                    {"Find",new Variable(new MFunction( new String_Function_Find(),this) )},
-                    {"Split",new Variable(new MFunction( new String_Function_Split(),this) )},
-                    {"SubString",new Variable(new MFunction( new String_Function_SubString(),this)) },
-                    {"Replace",new Variable(new MFunction( new DFunction
-                {
-                    IInformation = "replace the old string with the new in the str",
-                    str_xcname = "old,new",
-                    dRun = (xc) =>
-{
-    var str = xc.GetCSVariable<object>("this").ToString();
-    var old = xc.GetCSVariable<object>("old").ToString();
-    var _new = xc.GetCSVariable<object>("new").ToString();
-    return new Variable(str.Replace(old, _new));
-}
-                },this)) }
+                    {"Find",new Variable(new MFunction( find,this) )},
+                    {"Split",new Variable(new MFunction( split,this) )},
+                    {"SubString",new Variable(new MFunction(sub,this)) },
+                    {"Replace",new Variable(new MFunction( replace,this)) }
 
             };
 

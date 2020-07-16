@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Collections;
+using System.Diagnostics;
 
 namespace GI
 {
@@ -30,7 +31,19 @@ namespace GI
         public static T GetCSVariableFromSpeType<T>(this Hashtable hashtable, string varname,string typename)
         {
             IOBJ io = ((Variable)hashtable[varname]).value;
-            return (T) (io.IGetMember(typename).value).IGetCSValue();
+            //Debug.Write(io.IGetType());
+            while(io.IGetType() != typename)
+            {
+                if (io.IGetType() == "")
+                    throw new Exceptions.RunException(Exceptions.EXID.未知, "找不到该名称的真实对象");
+                else
+                    if(io !=null) io = io.IGetParent();
+                    else throw new Exceptions.RunException(Exceptions.EXID.未知, "找不到该名称的真实对象");
+                
+
+            }
+            return (T) io.IGetCSValue();
+
 
 
         }

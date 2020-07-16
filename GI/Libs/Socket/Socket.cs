@@ -1,23 +1,25 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
 
 namespace GI
 {
-    partial class Function
+    partial class Lib
     {
-        public class Socket_Head:Head
+        public class Socket_Lib : ILib
         {
-            //注册
-            public override void AddFunctions(System.Collections.Generic.Dictionary<string, IFunction> h)
+            public Socket_Lib()
             {
-                h.Add("Socket.HttpGet", new Socket_Function_HttpGet());
-                h.Add("Socket.HttpPost", new Socket_Function_HttpPost());
-                h.Add("Socket.HttpDownload", new Socket_Function_HttpDownload());
-
+                myThing.Add("Socket.HttpGet",new Variable( new Socket_Function_HttpGet()));
+                myThing.Add("Socket.HttpPost",new Variable( new Socket_Function_HttpPost()));
+                
             }
-            public class Socket_Function_HttpGet:Function
+
+
+            public class Socket_Function_HttpGet : Function
             {
                 public Socket_Function_HttpGet()
                 {
@@ -32,14 +34,14 @@ namespace GI
                     return new Variable(res);
                 }
 
-                public static  string HttpGet(string Url, string postDataStr)
+                public static string HttpGet(string Url, string postDataStr)
                 {
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url + (postDataStr == "" ? "" : "?") + postDataStr);
                     request.Method = "GET";
                     request.ContentType = "text/html;charset=UTF-8";
-                    
-                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    
+
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
                     Stream myResponseStream = response.GetResponseStream();
                     StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
                     string retString = myStreamReader.ReadToEnd();
@@ -64,7 +66,7 @@ namespace GI
                     return new Variable(res);
                 }
 
-                private static  string HttpPost(string Url, string postDataStr)
+                private static string HttpPost(string Url, string postDataStr)
                 {
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
                     request.Method = "POST";
@@ -89,52 +91,12 @@ namespace GI
                 }
             }
 
-            public class Socket_Function_HttpDownload : Function
-            {
+            #region
+            public Dictionary<string, Variable> myThing { get; set; } = new Dictionary<string, Variable>();
+            public Dictionary<string, Variable> otherThing { get; set; } = new Dictionary<string, Variable>();
 
-                public Socket_Function_HttpDownload()
-                {
-                    IInformation = "get the file fromurl and save .";
-                    str_xcname = "url,file";
-                }
-                public override object Run(Hashtable xc)
-                {
-                    string url = Variable.GetTrueVariable<object>(xc, "url").ToString();
-                    string param = Variable.GetTrueVariable<object>(xc, "file").ToString();
-                    HttpDownloadFile(url, param);
-                    return new Variable(0);
-                }
-                /// <summary>
-                /// Http下载文件
-                /// </summary>
-                public static string HttpDownloadFile(string url, string path)
-                {
-                    // 设置参数
-                    HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-
-                    //发送请求并获取相应回应数据
-                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                    //直到request.GetResponse()程序才开始向目标网页发送Post请求
-                    Stream responseStream = response.GetResponseStream();
-
-                    //创建本地文件写入流
-                    Stream stream = new FileStream(path, FileMode.OpenOrCreate);
-
-                    byte[] bArr = new byte[1024];
-                    int size = responseStream.Read(bArr, 0, bArr.Length);
-                    while (size > 0)
-                    {
-                        stream.Write(bArr, 0, size);
-                        size = responseStream.Read(bArr, 0, bArr.Length);
-                    }
-                    stream.Close();
-                    responseStream.Close();
-                    return path;
-                }
-            }
+            public List<string> waittoadd { get; set; } = new List<string>();
+            #endregion
         }
-        
     }
-
-    
 }
