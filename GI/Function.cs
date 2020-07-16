@@ -25,7 +25,7 @@ namespace GI
     public partial class Function:IFunction
     {
         //实现IFunction
-        public string poslib { get => "System"; set => throw new Exceptions.RunException(Exceptions.EXID.未知); }
+        public string poslib { get ; set ; }
         public object IRun(Hashtable xc)
         {
             return Run(xc);

@@ -92,7 +92,7 @@ namespace GI
                     IFunction truefunction = var_func.value as IFunction;
 
                     //判断使用async 关键字
-                    if(truefunction is Function.System_Head.Asyncfunc)
+                    if(truefunction is Lib.System_Lib.Asyncfunc)
                     {
                         var a = childresulters[0].Run(basehashtable);
                         Debug.Write(a);
@@ -135,15 +135,12 @@ namespace GI
             }
 
 
-            public static Hashtable Setvariablesname(string xcname, ArrayList tempvariables,string poslib)
+            public static Hashtable Setvariablesname(string xcname, ArrayList newvariables,string poslib)
             {
 
+                
                 var hashtable = GetOwnVariables(poslib);
-                ArrayList newvariables = new ArrayList();
-                foreach (Variable v in tempvariables)
-                {
-                    newvariables.Add(new Variable(v.value));
-                }
+                
                 if (xcname.Replace(" ","") == "")
                 {
                     return hashtable;
@@ -157,7 +154,7 @@ namespace GI
                     return hashtable;
                 }
                 string[] xc_names = xcname.Split(',');
-                if (xc_names.Length != tempvariables.Count)
+                if (xc_names.Length != newvariables.Count)
                     throw new Exceptions.RunException(Exceptions.EXID.参数错误,"参数传递错误");
                 for (int i = 0; i < xc_names.Length; i++)
                 {
@@ -203,7 +200,12 @@ namespace GI
         /// <returns>新变量表</returns>
         public static Hashtable GetOwnVariables(string poslib)
         {
+            if (string.IsNullOrEmpty(poslib))
+                return new Hashtable { { "true", new Variable(true) }, { "false", new Variable(false) } };
+            
+            
             var basehashtable = Gasoline.libs[poslib];
+
             var hashtable = new Hashtable();
             foreach (var inbase in basehashtable.myThing)
                 hashtable.Add(inbase.Key, inbase.Value);
@@ -211,17 +213,20 @@ namespace GI
                 hashtable.Add(inbase.Key, inbase.Value);
             return hashtable;
         }
-        
-        public static Hashtable GetOwnVariables(Hashtable h)
-        {
-            var hash = new Hashtable();
-            foreach(var i in h)
-                hash.Add(i.)
-        }
-        
-        
 
-      
+        public static Hashtable GetOwnVariables(Hashtable basehashtable)
+        {
+            var hashtable = new Hashtable();
+            foreach (DictionaryEntry inbase in basehashtable)
+            {
+                hashtable.Add(inbase.Key, inbase.Value);
+            }
+            return hashtable;
+        }
+
+
+
+
         public static T GetTrueVariable<T>(Hashtable oldhs, string variablename)
         {
             T t = (T)((Variable)oldhs[variablename]).value;

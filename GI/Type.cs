@@ -82,7 +82,6 @@ namespace GI
         internal IFunction ctor;
         internal IOBJ parent = null;
 
-       
 
         public GClass(string type, string parent,Hashtable xc)
         {
@@ -105,16 +104,25 @@ namespace GI
             GType.Sign("ClassTemplate");
         }
         internal string classname, parentclassname;
-        public string poslib { get => "System"; set => throw new Exceptions.RunException(Exceptions.EXID.未知); }
+        public string poslib { get => "System"; set { } }
+        private string targetposlib = "";
         internal List<string> membernames = new List<string>();
         internal Dictionary<string,IFunction> memberfuncs = new Dictionary<string,IFunction>();
         internal IFunction ctor;
-        public GClassTemplate(string _type,string poslib,string _parent = "") 
-            
+
+        internal Func<Hashtable, IOBJ> csctor;
+        internal string csstr_xc = "";
+        public GClassTemplate(string _type,string poslib,string _parent = "")  
         {
             classname = _type;
             parentclassname = _parent;
-            this.poslib = poslib;
+            targetposlib = poslib;
+            if (csstr_xc != "")
+                Istr_xcname = csstr_xc;
+            else if (ctor != null)
+                Istr_xcname = ctor.Istr_xcname;
+            else
+                Istr_xcname = "";
         }
 
         /// <summary>
@@ -129,13 +137,15 @@ namespace GI
                     membernames.Add(i.GetAttribute("value"));
                 else if (i.Name == "memfun" && i.GetAttribute("funname") == "init")
                 {
-                    Function.New_User_Function new_User_Function = new Function.New_User_Function(i,poslib);
+                    Function.New_User_Function new_User_Function = new Function.New_User_Function(i,targetposlib);
                     ctor = new_User_Function;
                 }
                 else if (i.Name == "memfun")
                 {
-                    Function.New_User_Function new_User_Function = new Function.New_User_Function(i,poslib);
+                    Function.New_User_Function new_User_Function = new Function.New_User_Function(i,targetposlib);
                     memberfuncs.Add(i.GetAttribute("funname"), new_User_Function);
+                    ctor = new Function.DFunction { poslib = targetposlib, dRun = (x) => new Variable(0), IInformation = "instruction function", Iisasync = false, isreffunction = false, str_xcname = "" };
+
                 }
                 else throw new Exceptions.RunException(Exceptions.EXID.未知);
             }
@@ -151,10 +161,7 @@ namespace GI
             return new Variable(CreatFromClassTemplate(xc));
         }
 
-        /// <summary>
-        /// C#原生类请实现该委托
-        /// </summary>
-        internal Func<Hashtable, IOBJ> csctor = null;
+        
 
         /// <summary>
         /// 注意，这个xc是已经处理过的xc,应该有构造函数的参数,不含对象本身
@@ -163,11 +170,7 @@ namespace GI
         /// <returns></returns>
         public IOBJ CreatFromClassTemplate(Hashtable xc)
         {
-            if (csctor != null)
-            {
-                return csctor.Invoke(xc);
-            }
-            else
+            if (csstr_xc == "")
             {
                 IOBJ parent;
                 if (!string.IsNullOrEmpty(parentclassname))
@@ -175,17 +178,22 @@ namespace GI
                 GClass gClass = new GClass(classname, parentclassname, xc);
                 gClass.ctor = this.ctor;
                 foreach (var i in membernames) gClass.members.Add(i, new Variable(0));
-                foreach (var i in memberfuncs) gClass.members.Add(i.Key, new Variable(new Function.MFunction(i.Value,gClass)));
+                foreach (var i in memberfuncs) gClass.members.Add(i.Key, new Variable(new Function.MFunction(i.Value, gClass)));
                 xc.Add("this", new Variable(gClass));
                 ctor.IRun(xc);
                 return gClass;
             }
+            else
+            {
+
+                return csctor.Invoke(xc);
+            }
         }
 
         #region
-        public string Istr_xcname { get => ctor.Istr_xcname; set => ctor.Istr_xcname = value; }
+        public string Istr_xcname { get; set; }
         public bool Iisreffunction { get => ctor.Iisreffunction; set => ctor.Iisreffunction = value; }
-        public string IInformation { get => ctor.IInformation; set => ctor.IInformation = value; }
+        public string IInformation { get; set; }
         public bool Iisasync { get => ctor.Iisasync; set => ctor.Iisasync = value; }
 
         public Task<object> IAsyncRun(Hashtable xc)

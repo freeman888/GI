@@ -9,6 +9,10 @@ namespace GI
 {
     public class Glist : List<Variable>,IOBJ,IFunction
     {
+        public Glist()
+        {
+
+        }
         const string type = "list,function";
         #region
         public string Istr_xcname
@@ -50,9 +54,9 @@ namespace GI
         {
             throw new Exception();
         }
-        public string poslib { get => "System"; set => throw new Exceptions.RunException(Exceptions.EXID.未知); }
+        public string poslib { get ; set ; }
         #endregion
-        #region 实现Ityoe
+        #region 实现Itype
         static Glist()
         {
             GType.Sign("list");

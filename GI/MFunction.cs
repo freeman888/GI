@@ -16,6 +16,7 @@ namespace GI
             {
                 this.function = function;
                 this.self = self;
+                poslib = function.poslib;
             }
 
 
@@ -35,7 +36,7 @@ namespace GI
                 return null;
             }
 
-            public string poslib { get => "System"; set => throw new Exceptions.RunException(Exceptions.EXID.未知); }
+            public string poslib { get ; set ; }
             public string IGetType()
             {
                 return function.IGetType();

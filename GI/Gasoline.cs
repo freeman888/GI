@@ -75,15 +75,23 @@ namespace GI
         public async static void StartGas(Dictionary<string,UserLib> heads,XmlDocument codes)
         {
             //1加载所有通用Lib
-            libs.Add("IO", new UserLib.IO_Lib());
-
+            libs.Add("IO", new IO_Lib());
+            libs.Add("System", new System_Lib());
+            libs.Add("String",new String_Lib());
+            libs.Add("Math", new Math_Lib());
             //2加载平台Lib
+            foreach (var i in heads)
+                libs.Add(i.Key, i.Value);
+
+            //加载用户代码
+            Getfunandvar(codes);
 
             //3加载库依赖
             foreach(var lib in libs)
             {
                 foreach(string s_delib in lib.Value.waittoadd)
                 {
+                    
                     var delib = libs[s_delib];
                     foreach (var i in delib.myThing)
                         lib.Value.otherThing.Add(i.Key, i.Value);
@@ -100,6 +108,7 @@ namespace GI
                 {
                     if(libmems.Key == "Main")
                     {
+                        var res = libmems.Value.value.IGetCSValue();
                         mainfunc = libmems.Value.value.IGetCSValue() as IFunction;
                     }
                 }
@@ -128,9 +137,8 @@ namespace GI
             //await Function.AsyncFuncStarter("Main", ht);
         }
 
-        static Dictionary<string, IFunction> Getfunandvar(XmlDocument codes)
+        static void Getfunandvar(XmlDocument codes)
         {
-            var functions = new Dictionary<string, IFunction>();
             if (!codes.HasChildNodes) Gdebug.WriteLine("bugging");
             XmlNode root = codes.ChildNodes[1];
             int minversion = Convert.ToInt32(root.Attributes["minversion"].InnerText);
@@ -151,16 +159,18 @@ namespace GI
                             libs[libname].waittoadd.Add(libcontent.GetAttribute("value"));
 
                         }
+                        else if (libcontent.Name == "var")
+                            libs[libname].myThing.Add(libcontent.GetAttribute("value"), new Variable(0));
                         else if (libcontent.Name == "cls")
                         {
                             var x_cls = libcontent;
-                            GClassTemplate gClassTemplate = new GClassTemplate(x_cls.GetAttribute("name"),libname);
+                            GClassTemplate gClassTemplate = new GClassTemplate(x_cls.GetAttribute("name"), libname);
                             gClassTemplate.LoadContent(x_cls.ChildNodes);
                             libs[libname].myThing.Add(libcontent.GetAttribute("name"), new Variable(gClassTemplate));
                         }
                         else if (libcontent.Name == "deffun")
                         {
-                            Function.New_User_Function new_User_Function = new Function.New_User_Function(libcontent,libname);
+                            Function.New_User_Function new_User_Function = new Function.New_User_Function(libcontent, libname);
                             libs[libname].myThing.Add(libcontent.GetAttribute("funname"), new Variable(new_User_Function));
                         }
                         else throw new Exceptions.RunException(Exceptions.EXID.未知);
@@ -171,7 +181,6 @@ namespace GI
             }
 
 
-            return functions;
 
         }
 

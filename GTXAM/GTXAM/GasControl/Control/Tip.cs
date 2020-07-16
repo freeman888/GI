@@ -1,291 +1,303 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
-using System.Collections;
-using GI;
-using System.Threading.Tasks;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Text;
+//using Xamarin.Forms;
+//using System.Collections;
+//using GI;
+//using System.Threading.Tasks;
 
-namespace GTXAM.GasControl.Control
-{
-    public class Tip : Label,IGetter,ISetter,IName,IFunction
-    {
-        public Tip()
-        {
+//namespace GTXAM.GasControl.Control
+//{
+//    public class Tip : Label,IGetter,ISetter,IName,IFunction
+//    {
+//        public Tip()
+//        {
 
-            HorizontalOptions = LayoutOptions.Center;
-            VerticalOptions = LayoutOptions.Center;
-        }
-
-
-        #region 实现IName
-        public string Name { get; set; }
-        #endregion
-
-        #region 实现IGetter
-        object IGetter.IGetWidth()
-        {
-            return Width;
-        }
-
-        object IGetter.IGetHeight()
-        {
-            return Height;
-        }
-
-        object IGetter.IGetHorizontalAlignment()
-        {
-            return HorizontalOptions.ToString();
-        }
-
-        object IGetter.IGetVerticalAlignment()
-        {
-            return VerticalOptions.ToString();
-        }
-
-        object IGetter.IGetMarin()
-        {
-            string s = String.Format("{0},{0},{0},{0}", Margin.Left, Margin.Top, Margin.Right, Margin.Bottom);
-            return s;
-        }
-
-        object IGetter.IGetVisibility()
-        {
-            string s = "null";
-            switch (IsVisible)
-            {
-                case false: s = "gone"; break;
-                case true: s = "visible"; break;
-            }
-            return s;
-        }
-
-        object IGetter.IGetText()
-        {
-            return Text;
-        }
-
-        object IGetter.IGetFontSize()
-        {
-            return FontSize;
-        }
-
-        object IGetter.IGetPadding()
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 padding 属性");
-        }
-
-        object IGetter.IGetBackgroundColor()
-        {
-            return BackgroundColor.ToString();
-        }
-
-        object IGetter.IGetForegroundColor()
-        {
-            return BackgroundColor.ToString();
-        }
-
-        object IGetter.IFindID(string id)
-        {
-
-            return id == (this as IName).Name ? this : null;
-        }
-        object IGetter.IGetScrollPosition()
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 scrollposition 属性");
-        }
-        object IGetter.IGetTogged()
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 togged 属性");
-        }
-
-        #endregion
-
-        #region 实现IFunction
-        public bool Iisasync { get { return false; } set { } }
-
-        public Task<object> IAsyncRun(Hashtable xc)
-        {
-            throw new Exception();
-        }
-        string IFunction.Istr_xcname
-        {
-            get { return "params"; }
-            set { }
-        }
-        bool IFunction.Iisreffunction
-        {
-            get { return false; }
-            set { }
-        }
-        string IFunction.IInformation
-        {
-            get =>
-                "to be added";
-            set => throw new Exception
+//            HorizontalOptions = LayoutOptions.Center;
+//            VerticalOptions = LayoutOptions.Center;
+//        }
 
 
-                ();
-        }
-        object IFunction.IRun(Hashtable xc)
-        {
-            var arrayList = Variable.GetTrueVariable<Glist>(xc, "params");
-            Variable ret;
-            switch (arrayList.Count)
-            {
-                case 1:
-                Hashtable hashtable0 = Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables);
-                hashtable0.Add("control", new Variable(this));
-                hashtable0.Add("config", arrayList[0]);
-                Variable v;
-                Function.FuncStarter("Control.Get", hashtable0, out v);
-                ret = v;
-                break;
+//        #region 实现IName
+//        public string Name { get; set; }
+//        #endregion
 
-                case 2:
+//        #region 实现IGetter
+//        object IGetter.IGetWidth()
+//        {
+//            return Width;
+//        }
 
-                Hashtable hashtable = Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables);
-                hashtable.Add("control", new Variable(this));
-                hashtable.Add("config", arrayList[0]);
-                hashtable.Add("value", arrayList[1]);
-                Function.FuncStarter("Control.Set", hashtable, out var v1);
-                ret = new Variable(0);
-                break;
+//        object IGetter.IGetHeight()
+//        {
+//            return Height;
+//        }
 
-                default:
-                ret = new Variable(0);
-                break;
-            }
-            return ret;
-        }
+//        object IGetter.IGetHorizontalAlignment()
+//        {
+//            return HorizontalOptions.ToString();
+//        }
 
-        #endregion
+//        object IGetter.IGetVerticalAlignment()
+//        {
+//            return VerticalOptions.ToString();
+//        }
 
-        #region 实现ISettet
+//        object IGetter.IGetMarin()
+//        {
+//            string s = String.Format("{0},{0},{0},{0}", Margin.Left, Margin.Top, Margin.Right, Margin.Bottom);
+//            return s;
+//        }
 
+//        object IGetter.IGetVisibility()
+//        {
+//            string s = "null";
+//            switch (IsVisible)
+//            {
+//                case false: s = "gone"; break;
+//                case true: s = "visible"; break;
+//            }
+//            return s;
+//        }
 
-        void ISetter.ISetWidth(object value)
-        {
-            WidthRequest = Convert.ToDouble(value);
-        }
+//        object IGetter.IGetText()
+//        {
+//            return Text;
+//        }
 
-        void ISetter.ISetHeight(object value)
-        {
-            HeightRequest = Convert.ToDouble(value);
-        }
+//        object IGetter.IGetFontSize()
+//        {
+//            return FontSize;
+//        }
 
-        void ISetter.ISetHorizontalAlignment(object value)
-        {
-            var view = this;
-            if (value.ToString() == "center")
-                view.HorizontalOptions = LayoutOptions.Center;
-            else if (value.ToString() == "left")
-                view.HorizontalOptions = LayoutOptions.Start;
-            else if (value.ToString() == "right")
-                view.HorizontalOptions = LayoutOptions.End;
-            else if (value.ToString() == "stretch")
-                view.HorizontalOptions = LayoutOptions.Fill;
-        }
+//        object IGetter.IGetPadding()
+//        {
+//            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 padding 属性");
+//        }
 
-        void ISetter.ISetVerticalAlignment(object value)
-        {
-            var view = this;
-            if (value.ToString() == "center")
-                view.VerticalOptions = LayoutOptions.Center;
-            else if (value.ToString() == "bottom")
-                view.VerticalOptions = LayoutOptions.End;
-            else if (value.ToString() == "stretch")
-                view.VerticalOptions = LayoutOptions.Fill;
-            else if (value.ToString() == "top")
-                view.VerticalOptions = LayoutOptions.Start;
+//        object IGetter.IGetBackgroundColor()
+//        {
+//            return BackgroundColor.ToString();
+//        }
 
-        }
+//        object IGetter.IGetForegroundColor()
+//        {
+//            return BackgroundColor.ToString();
+//        }
 
-        void ISetter.ISetMarin(object value)
-        {
-            double a1, a2, a3, a4;
-            string[] vs = value.ToString().Split(',');
-            a1 = Convert.ToDouble(vs[0]);
-            a2 = Convert.ToDouble(vs[1]);
-            a3 = Convert.ToDouble(vs[2]);
-            a4 = Convert.ToDouble(vs[3]);
-            Margin = new Thickness(a1, a2, a3, a4);
-        }
+//        object IGetter.IFindID(string id)
+//        {
 
-        void ISetter.ISetVisibility(object value)
-        {
-            var visualElement = this;
-            if (value.ToString() == "gone")
-                visualElement.IsVisible = false;
-            else if (value.ToString() == "hidden")
-                visualElement.IsVisible = false;
-            else if (value.ToString() == "visible")
-                visualElement.IsVisible = true;
-        }
+//            return id == (this as IName).Name ? this : null;
+//        }
+//        object IGetter.IGetScrollPosition()
+//        {
+//            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 scrollposition 属性");
+//        }
+//        object IGetter.IGetTogged()
+//        {
+//            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 togged 属性");
+//        }
 
-        void ISetter.ISetText(object value)
-        {
-            Text = value.ToString();
-        }
+//        #endregion
 
-        void ISetter.ISetFontSize(object value)
-        {
-            FontSize = Convert.ToDouble(value);
-        }
+//        #region 实现IFunction
+//        public bool Iisasync { get { return false; } set { } }
 
-        void ISetter.ISetPadding(object value)
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 padding 属性");
-        }
-
-        void ISetter.ISetBackgroundColor(object value)
-        {
-            BackgroundColor = (Color)new ColorTypeConverter().ConvertFromInvariantString(value.ToString());
-        }
-
-        void ISetter.ISetForegroundColor(object value)
-        {
-
-            TextColor = (Color)new ColorTypeConverter().ConvertFromInvariantString(value.ToString());
-        }
+//        public Task<object> IAsyncRun(Hashtable xc)
+//        {
+//            throw new Exception();
+//        }
+//        string IFunction.Istr_xcname
+//        {
+//            get { return "params"; }
+//            set { }
+//        }
+//        bool IFunction.Iisreffunction
+//        {
+//            get { return false; }
+//            set { }
+//        }
+//        string IFunction.IInformation
+//        {
+//            get =>
+//                "to be added";
+//            set => throw new Exception
 
 
-        void ISetter.ISetClickEvent(object value)
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"此控件没有 click 事件");
-        }
+//                ();
+//        }
+//        public string poslib { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+//        object IFunction.IRun(Hashtable xc)
+//        {
+//            var arrayList = Variable.GetTrueVariable<Glist>(xc, "params");
+//            Variable ret;
+//            switch (arrayList.Count)
+//            {
+//                case 1:
+//                Hashtable hashtable0 = Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables);
+//                hashtable0.Add("control", new Variable(this));
+//                hashtable0.Add("config", arrayList[0]);
+//                Variable v;
+//                Function.FuncStarter("Control.Get", hashtable0, out v);
+//                ret = v;
+//                break;
+
+//                case 2:
+
+//                Hashtable hashtable = Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables);
+//                hashtable.Add("control", new Variable(this));
+//                hashtable.Add("config", arrayList[0]);
+//                hashtable.Add("value", arrayList[1]);
+//                Function.FuncStarter("Control.Set", hashtable, out var v1);
+//                ret = new Variable(0);
+//                break;
+
+//                default:
+//                ret = new Variable(0);
+//                break;
+//            }
+//            return ret;
+//        }
+
+//        #endregion
+
+//        #region 实现ISettet
 
 
-        void ISetter.ISetTogged(object value)
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 togged 属性");
-        }
+//        void ISetter.ISetWidth(object value)
+//        {
+//            WidthRequest = Convert.ToDouble(value);
+//        }
 
-        void ISetter.ISetScrollPosition(object value)
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 scrollposition 属性");
-        }
-        #endregion
-        #region 实现IType
-        const string type = "tip,function";
-        public string IGetType()
-        {
-            return type;
-        }
-        public override string ToString()
-        {
-            return IGetType();
-        }
+//        void ISetter.ISetHeight(object value)
+//        {
+//            HeightRequest = Convert.ToDouble(value);
+//        }
 
-        public object IGetCSValue()
-        {
-            return this;
-        }
+//        void ISetter.ISetHorizontalAlignment(object value)
+//        {
+//            var view = this;
+//            if (value.ToString() == "center")
+//                view.HorizontalOptions = LayoutOptions.Center;
+//            else if (value.ToString() == "left")
+//                view.HorizontalOptions = LayoutOptions.Start;
+//            else if (value.ToString() == "right")
+//                view.HorizontalOptions = LayoutOptions.End;
+//            else if (value.ToString() == "stretch")
+//                view.HorizontalOptions = LayoutOptions.Fill;
+//        }
 
-        static Tip()
-        {
-            GType.Sign("tip");
-        }
-        #endregion
-    }
-}
+//        void ISetter.ISetVerticalAlignment(object value)
+//        {
+//            var view = this;
+//            if (value.ToString() == "center")
+//                view.VerticalOptions = LayoutOptions.Center;
+//            else if (value.ToString() == "bottom")
+//                view.VerticalOptions = LayoutOptions.End;
+//            else if (value.ToString() == "stretch")
+//                view.VerticalOptions = LayoutOptions.Fill;
+//            else if (value.ToString() == "top")
+//                view.VerticalOptions = LayoutOptions.Start;
+
+//        }
+
+//        void ISetter.ISetMarin(object value)
+//        {
+//            double a1, a2, a3, a4;
+//            string[] vs = value.ToString().Split(',');
+//            a1 = Convert.ToDouble(vs[0]);
+//            a2 = Convert.ToDouble(vs[1]);
+//            a3 = Convert.ToDouble(vs[2]);
+//            a4 = Convert.ToDouble(vs[3]);
+//            Margin = new Thickness(a1, a2, a3, a4);
+//        }
+
+//        void ISetter.ISetVisibility(object value)
+//        {
+//            var visualElement = this;
+//            if (value.ToString() == "gone")
+//                visualElement.IsVisible = false;
+//            else if (value.ToString() == "hidden")
+//                visualElement.IsVisible = false;
+//            else if (value.ToString() == "visible")
+//                visualElement.IsVisible = true;
+//        }
+
+//        void ISetter.ISetText(object value)
+//        {
+//            Text = value.ToString();
+//        }
+
+//        void ISetter.ISetFontSize(object value)
+//        {
+//            FontSize = Convert.ToDouble(value);
+//        }
+
+//        void ISetter.ISetPadding(object value)
+//        {
+//            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 padding 属性");
+//        }
+
+//        void ISetter.ISetBackgroundColor(object value)
+//        {
+//            BackgroundColor = (Color)new ColorTypeConverter().ConvertFromInvariantString(value.ToString());
+//        }
+
+//        void ISetter.ISetForegroundColor(object value)
+//        {
+
+//            TextColor = (Color)new ColorTypeConverter().ConvertFromInvariantString(value.ToString());
+//        }
+
+
+//        void ISetter.ISetClickEvent(object value)
+//        {
+//            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"此控件没有 click 事件");
+//        }
+
+
+//        void ISetter.ISetTogged(object value)
+//        {
+//            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 togged 属性");
+//        }
+
+//        void ISetter.ISetScrollPosition(object value)
+//        {
+//            throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 scrollposition 属性");
+//        }
+//        #endregion
+//        #region 实现IType
+//        const string type = "tip,function";
+//        public string IGetType()
+//        {
+//            return type;
+//        }
+//        public override string ToString()
+//        {
+//            return IGetType();
+//        }
+
+//        public object IGetCSValue()
+//        {
+//            return this;
+//        }
+
+//        public Variable IGetMember(string name)
+//        {
+//            throw new NotImplementedException();
+//        }
+
+//        public IOBJ IGetParent()
+//        {
+//            throw new NotImplementedException();
+//        }
+
+//        static Tip()
+//        {
+//            GType.Sign("tip");
+//        }
+//        #endregion
+//    }
+//}

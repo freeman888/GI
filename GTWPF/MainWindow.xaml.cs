@@ -59,18 +59,18 @@ namespace GTWPF
             //获取GIInfo
             system_outputbox.Text += "Gasoline for GTWPF version " + GIInfo.GIVersion.ToString()+Environment.NewLine;
             
-            //加载重写函数
-            _function_Thread_override_.Load();
-            //加载自定义函数
-            System.Collections.Generic.Dictionary<string, Function.Head> heads = new System.Collections.Generic.Dictionary<string, Function.Head>
-            {
-                {"Control",new GTWPFFunction.Control_Head() },
-                {"IO",new GTWPFFunction.IO_Head() },
-                {"Page",new GTWPFFunction.Page_Head() },
-            };
+            ////加载重写函数
+            //_function_Thread_override_.Load();
+            ////加载自定义函数
+            //System.Collections.Generic.Dictionary<string, Function.Head> heads = new System.Collections.Generic.Dictionary<string, Function.Head>
+            //{
+            //    {"Control",new GTWPFFunction.Control_Head() },
+            //    {"IO",new GTWPFFunction.IO_Head() },
+            //    {"Page",new GTWPFFunction.Page_Head() },
+            //};
             System.Xml.XmlDocument codes = new System.Xml.XmlDocument();
             codes.LoadXml(App.xmlcodes);
-            Gasoline.StartGas(heads, codes);
+            Gasoline.StartGas(new System.Collections.Generic.Dictionary<string, Lib.UserLib>(), codes);
         }
         private void Window_Closed(object sender, EventArgs e)
         {

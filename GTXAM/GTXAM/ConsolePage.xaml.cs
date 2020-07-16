@@ -23,17 +23,9 @@ namespace GTXAM
                 Thread.Sleep(10);
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    _function_Thread_override_.Load();
-                    var res = new System.Collections.Generic.Dictionary<string, GI.Function.Head>
-                        {
-                            {"IO" ,new GTXAMFunctions.GTXAMFunction.IO_Head()},
-                            {"Page",new GTXAMFunctions. GTXAMFunction.Page_Head()},
-                            {"Control",new GTXAMFunctions.GTXAMFunction.Control_Head() },
-                            {"Alien",new GTXAMFunctions.GTXAMFunction.Alien_Head() }
-                        
+                    //_function_Thread_override_.Load();
 
-                        };
-                    GI.Gasoline.StartGas(res, GTXAM.GTXAMInfo.Codes);
+                    GI.Gasoline.StartGas(new System.Collections.Generic.Dictionary<string, GI.Lib.UserLib>(), GTXAMInfo.Codes);
                 });
             });
             OutputLabel.Text += "Gasoline for GTXAM Version " + GI.GIInfo.GIVersion.ToString() + Environment.NewLine;

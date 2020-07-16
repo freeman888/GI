@@ -1,27 +1,32 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
+using static GI.Function;
 
 namespace GI
 {
-    partial class Function 
+    public partial class Lib
     {
-
-        public class System_Head : Head
+        public class System_Lib : ILib
         {
-            //注册
-            public override void AddFunctions( System.Collections.Generic.Dictionary<string, IFunction> h)
+            public Dictionary<string, Variable> myThing { get; set; } = new Dictionary<string, Variable>();
+            public Dictionary<string, Variable> otherThing { get; set; } = new Dictionary<string, Variable>();
+
+            public List<string> waittoadd { get; set; } = new List<string>();
+            public System_Lib()
             {
-                h.Add("System.GetType", new System_Function_Gettype());
-                h.Add("System.Exit", new System_Function_Exit());
-                h.Add("System.Const", new System_Function_Const());
-                h.Add("const", new System_Function_Const());
-                h.Add("System.GetInterpreterVersion", new DFunction {IInformation ="get the version of interpreter", dRun = (xc) =>new Variable(GIInfo.GIVersion)});
-                h.Add("System.GetInterpreter", new DFunction {  IInformation = "get the name of interpreter",dRun = (xc) => new Variable("GI") });
-                h.Add("System.GetPlatform", new DFunction { IInformation = "get the paltform", dRun = (xc) => new Variable(GIInfo.Platform) });
+                myThing.Add("GetType", new Variable(new System_Function_Gettype()));
+                myThing.Add("Exit", new Variable(new System_Function_Exit()));
+                myThing.Add("Const", new Variable(new System_Function_Const()));
+                myThing.Add("const", new Variable( new System_Function_Const() ));
+                myThing.Add("GetInterpreterVersion", new Variable(new DFunction { IInformation = "get the version of interpreter", dRun = (xc) => new Variable(GIInfo.GIVersion) }));
+                myThing.Add("System.GetInterpreter", new Variable( new DFunction { IInformation = "get the name of interpreter", dRun = (xc) => new Variable("GI") }));
+                myThing.Add("System.GetPlatform", new Variable( new DFunction { IInformation = "get the paltform", dRun = (xc) => new Variable(GIInfo.Platform) }));
                 #region 获取时间
-                h.Add("System.GetTime", new DFunction
+         myThing.Add("System.GetTime", new Variable( new DFunction
                 {
                     IInformation = @"get the time.
 [val(string)]:
@@ -42,47 +47,47 @@ time",
                         {
                             case "y":
                             case "year":
-                            return new Variable(dateTime.Year);
+                                return new Variable(dateTime.Year);
 
 
                             case "m":
                             case "month":
-                            return new Variable(dateTime.Month);
+                                return new Variable(dateTime.Month);
 
                             case "d":
-                           
+
                             case "day":
-                            return new Variable(dateTime.Day);
+                                return new Variable(dateTime.Day);
 
                             case "h":
-                            
+
                             case "hour":
-                            return new Variable(dateTime.Hour);
+                                return new Variable(dateTime.Hour);
 
                             case "min":
-                            
+
                             case "minute":
-                            return new Variable(dateTime.Minute);
+                                return new Variable(dateTime.Minute);
 
                             case "s":
-                            
+
                             case "second":
-                            return new Variable(dateTime.Second);
+                                return new Variable(dateTime.Second);
 
                             case "date":
-                            return new Variable(dateTime.ToLongDateString());
+                                return new Variable(dateTime.ToLongDateString());
 
                             case "time":
-                            return new Variable(dateTime.ToLongTimeString());
+                                return new Variable(dateTime.ToLongTimeString());
 
                             default:
-                            return null;
+                                return null;
                         }
                     }
-                });
+                }));
                 #endregion
-                h.Add("Debug", new DFunction { IInformation = "output when debugging", str_xcname = "str" , dRun = (xc) => { Gdebug.WriteLine(xc.GetVariable<object>("str").ToString()); return new Variable(0); } });
-                h.Add("Help", new DFunction
+                myThing.Add("Debug",new Variable( new DFunction { IInformation = "output when debugging", str_xcname = "str", dRun = (xc) => { Gdebug.WriteLine(xc.GetVariable<object>("str").ToString()); return new Variable(0); } }));
+                myThing.Add("Help", new Variable( new DFunction
                 {
                     IInformation = "return the help of \'in\'",
                     str_xcname = "in",
@@ -96,13 +101,15 @@ time",
                         }
                         return new Variable(0);
                     }
-                });
-                h.Add("async", new Asyncfunc());
-                h.Add("await", new System_Function_Await());
-                h.Add("wait", new System_Function_Wait());
+                }));
+                myThing.Add("async",new Variable( new Asyncfunc()));
+                myThing.Add("await", new Variable( new System_Function_Await()));
+                myThing.Add("wait",new Variable( new System_Function_Wait()));
+
             }
-            //注册结束
-            public class Asyncfunc:AFunction
+
+
+            public class Asyncfunc : AFunction
             { }
 
             #region 获取类型
@@ -151,7 +158,7 @@ time",
                 }
             }
             #endregion
-            public class System_Function_Await:AFunction
+            public class System_Function_Await : AFunction
             {
                 public System_Function_Await()
                 {
@@ -161,11 +168,11 @@ time",
 
                 public async override Task<object> Run(Hashtable xc)
                 {
-                    
+
                     try
                     {
                         var task = xc.GetCSVariable<Task<Variable>>("task");
-                        return(await task);
+                        return (await task);
                     }
                     catch
                     {
@@ -173,8 +180,8 @@ time",
                     }
                 }
             }
-                
-            public class System_Function_Wait:Function
+
+            public class System_Function_Wait : Function
             {
                 public System_Function_Wait()
                 {
@@ -190,8 +197,7 @@ time",
                     //return xc.GetCSVariable<Task<Variable>>("task").Result;
                 }
             }
+
         }
     }
-
-    
 }

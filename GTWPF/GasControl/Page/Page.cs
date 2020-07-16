@@ -14,15 +14,15 @@ namespace GTWPF.GasControl.Page
     /// <summary>
     /// Gasoline页面
     /// </summary>
-    public class GasPage : Grid,IFunction
+    public class GasPage : Grid, IFunction
     {
-       
+
 
         public GasPage(string title)
         {
             this.title = title;
             Background = Brushes.White;
-            Children.Add(new GasControl.Control.Tip() { Text = "Welcome to use Gasoline.Page", VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center });
+            //Children.Add(new GasControl.Control.Tip() { Text = "Welcome to use Gasoline.Page", VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center });
         }
 
         internal StackPanel sp_tools = new StackPanel
@@ -34,58 +34,58 @@ namespace GTWPF.GasControl.Page
 
         internal void AddTool(string text, object click_event)
         {
-            hastool = true;
-            var grid = new Grid
-            {
-                Children =
-                {
-                    new Label
-                    {
-                        Content = text,
-                        FontSize = 16
-                    }
-                },
-                Background = Brushes.White
-            };
-            grid.MouseDown +=async (s, e) =>
-            {
-                if (click_event != null)
-                {
-                    if (click_event is IFunction)
-                    {
-                        IFunction function = click_event as IFunction;
-                        Hashtable hashtable = Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables);
-                        string[] sss = function.Istr_xcname.Split(',');
-                        if (sss.Length == 2)
-                        {
-                            hashtable.Add(sss[0], new Variable(this));
-                            hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
-                            await Function.AsyncFuncStarter(function, hashtable);
-                        }
-                    }
-                    else
-                    {
-                        IFunction function = Variable.GetTrueVariable<IFunction>(Gasoline.sarray_Sys_Variables, click_event.ToString());
-                        Hashtable hashtable = Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables);
-                        string[] sss = function.Istr_xcname.Split(',');
-                        if (sss.Length == 2)
-                        {
-                            hashtable.Add(sss[0], new Variable(this));
-                            hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
-                            await Function.AsyncFuncStarter(function, hashtable);
-                        }
-                    }
-                };
-            };
-            grid.MouseEnter += (s, e) =>
-            {
-                grid.Background = new BrushConverter().ConvertFromString("#50000000") as Brush;
-            };
-            grid.MouseLeave += (s, e) =>
-            {
-                grid.Background = Brushes.White;
-            };
-            sp_tools.Children.Add(grid);
+            //hastool = true;
+            //var grid = new Grid
+            //{
+            //    Children =
+            //    {
+            //        new Label
+            //        {
+            //            Content = text,
+            //            FontSize = 16
+            //        }
+            //    },
+            //    Background = Brushes.White
+            //};
+            //grid.MouseDown += async (s, e) =>
+            // {
+            //     if (click_event != null)
+            //     {
+            //         if (click_event is IFunction)
+            //         {
+            //             IFunction function = click_event as IFunction;
+            //             Hashtable hashtable = Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables);
+            //             string[] sss = function.Istr_xcname.Split(',');
+            //             if (sss.Length == 2)
+            //             {
+            //                 hashtable.Add(sss[0], new Variable(this));
+            //                 hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
+            //                 await Function.AsyncFuncStarter(function, hashtable);
+            //             }
+            //         }
+            //         else
+            //         {
+            //             IFunction function = Variable.GetTrueVariable<IFunction>(Gasoline.sarray_Sys_Variables, click_event.ToString());
+            //             Hashtable hashtable = Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables);
+            //             string[] sss = function.Istr_xcname.Split(',');
+            //             if (sss.Length == 2)
+            //             {
+            //                 hashtable.Add(sss[0], new Variable(this));
+            //                 hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
+            //                 await Function.AsyncFuncStarter(function, hashtable);
+            //             }
+            //         }
+            //     };
+            // };
+            //grid.MouseEnter += (s, e) =>
+            //{
+            //    grid.Background = new BrushConverter().ConvertFromString("#50000000") as Brush;
+            //};
+            //grid.MouseLeave += (s, e) =>
+            //{
+            //    grid.Background = Brushes.White;
+            //};
+            //sp_tools.Children.Add(grid);
         }
         public string title;
         public void SetContent(UIElement control)
@@ -112,6 +112,9 @@ namespace GTWPF.GasControl.Page
             get { return false; }
             set { }
         }
+
+        public string poslib { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         object IFunction.IRun(Hashtable xc)
         {
 
@@ -120,13 +123,14 @@ namespace GTWPF.GasControl.Page
             {
                 case 1:
                     {
-                        return new Variable ((Children[0] as Control.IGetter).IFindID((arrayList[0] as Variable).value.ToString()));
+                        return new Variable((Children[0] as Control.IGetter).IFindID((arrayList[0] as Variable).value.ToString()));
                     }
                 case 0:
                     {
-                        return new Variable(new Function.DFunction {
+                        return new Variable(new Function.DFunction
+                        {
                             str_xcname = "con",
-                            dRun = (dxc)=>
+                            dRun = (dxc) =>
                             {
                                 SetContent(Variable.GetTrueVariable<UIElement>(dxc, "con"));
                                 return new Variable(0);
