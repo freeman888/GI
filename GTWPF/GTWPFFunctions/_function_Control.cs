@@ -56,11 +56,11 @@
 //            }
 
 //            #region 通用方法
-//            public class Control_Function_Set :GI. Function
+//            public class Control_Function_Set : GI.Function
 //            {
 //                public Control_Function_Set()
 //                {
-//                    IInformation = 
+//                    IInformation =
 //@"set the config of the control the value
 //[config(string)]:
 //width
@@ -83,7 +83,7 @@
 //                public override object Run(Hashtable xc)
 //                {
 //                    GasControl.Control.ISetter setter = (GasControl.Control.ISetter)Variable.GetTrueVariable<object>(xc, "control");
-                    
+
 //                    string config = Variable.GetTrueVariable<object>(xc, "config").ToString().ToLower();
 //                    object value = Variable.GetTrueVariable<object>(xc, "value");
 
@@ -111,9 +111,9 @@
 
 //                        case "foregroundcolor": setter.ISetForegroundColor(value); break;
 
-//                        case "togged": setter.ISetTogged(value);break;
+//                        case "togged": setter.ISetTogged(value); break;
 
-//                        case "scrollposition":setter.ISetScrollPosition(value);break;
+//                        case "scrollposition": setter.ISetScrollPosition(value); break;
 
 
 //                        case "clickevent": setter.ISetClickEvent(value); break;
@@ -123,7 +123,7 @@
 //                }
 
 //            }
-//            public class Control_Function_Get  :GI.Function
+//            public class Control_Function_Get : GI.Function
 //            {
 //                public Control_Function_Get()
 //                {
@@ -179,11 +179,11 @@
 
 //                        case "foregroundcolor": ret = setter.IGetForegroundColor(); break;
 
-//                        case "togged":ret = setter.IGetTogged();break;
+//                        case "togged": ret = setter.IGetTogged(); break;
 
-//                        case "scrollposition":ret = setter.IGetScrollPosition();break;
+//                        case "scrollposition": ret = setter.IGetScrollPosition(); break;
 
-//                        default: throw new Exceptions.RunException(Exceptions.EXID.无对应属性,"没有 " + config + " 属性");
+//                        default: throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 " + config + " 属性");
 //                    }
 //                    return new Variable(ret);
 //                }
@@ -223,8 +223,8 @@
 //                    return new Variable(new GasControl.Control.Tip() { Name = text });
 //                }
 //            }
-           
-            
+
+
 //            #endregion
 
 //            #region EditText系列方法
@@ -354,7 +354,7 @@
 //            #endregion
 
 //            #region Switcher 系列方法
-//            public class Switcher_Function_Creat: GI.Function
+//            public class Switcher_Function_Creat : GI.Function
 //            {
 //                public Switcher_Function_Creat()
 //                {
@@ -373,7 +373,7 @@
 //            #endregion
 
 //            #region ScrollFlat系列方法
-//            public class ScrollFlat_Function_Creat:Function
+//            public class ScrollFlat_Function_Creat : Function
 //            {
 //                public ScrollFlat_Function_Creat()
 //                {
@@ -388,7 +388,7 @@
 //                    return new Variable(scrollFlat);
 //                }
 //            }
-//            public class ScrollFlat_Function_ScrollToPosition:Function
+//            public class ScrollFlat_Function_ScrollToPosition : Function
 //            {
 //                public ScrollFlat_Function_ScrollToPosition()
 //                {

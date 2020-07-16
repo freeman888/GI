@@ -276,7 +276,7 @@ namespace GI
 
         private IOBJ m_value;
 
-        public IOBJ value
+        public virtual IOBJ value
         {
             get
             {
@@ -295,5 +295,23 @@ namespace GI
             }
         }
 
+    }
+    /// <summary>
+    /// 是个Variable的空壳，里面的东西应该重新实现
+    /// </summary>
+    public class FVariable:Variable
+    {
+        public static IOBJ obj = new Gnumber(0);
+        public Func<IOBJ, int> onsetvalue = null;
+        public Func<IOBJ> ongetvalue = null;
+        public FVariable():base(obj)
+        { }
+
+        public override IOBJ value
+        { get 
+            {
+                if (ongetvalue != null) return ongetvalue.Invoke();
+                else return base.value;
+            } set { onsetvalue?.Invoke(value); base.value = value; } }
     }
 }

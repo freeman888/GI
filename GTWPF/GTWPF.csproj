@@ -69,12 +69,16 @@
     <Compile Include="GasControl\Control\Tip.cs" />
     <Compile Include="GasControl\Page\Page.cs" />
     <Compile Include="GTWPFFunctions\_function_Control.cs" />
-    <Compile Include="GTWPFFunctions\_function_IO.cs" />
     <Compile Include="GTWPFFunctions\_function_IO\Input.xaml.cs">
       <DependentUpon>Input.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GTWPFFunctions\_function_Page.cs" />
-    <Compile Include="GTWPFFunctions\_function_Thread%28override%29.cs" />
+    <Compile Include="Lib\Control\Class1.cs" />
+    <Compile Include="Lib\IO\Input.xaml.cs">
+      <DependentUpon>Input.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\IO\IO.cs" />
+    <Compile Include="Lib\Page\Page.cs" />
+    <Compile Include="Lib\Thread\Thread%28override%29.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -103,6 +107,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="GTWPFFunctions\_function_IO\Input.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Lib\IO\Input.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,30 +1,28 @@
 ﻿using GI;
-using GTWPF.GTWPFFunctions._function_IO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using static GI.Function;
 
 namespace GTWPF
 {
-    partial class GTWPFFunction
+    partial class  WPFLib
     {
-       
-        public class IO_Head : Head
+        public class IO_Lib : GI.Lib.ILib
         {
-            //注册
-            public override void AddFunctions(Dictionary<string, IFunction> h)
+
+            public IO_Lib()
             {
-                h.Add("IO.Write", new IO_Function_Write());
-                h.Add("IO.Tip", new IO_Function_Tip());
-                h.Add("IO.WriteLine", new IO_Function_WriteLine());
-                h.Add("IO.Input", new IO_Function_Input());
+                myThing.Add("Write", new Variable(new IO_Function_Write()));
+                myThing.Add("WriteLine", new Variable(new IO_Function_WriteLine()));
+                myThing.Add("Input", new Variable(new IO_Function_Input()));
+                myThing.Add("Message", new Variable(new IO_Function_Tip()));
             }
+
             public class IO_Function_WriteLine : Function
             {
                 public IO_Function_WriteLine()
@@ -36,7 +34,7 @@ namespace GTWPF
                 public override object Run(Hashtable xc)
                 {
                     string text = ((Variable)xc["text"]).value.ToString();
-                    
+
                     MainWindow page = MainWindow.MainApp;
                     page.Dispatcher.Invoke(() =>
                     {
@@ -64,7 +62,7 @@ namespace GTWPF
                 }
             }
 
-            public class IO_Function_Input:AFunction
+            public class IO_Function_Input : AFunction
             {
                 public IO_Function_Input()
                 {
@@ -89,7 +87,7 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                     {
                         await MainWindow.MainApp.Dispatcher.InvokeAsync(async () =>
                         {
-                            var input = new Input();
+                            var input = new GwpfLib.IO.Input();
                             if (list.Count == 0)
                                 ret = new Variable(await input.GetInput());
                             else if (list.Count == 1)
@@ -130,8 +128,12 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                 }
 
             }
-        }
+            #region
+            public Dictionary<string, Variable> myThing { get; set; } = new Dictionary<string, Variable>();
+            public Dictionary<string, Variable> otherThing { get; set; } = new Dictionary<string, Variable>();
 
+            public List<string> waittoadd { get; set; } = new List<string>();
+            #endregion
+        }
     }
 }
-

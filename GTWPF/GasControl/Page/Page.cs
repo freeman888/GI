@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using GI;
+using static GI.Function;
 
 namespace GTWPF.GasControl.Page
 {
@@ -14,7 +15,7 @@ namespace GTWPF.GasControl.Page
     /// <summary>
     /// Gasoline页面
     /// </summary>
-    public class GasPage : Grid, IFunction
+    public class GasPage : Grid, IFunction, IOBJ
     {
 
 
@@ -23,6 +24,12 @@ namespace GTWPF.GasControl.Page
             this.title = title;
             Background = Brushes.White;
             //Children.Add(new GasControl.Control.Tip() { Text = "Welcome to use Gasoline.Page", VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center });
+            members = new Dictionary<string, Variable>
+            {
+                {"SetContent",new Variable(new MFunction(setcontent,this)) },
+                {"SetTitle",new Variable(new MFunction(settitle,this)) },
+                {"AddTool",new Variable(new MFunction(addtool,this)) }
+            };
         }
 
         internal StackPanel sp_tools = new StackPanel
@@ -142,7 +149,7 @@ namespace GTWPF.GasControl.Page
         }
         #endregion
         #region 实现Itype
-        const string type = "page,function";
+        const string type = "page";
         public string IGetType()
         {
             return type;
@@ -176,5 +183,62 @@ namespace GTWPF.GasControl.Page
         }
 
         #endregion
+
+
+        //member function
+        IFunction setcontent = new Page_Function_SetContent();
+        public class Page_Function_SetContent : Function
+        {
+            public Page_Function_SetContent()
+            {
+                IInformation = "set the control as the content of the page";
+                str_xcname = "control";
+            }
+            public override object Run(Hashtable xc)
+            {
+                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "page");
+                UIElement control = Variable.GetTrueVariable<UIElement>(xc, "control");
+                page.SetContent(control);
+                return new Variable(0);
+            }
+        }
+        IFunction settitle = new Page_Function_SetTitle();
+        public class Page_Function_SetTitle : Function
+        {
+            public Page_Function_SetTitle()
+            {
+                IInformation = "set the title of the page";
+                str_xcname = "title";
+            }
+            public override object Run(Hashtable xc)
+            {
+                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "page");
+                string title = Variable.GetTrueVariable<object>(xc, "title").ToString();
+                if (MainWindow.MainApp.PageBase.Children.Contains(page))
+                {
+                    MainWindow.MainApp.GasTitle.Content = title;
+                }
+                page.title = title;
+                return new Variable(0);
+            }
+        }
+        IFunction addtool = new Page_Function_AddTool();
+        public class Page_Function_AddTool : Function
+        {
+            public Page_Function_AddTool()
+            {
+                str_xcname = "text,clickevent";
+                IInformation = "Add a toolitem to page";
+            }
+
+            public override object Run(Hashtable xc)
+            {
+                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this","page");
+                var text = xc.GetCSVariable<object>("text").ToString();
+                var click = xc.GetCSVariable<object>("clickevent");
+                page.AddTool(text, click);
+                return new Variable(0);
+            }
+        }
     }
 }

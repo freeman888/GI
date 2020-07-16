@@ -38,6 +38,7 @@ creat a new list contains numbers(sure it can contains more than number)",
             {
                 public ListClassTemplate():base("list","System")
                 {
+                    Istr_xcname = "params";
                     csctor = (xc) =>
                     {
                         return (xc["params"] as Variable).value;

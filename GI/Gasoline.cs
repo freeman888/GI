@@ -72,10 +72,9 @@ namespace GI
 
         //}
 
-        public async static void StartGas(Dictionary<string,UserLib> heads,XmlDocument codes)
+        public async static void StartGas(Dictionary<string,ILib> heads,XmlDocument codes)
         {
             //1加载所有通用Lib
-            libs.Add("IO", new IO_Lib());
             libs.Add("System", new System_Lib());
             libs.Add("String",new String_Lib());
             libs.Add("Math", new Math_Lib());

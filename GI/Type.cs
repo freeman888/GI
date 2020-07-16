@@ -110,7 +110,7 @@ namespace GI
         internal Dictionary<string,IFunction> memberfuncs = new Dictionary<string,IFunction>();
         internal IFunction ctor;
 
-        internal Func<Hashtable, IOBJ> csctor;
+        public Func<Hashtable, IOBJ> csctor;
         internal string csstr_xc = "";
         public GClassTemplate(string _type,string poslib,string _parent = "")  
         {
@@ -170,7 +170,7 @@ namespace GI
         /// <returns></returns>
         public IOBJ CreatFromClassTemplate(Hashtable xc)
         {
-            if (csstr_xc == "")
+            if (csctor == null)
             {
                 IOBJ parent;
                 if (!string.IsNullOrEmpty(parentclassname))
@@ -192,9 +192,15 @@ namespace GI
 
         #region
         public string Istr_xcname { get; set; }
-        public bool Iisreffunction { get => ctor.Iisreffunction; set => ctor.Iisreffunction = value; }
+        public bool Iisreffunction { 
+            get { if (ctor != null) return ctor.Iisreffunction; else return false; } 
+            set {  } 
+        }
         public string IInformation { get; set; }
-        public bool Iisasync { get => ctor.Iisasync; set => ctor.Iisasync = value; }
+        public bool Iisasync {
+            get { if (ctor != null) return ctor.Iisasync; else return false; }
+            set { }
+        }
 
         public Task<object> IAsyncRun(Hashtable xc)
         {
