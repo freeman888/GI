@@ -6,6 +6,7 @@ using GTXAM.GasControl.Control;
 using System.Collections;
 using GI;
 using System.Threading.Tasks;
+using static GI.Function;
 
 namespace GTXAM.GasControl.ContentControl
 {/// <summary>
@@ -142,25 +143,25 @@ namespace GTXAM.GasControl.ContentControl
                         else
                         {
                             string s_info = value.ToString();
-            switch (s_info)
+            switch (s_info) 
             {
                 case "bottom":
-                    ScrollToAsync(();
+                    ScrollToAsync(Content,ScrollToPosition.End,true);
                     return 0;
                 case "end":
-                    ScrollToEnd();
+                    ScrollToAsync(Content,ScrollToPosition.End,true);
                     return 0;
                 case "home":
-                    ScrollToHome();
+                    ScrollToAsync(Content,ScrollToPosition.Start,true);
                     return 0;
                 case "leftend":
-                    ScrollToLeftEnd();
+                    ScrollToAsync(Content,ScrollToPosition.End,true);
                     return 0;
                 case "rightend":
-                    ScrollToRightEnd();
+                    ScrollToAsync(Content,ScrollToPosition.End,true);
                     return 0;
                 case "top":
-                    ScrollToTop();
+                                    ScrollToAsync(Content,ScrollToPosition.Start,true);
                     return 0;
                 default:
                     break;

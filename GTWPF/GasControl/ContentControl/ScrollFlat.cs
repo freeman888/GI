@@ -282,7 +282,7 @@ namespace GTWPF.GasControl.ContentControl
             return this;
         }
        
-
+       
         #region 实现ISettet
 
         void ISetter.ISetScrollPosition(object value)
