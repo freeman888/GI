@@ -76,7 +76,7 @@ namespace GTXAM.GasControl.Page
         #endregion
 
         #region 实现IType
-        const string type = "page,function";
+        const string type = "page";
         public string IGetType()
         {
             return type;

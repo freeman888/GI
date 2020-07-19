@@ -119,6 +119,7 @@ namespace GTWPF.GasControl.ContentControl
 
 
             };
+            
             parent = new GTWPF.Control(this);
             #endregion
         }

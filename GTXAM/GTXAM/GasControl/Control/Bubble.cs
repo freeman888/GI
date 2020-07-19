@@ -18,6 +18,143 @@ namespace GTXAM.GasControl.Control
             HorizontalOptions = LayoutOptions.Center;
             VerticalOptions = LayoutOptions.Center;
             Clicked += Bubble_Clicked;
+
+            #region
+            members = new Dictionary<string, Variable>
+            {
+                {"Width" ,new FVariable{
+                    ongetvalue = ()=>new Gnumber(Width),
+                    onsetvalue = (value)=>{WidthRequest =Convert.ToDouble( value); return 0; }}},
+                {"Height" ,new FVariable
+                {
+                    ongetvalue = ()=>new Gnumber(Height),
+                    onsetvalue = (value)=>{HeightRequest = Convert.ToDouble(value);return 0; }
+                }},
+                {"Horizontal",new FVariable
+                {
+                    ongetvalue = ()=> new Gstring( HorizontalOptions.ToString()),
+                    onsetvalue = (value) =>{
+                        if (value.ToString() == "center")
+                            HorizontalOptions = LayoutOptions.Center;
+                        else if (value.ToString() == "left")
+                            HorizontalOptions = LayoutOptions.Start;
+                        else if (value.ToString() == "right")
+                            HorizontalOptions = LayoutOptions.End;
+                        else if (value.ToString() == "stretch")
+                            HorizontalOptions = LayoutOptions.Fill;
+                        return 0;
+                    }
+                } },
+                {"Vertical",new FVariable{
+                ongetvalue = ()=>new Gstring(VerticalOptions.ToString()),
+                onsetvalue = (value)=>
+                {
+                    if (value.ToString() == "center")
+                        VerticalOptions = LayoutOptions.Center;
+                    else if (value.ToString() == "bottom")
+                        VerticalOptions = LayoutOptions.End;
+                    else if (value.ToString() == "stretch")
+                        VerticalOptions = LayoutOptions.Fill;
+                    else if (value.ToString() == "top")
+                        VerticalOptions = LayoutOptions.Start;
+                    return 0;
+                }
+                } },
+                {"Margin",new FVariable{
+                ongetvalue =() => new Glist{new Variable(Margin.Left) ,new Variable(Margin.Top),new Variable(Margin.Right),new Variable(Margin.Bottom)},
+                onsetvalue = (value)=>
+                {
+                    var list = value.IGetCSValue() as Glist;
+                    Margin = new Thickness(
+                        Convert.ToDouble( list[0].value),Convert.ToDouble(list[1].value),Convert.ToDouble(list[2].value),Convert.ToDouble(list[3].value)
+                          );
+                    return 0;
+                }
+
+                } },
+                {"Visibility",new FVariable{
+                    ongetvalue = () =>
+                    {
+                        string s = "null";
+            switch (IsVisible)
+            {
+                case true:
+                                s = "visiable";
+                                break;
+                case false:
+                                s = "gone";
+                                break;
+            }
+            return new Gstring(s);
+                    },
+                    onsetvalue = (value)=>
+                    {
+                        if (value.ToString() == "gone")
+                IsVisible = false;
+            else if (value.ToString() == "hidden")
+                IsVisible = false;
+            else if (value.ToString() == "visible")
+                IsVisible = true;
+                        return 0;
+                    }
+                } },
+                {"Text",new FVariable{
+                    ongetvalue = ()=> new Gstring(Text.ToString()),
+                    onsetvalue = (value)=>
+                    {
+                        Text = value.ToString();
+                        return 0;
+                    }
+                } },
+                {"FontSize",new FVariable{
+                    ongetvalue = ()=>new Gnumber(FontSize),
+                    onsetvalue = (value)=>
+                    {
+                        FontSize = Convert.ToDouble(value);
+                        return 0;
+                    }
+                } },
+                {"Padding" ,new FVariable{
+                    ongetvalue =() => new Glist{new Variable(Padding.Left) ,new Variable(Padding.Top),new Variable(Padding.Right),new Variable(Padding.Bottom)},
+                onsetvalue = (value)=>
+                {
+                    var list = value.IGetCSValue() as Glist;
+                    Padding = new Thickness(
+                        Convert.ToDouble( list[0].value),Convert.ToDouble(list[1].value),Convert.ToDouble(list[2].value),Convert.ToDouble(list[3].value)
+                          );
+                    return 0;
+                }} },
+                {"Background",new FVariable{
+                    ongetvalue = ()=>new Gstring(BackgroundColor.ToString()),
+                    onsetvalue = (value)=>
+                    {
+                        BackgroundColor = (Color)new ColorTypeConverter().ConvertFromInvariantString(value.ToString());
+                        return 0;
+                    }
+                } },
+                {"Foreground",new FVariable{ ongetvalue =()=>new Gstring(TextColor.ToString()),
+                onsetvalue = (value)=>
+                {
+                    TextColor = (Color)new ColorTypeConverter().ConvertFromInvariantString(value.ToString());
+                    return 0;
+                } } },
+                {"Clickevent",new FVariable
+                {
+                    ongetvalue = ()=>event_click as IOBJ
+                    ,onsetvalue = (value)=>
+                    {
+                        event_click = value;
+                        return 0;
+                    }
+                } }
+
+
+
+
+
+            };
+            parent = new GTXAM.Control(this);
+            #endregion
         }
 
         private async void Bubble_Clicked(object sender, EventArgs e)

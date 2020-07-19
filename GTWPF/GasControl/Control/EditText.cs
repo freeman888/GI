@@ -117,16 +117,7 @@ namespace GTWPF.GasControl.Control
                         return 0;
                     }
                 } },
-                {"Padding" ,new FVariable{
-                    ongetvalue =() => new Glist{new Variable(Padding.Left) ,new Variable(Padding.Top),new Variable(Padding.Right),new Variable(Padding.Bottom)},
-                onsetvalue = (value)=>
-                {
-                    var list = value.IGetCSValue() as Glist;
-                    Padding = new Thickness(
-                        Convert.ToDouble( list[0].value),Convert.ToDouble(list[1].value),Convert.ToDouble(list[2].value),Convert.ToDouble(list[3].value)
-                          );
-                    return 0;
-                }} },
+               
                 {"Background",new FVariable{
                     ongetvalue = ()=>new Gstring(Background.ToString()),
                     onsetvalue = (value)=>
@@ -141,7 +132,7 @@ namespace GTWPF.GasControl.Control
                     Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
                     return 0;
                 } } },
-                {"ScrollTo" ,new Variable(new MFunction(scrollto,this))}
+               
 
 
 
@@ -241,37 +232,7 @@ namespace GTWPF.GasControl.Control
             return this;
         }
 
-        public string poslib { get => "Control"; set { } }
-
-        static IFunction scrollto = new EditText_Function_ScrollToEnd();
-        public class EditText_Function_ScrollToEnd : GI.Function
-        {
-            public EditText_Function_ScrollToEnd()
-            {
-                IInformation = "Scroll this control to end";
-                str_xcname = "text";
-            }
-            public override object Run(Hashtable xc)
-            {
-                var edit = xc.GetCSVariableFromSpeType<EditText>("this", "edittext");
-                var text = xc.GetCSVariable<object>("text").ToString();
-                switch(text)
-                {
-                    case "top":
-                        edit.ScrollToHome();
-                        break;
-                    case "bottom":
-                        edit.ScrollToEnd();
-                        break;
-                    default:
-                        break;
-                        
-                }
-                    return new Variable(0);
-            }
-        }
-
-        
+     
         
 
         #region 实现ISettet

@@ -6,6 +6,7 @@ using GTXAM.GasControl.Control;
 using System.Collections;
 using GI;
 using System.Threading.Tasks;
+using static GI.Function;
 
 namespace GTXAM.GasControl.ContentControl
 {/// <summary>
@@ -101,16 +102,7 @@ namespace GTXAM.GasControl.ContentControl
                 } },
 
 
-                {"Padding" ,new FVariable{
-                    ongetvalue =() => new Glist{new Variable(Padding.Left) ,new Variable(Padding.Top),new Variable(Padding.Right),new Variable(Padding.Bottom)},
-                onsetvalue = (value)=>
-                {
-                    var list = value.IGetCSValue() as Glist;
-                    Padding = new Thickness(
-                        Convert.ToDouble( list[0].value),Convert.ToDouble(list[1].value),Convert.ToDouble(list[2].value),Convert.ToDouble(list[3].value)
-                          );
-                    return 0;
-                }} },
+
                 {"Background",new FVariable{
                     ongetvalue = ()=>new Gstring(BackgroundColor.ToString()),
                     onsetvalue = (value)=>
@@ -120,11 +112,14 @@ namespace GTXAM.GasControl.ContentControl
                     }
                 } },
 
-
+                {"Add",new Variable(new MFunction(add,this)) },
+                {"AddRow",new Variable(new MFunction(addrow,this)) },
+                {"AddColume",new Variable(new MFunction(addcolume,this)) }
 
 
 
             };
+            
             parent = new GTXAM.Control(this);
             #endregion
         }

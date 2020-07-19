@@ -119,7 +119,57 @@ namespace GTXAM.GasControl.ContentControl
                         return 0;
                     }
                 } },
-                
+
+                {"ScrollPosition" ,new FVariable
+                {
+                    ongetvalue = ()=>
+                    {
+                        return new Glist
+                        {
+                            new Variable(ScrollX),
+                            new Variable(ScrollY)
+                        };
+                    },
+                    onsetvalue = (value)=>
+                    {
+                        if(value.IGetType() == "list")
+                        {
+                            var list = value.IGetCSValue() as Glist;
+                            var ho =Convert.ToDouble( list[0].value);
+                            var vo = Convert.ToDouble(list[1].value);
+                            ScrollToAsync(ho,vo,true);
+                        }
+                        else
+                        {
+                            string s_info = value.ToString();
+            switch (s_info)
+            {
+                case "bottom":
+                    ScrollToAsync(();
+                    return 0;
+                case "end":
+                    ScrollToEnd();
+                    return 0;
+                case "home":
+                    ScrollToHome();
+                    return 0;
+                case "leftend":
+                    ScrollToLeftEnd();
+                    return 0;
+                case "rightend":
+                    ScrollToRightEnd();
+                    return 0;
+                case "top":
+                    ScrollToTop();
+                    return 0;
+                default:
+                    break;
+            }
+                        }
+                        return 0;
+                    }
+                } },
+                {"SetContent",new Variable(new MFunction(setcontent,this)) }
 
 
 

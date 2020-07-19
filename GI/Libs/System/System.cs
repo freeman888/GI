@@ -23,10 +23,10 @@ namespace GI
                 myThing.Add("Const", new Variable(new System_Function_Const()));
                 myThing.Add("const", new Variable( new System_Function_Const() ));
                 myThing.Add("GetInterpreterVersion", new Variable(new DFunction { IInformation = "get the version of interpreter", dRun = (xc) => new Variable(GIInfo.GIVersion) }));
-                myThing.Add("System.GetInterpreter", new Variable( new DFunction { IInformation = "get the name of interpreter", dRun = (xc) => new Variable("GI") }));
-                myThing.Add("System.GetPlatform", new Variable( new DFunction { IInformation = "get the paltform", dRun = (xc) => new Variable(GIInfo.Platform) }));
+                myThing.Add("GetInterpreter", new Variable( new DFunction { IInformation = "get the name of interpreter", dRun = (xc) => new Variable("GI") }));
+                myThing.Add("GetPlatform", new Variable( new DFunction { IInformation = "get the paltform", dRun = (xc) => new Variable(GIInfo.Platform) }));
                 #region 获取时间
-         myThing.Add("System.GetTime", new Variable( new DFunction
+         myThing.Add("GetTime", new Variable( new DFunction
                 {
                     IInformation = @"get the time.
 [val(string)]:

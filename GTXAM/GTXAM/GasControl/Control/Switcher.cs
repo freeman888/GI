@@ -121,6 +121,7 @@ namespace GTXAM.GasControl.Control
 
 
             };
+            
             parent = new GTXAM.Control(this);
             #endregion
         }

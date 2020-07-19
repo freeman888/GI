@@ -8,7 +8,7 @@ namespace GTXAM
     partial class Lib
     {
 
-        class _function_Thread_override_
+        public class _function_Thread_override_
         {
             internal static void Load()
             {

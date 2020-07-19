@@ -13,8 +13,8 @@ namespace GI
         {
             public Socket_Lib()
             {
-                myThing.Add("Socket.HttpGet",new Variable( new Socket_Function_HttpGet()));
-                myThing.Add("Socket.HttpPost",new Variable( new Socket_Function_HttpPost()));
+                myThing.Add("HttpGet",new Variable( new Socket_Function_HttpGet()));
+                myThing.Add("HttpPost",new Variable( new Socket_Function_HttpPost()));
                 
             }
 

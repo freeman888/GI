@@ -23,7 +23,7 @@ namespace GTXAM
                 Thread.Sleep(10);
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    _function_Thread_override_.Load();
+                    Lib._function_Thread_override_.Load();
 
                     GI.Gasoline.StartGas(new System.Collections.Generic.Dictionary<string, GI.Lib.ILib> {
                      {"IO",new Lib.IO_Lib() },

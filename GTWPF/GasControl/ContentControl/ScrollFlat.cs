@@ -103,14 +103,7 @@ namespace GTWPF.GasControl.ContentControl
                     }
                 } },
                 
-                {"FontSize",new FVariable{
-                    ongetvalue = ()=>new Gnumber(FontSize),
-                    onsetvalue = (value)=>
-                    {
-                        FontSize = Convert.ToDouble(value);
-                        return 0;
-                    }
-                } },
+               
                 {"Padding" ,new FVariable{
                     ongetvalue =() => new Glist{new Variable(Padding.Left) ,new Variable(Padding.Top),new Variable(Padding.Right),new Variable(Padding.Bottom)},
                 onsetvalue = (value)=>
@@ -129,12 +122,7 @@ namespace GTWPF.GasControl.ContentControl
                         return 0;
                     }
                 } },
-                {"Foreground",new FVariable{ ongetvalue =()=>new Gstring(Foreground.ToString()),
-                onsetvalue = (value)=>
-                {
-                    Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
-                    return 0;
-                } } },
+               
 
                 {"ScrollPosition" ,new FVariable
                 {
@@ -185,8 +173,7 @@ namespace GTWPF.GasControl.ContentControl
                         }
                         return 0;
                     }
-                }
-                },
+                } },
                 {"SetContent",new Variable(new MFunction(setcontent,this)) }
                 
 

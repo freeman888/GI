@@ -18,7 +18,7 @@ namespace GTXAM.GasControl.Control
         {
             HorizontalOptions = LayoutOptions.Center;
             VerticalOptions = LayoutOptions.Center;
-
+            
             #region
             members = new Dictionary<string, Variable>
             {
@@ -129,7 +129,6 @@ namespace GTXAM.GasControl.Control
                     TextColor = (Color)new ColorTypeConverter().ConvertFromInvariantString(value.ToString());
                     return 0;
                 } } },
-
 
 
 
@@ -351,6 +350,8 @@ namespace GTXAM.GasControl.Control
         #endregion
 
         #region
+        
+
         Dictionary<string, Variable> members = new Dictionary<string, Variable>();
         public Variable IGetMember(string name)
         {
@@ -366,5 +367,6 @@ namespace GTXAM.GasControl.Control
         }
 
         #endregion
+
     }
 }
