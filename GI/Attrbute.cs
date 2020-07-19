@@ -6,13 +6,7 @@ namespace GI
 {
     public class Attribute
     {
-        /// <summary>
-        /// 标志含有子语句的语句
-        /// </summary>
-        internal class HasChildSentencesAttribute : System.Attribute
-        {
-        }
-
+        
         internal class GasTypeAttribute: System. Attribute
         {
             private static List<string> types = new List<string>();

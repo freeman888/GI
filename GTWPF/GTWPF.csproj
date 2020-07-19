@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="GasControl\ContentControl\ScrollFlat.cs" />
     <Compile Include="GasControl\ContentControl\GridFlat.cs" />
+    <Compile Include="GasControl\Control.cs" />
     <Compile Include="GasControl\Control\Bubble.cs" />
     <Compile Include="GasControl\Control\EditText.cs" />
     <Compile Include="GasControl\Control\IGetter.cs" />
@@ -68,11 +69,7 @@
     <Compile Include="GasControl\Control\Switcher.cs" />
     <Compile Include="GasControl\Control\Tip.cs" />
     <Compile Include="GasControl\Page\Page.cs" />
-    <Compile Include="GTWPFFunctions\_function_Control.cs" />
-    <Compile Include="GTWPFFunctions\_function_IO\Input.xaml.cs">
-      <DependentUpon>Input.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Lib\Control\Class1.cs" />
+    <Compile Include="Lib\Control\Control.cs" />
     <Compile Include="Lib\IO\Input.xaml.cs">
       <DependentUpon>Input.xaml</DependentUpon>
     </Compile>
@@ -106,10 +103,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="GTWPFFunctions\_function_IO\Input.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Lib\IO\Input.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

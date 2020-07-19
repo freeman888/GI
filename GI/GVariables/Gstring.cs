@@ -15,10 +15,10 @@ namespace GI
             GType.Sign(type);
         }
 
-        IFunction find = new String_Function_Find();
-        IFunction split = new String_Function_Find();
-        IFunction sub = new String_Function_SubString();
-        IFunction replace = new DFunction
+        static IFunction find = new String_Function_Find();
+        static IFunction split = new String_Function_Find();
+        static IFunction sub = new String_Function_SubString();
+        static IFunction replace = new DFunction
         {
             IInformation = "replace the old string with the new in the str",
             str_xcname = "old,new",

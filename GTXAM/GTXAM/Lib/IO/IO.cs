@@ -1,27 +1,28 @@
-﻿using System;
+﻿using GI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using GI;
 using Xamarin.Forms;
 using static GI.Function;
+using static GI.Lib;
 
-namespace GTXAM.GTXAMFunctions
+namespace GTXAM
 {
-    public partial class GTXAMFunction
+    partial class Lib
     {
-        public class IO_Head:Head
+        public class IO_Lib:ILib
         {
-            public override void AddFunctions(Dictionary<string, IFunction> h)
+            public IO_Lib()
             {
-                h.Add("IO.Write", new IO_Function_Write());
-                h.Add("IO.Tip", new IO_Function_Tip());
-                h.Add("IO.WriteLine", new IO_Function_WriteLine());
-                h.Add("IO.Input", new IO_Function_Input());
+                myThing.Add("Write", new Variable(new IO_Function_Write()));
+                myThing.Add("WriteLine", new Variable(new IO_Function_WriteLine()));
+                myThing.Add("Input", new Variable(new IO_Function_Input()));
+                myThing.Add("Message", new Variable(new IO_Function_Tip()));
             }
 
-            public class IO_Function_Input:AFunction
+            public class IO_Function_Input : AFunction
             {
                 public IO_Function_Input()
                 {
@@ -41,14 +42,14 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                     await Device.InvokeOnMainThreadAsync(async () =>
                     {
                         if (list.Count == 0)
-                            ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync("Input", "",initialValue:""));
+                            ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync("Input", "", initialValue: ""));
                         else if (list.Count == 1)
-                            ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync(list[0].value.IGetCSValue().ToString(), "",initialValue:""));
+                            ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync(list[0].value.IGetCSValue().ToString(), "", initialValue: ""));
                         else if (list.Count == 2)
-                            ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync(list[0].value.IGetCSValue().ToString(), list[1].value.IGetCSValue().ToString(),initialValue:""));
+                            ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync(list[0].value.IGetCSValue().ToString(), list[1].value.IGetCSValue().ToString(), initialValue: ""));
                         else throw new Exceptions.RunException(Exceptions.EXID.参数错误);
                     });
-                    
+
                     return ret;
                 }
             }
@@ -67,7 +68,7 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                     }
                     catch
                     {
-                        throw new Exceptions.RunException(Exceptions.EXID.逻辑错误,"控制台已被销毁");
+                        throw new Exceptions.RunException(Exceptions.EXID.逻辑错误, "控制台已被销毁");
                     }
                     return new Variable(this);
                 }
@@ -111,6 +112,14 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                     return new Variable(0);
                 }
             }
+
+            #region
+            public Dictionary<string, Variable> myThing { get; set; } = new Dictionary<string, Variable>();
+            public Dictionary<string, Variable> otherThing { get; set; } = new Dictionary<string, Variable>();
+
+            public List<string> waittoadd { get; set; } = new List<string>();
+            #endregion
         }
     }
+    
 }

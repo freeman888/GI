@@ -128,107 +128,52 @@ namespace GI
         }
 
 
+        public class New_Creat_Function : Function
+        {
+            /// <summary>
+            /// 自己所在的lib
+            /// </summary>
+            public Sentence[] sentences;
+            public string name;
 
-        ///// <summary>
-        ///// 函数启动器（安全）
-        ///// </summary>
-        ///// <param name="funname"></param>
-        ///// <param name="variable"></param>
-        ///// <param name="ret"></param>
-        ///// 
-        //public static void FuncStarter(string funname, Hashtable variable, out Variable ret, params Variable[] variables)
-        //{
 
-        //    try
-        //    {
-        //        IFunction function = ((Gasoline.sarray_Sys_Variables[funname] as Variable).value as IFunction);
-        //        if (variables.Length != 0)
-        //        {
-        //            variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
-        //        }
-        //        ret = (Variable)function.IRun(variable);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ret = new Variable(0);
-        //        Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
-        //    }
-        //}
+            public New_Creat_Function(XmlNode code, string poslib)
+            {
+                this.poslib = poslib;
+                name = code.GetAttribute("funname");
+                str_xcname = code.GetAttribute("params");
+                isreffunction = Convert.ToBoolean(code.GetAttribute("isref"));
+                Iisasync = false;
+                List<Sentence> list = Sentence.GetSentencesFormXml(code.ChildNodes);
 
-        ///// <summary>
-        ///// 函数直接启动器（安全）
-        ///// </summary>
-        ///// <param name="function"></param>
-        ///// <param name="variable"></param>
-        ///// <param name="ret"></param>
-        //public static void FuncStarter(IFunction function, Hashtable variable, out Variable ret,params Variable[] variables)
-        //{
-        //    try
-        //    {
-        //        if (variables.Length != 0)
-        //        {
-        //            variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
-        //        }
-        //        ret = (Variable)function.IRun(variable);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ret = new Variable(0);
-        //        Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
-        //    }
-        //}
+                sentences = list.ToArray();
 
-        ///// <summary>
-        ///// 异步函数启动 从函数名
-        ///// </summary>
-        ///// <param name="funname"></param>
-        ///// <param name="variable"></param>
-        ///// <returns></returns>
-        //public async static Task<object>  AsyncFuncStarter(string funname, Hashtable variable,params Variable[] variables)
-        //{
-        //    IFunction function = ((Gasoline.sarray_Sys_Variables[funname] as Variable).value as IFunction);
-            
-        //    object ret;
-        //    try
-        //    {
-        //        if (variables.Length != 0)
-        //        {
-        //            variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
-        //        }
-        //        ret = await function.IAsyncRun(variable);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ret = new Task<object>(() => new Variable(0));
-        //        Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
-        //    }
-        //    return ret;
-        //}
 
-        ///// <summary>
-        ///// 异步函数启动 从函数
-        ///// </summary>
-        ///// <param name="function"></param>
-        ///// <param name="variable"></param>
-        ///// <returns></returns>
-        //public async static Task<object>  AsyncFuncStarter(IFunction function, Hashtable variable,params Variable[] variables)
-        //{
-        //    Variable ret;
-        //    try
-        //    {
-        //        if (variables.Length != 0)
-        //        {
-        //            variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables));
-        //        }
-        //        ret =   (Variable) await function.IAsyncRun(variable);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ret = new Variable(0);
-        //        Gdebug.ThrowWrong("[-] 错误" + Environment.NewLine + ex.Message);
-        //    }
-        //    return ret;
-        //}
+
+
+            }
+
+            public  override object Run(Hashtable htxc)
+            {
+                try
+                {
+                    foreach (Sentence s in sentences)
+                    {
+                         s.Run(htxc).Wait();
+                    }
+                }
+                catch (Exceptions.ReturnException ex)
+                {
+                    return ex.toreturn;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                return new Variable(0);
+            }
+        }
+
 
         public static void NewFuncStarter(IFunction function, out Variable ret, params Variable[] variables)
         {

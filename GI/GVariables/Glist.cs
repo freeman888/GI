@@ -7,7 +7,7 @@ using static GI.Function;
 
 namespace GI
 {
-    public class Glist : List<Variable>,IOBJ,IFunction
+    public class Glist : List<Variable>, IOBJ, IFunction
     {
         public Glist()
         {
@@ -39,22 +39,22 @@ namespace GI
         public object IRun(Hashtable xc)
         {
             var param = xc.GetCSVariable<Glist>("params");
-            if(param.Count == 1)
+            if (param.Count == 1)
             {
                 return this[Convert.ToInt32(param[0].value)];
             }
-            else if(param.Count == 0)
+            else if (param.Count == 0)
             {
-                return new Variable(new DFunction() { str_xcname = "obj", dRun = (_xc) => { Add ( new Variable(( _xc["obj"] as Variable).value)); return new Variable(this); } });
+                return new Variable(new DFunction() { str_xcname = "obj", dRun = (_xc) => { Add(new Variable((_xc["obj"] as Variable).value)); return new Variable(this); } });
             }
-            else if(param.Count == 2)
+            else if (param.Count == 2)
             {
                 int index = Convert.ToInt32(param[0].value);
                 Variable obj = param[1];
                 this[index] = obj;
                 return new Variable(this);
             }
-            throw new Exceptions.RunException( Exceptions.EXID.参数错误,"参数错误");
+            throw new Exceptions.RunException(Exceptions.EXID.参数错误, "参数错误");
         }
 
         public bool Iisasync { get { return false; } set { } }
@@ -63,7 +63,7 @@ namespace GI
         {
             throw new Exception();
         }
-        public string poslib { get ; set ; }
+        public string poslib { get; set; }
         #endregion
         #region 实现Itype
         static Glist()
@@ -90,7 +90,7 @@ namespace GI
                 return members[name];
             else return null;
         }
-       
+
 
         public IOBJ IGetParent()
         {
@@ -98,7 +98,7 @@ namespace GI
         }
 
 
-        IFunction get = new List_Function_Get();
+        static IFunction get = new List_Function_Get();
         public class List_Function_Get : Function
         {
             public List_Function_Get()
@@ -116,7 +116,7 @@ namespace GI
             }
         }
 
-        IFunction add = new List_Function_Add();
+        static IFunction add = new List_Function_Add();
         public class List_Function_Add : Function
         {
             public List_Function_Add()
@@ -132,7 +132,7 @@ namespace GI
             }
 
         }
-        IFunction find = new List_Function_Find();
+        static IFunction find = new List_Function_Find();
         public class List_Function_Find : Function
         {
             public List_Function_Find()
@@ -153,7 +153,7 @@ when three
             {
                 var param = xc.GetCSVariable<Glist>("params");
 
-                var list = xc.GetCSVariableFromSpeType<Glist>("this","list");
+                var list = xc.GetCSVariableFromSpeType<Glist>("this", "list");
                 Variable obj = param[0];
                 if (param.Count == 1)
                 {
@@ -177,7 +177,7 @@ when three
                 else throw new Exceptions.RunException(Exceptions.EXID.参数错误, "参数错误");
             }
         }
-        IFunction remove = new List_Function_Remove();
+        static IFunction remove = new List_Function_Remove();
         public class List_Function_Remove : Function
         {
             public List_Function_Remove()
@@ -187,7 +187,7 @@ when three
             }
             public override object Run(Hashtable xc)
             {
-                var list = xc.GetCSVariableFromSpeType<Glist>("this","list");
+                var list = xc.GetCSVariableFromSpeType<Glist>("this", "list");
                 var tor = xc["obj"] as Variable;
                 int tori = -1;
                 for (int i = 1; i < list.Count; i++)
@@ -202,7 +202,7 @@ when three
                 return new Variable(0);
             }
         }
-        IFunction removeat = new List_Function_RemoveAt();
+        static IFunction removeat = new List_Function_RemoveAt();
         public class List_Function_RemoveAt : Function
         {
             public List_Function_RemoveAt()
@@ -212,7 +212,7 @@ when three
             }
             public override object Run(Hashtable xc)
             {
-                var res = xc.GetCSVariableFromSpeType<Glist>("list","list");
+                var res = xc.GetCSVariableFromSpeType<Glist>("list", "list");
                 int i = Convert.ToInt32(xc.GetVariable<object>("index"));
                 res.RemoveAt(i);
                 return new Variable(0);
@@ -227,7 +227,7 @@ when three
 [return(number)]:length",
             dRun = (_xc) =>
             {
-                return new Variable(_xc.GetCSVariableFromSpeType<Glist>("this","list").Count);
+                return new Variable(_xc.GetCSVariableFromSpeType<Glist>("this", "list").Count);
             }
         };
 

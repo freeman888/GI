@@ -2,34 +2,39 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
+using Xamarin.Forms;
+using static GI.Lib;
 
-namespace GTWPF
+namespace GTXAM
 {
-    partial class WPFLib
+  
+    partial class Lib
     {
-        public class Page_Lib:GI.Lib.ILib
+        public class Page_Lib:ILib
         {
+
             public Page_Lib()
             {
+
                 myThing.Add("Page", new Variable(new PageClassTemplate()));
                 myThing.Add("PageGo", new Variable(new Page_Function_GotoPage()));
                 myThing.Add("PageReturn", new Variable(new Page_Function_Return()));
                 myThing.Add("PageLoad", new Variable(new Page_Function_Load()));
             }
-            public class PageClassTemplate:GClassTemplate
+
+
+            public class PageClassTemplate : GClassTemplate
             {
-                public PageClassTemplate():base("page","Page")
+                public PageClassTemplate() : base("page", "Page")
                 {
                     Istr_xcname = "title";
                     csctor = (xc) =>
                     {
                         string title = Variable.GetTrueVariable<object>(xc, "title").ToString();
-                        GasControl.Page.GasPage gasPage = new GasControl.Page.GasPage(title);
-                        gasPage.Background = Brushes.White;
+                        GasControl.Page.Page gasPage = new GasControl.Page.Page(title);
+                        gasPage.BackgroundColor = Xamarin.Forms.Color.White;
                         return gasPage;
                     };
                 }
@@ -37,66 +42,72 @@ namespace GTWPF
 
             }
 
-            //静态函数
             public class Page_Function_GotoPage : Function
             {
+
                 public Page_Function_GotoPage()
                 {
-                    IInformation = "go to this page";
                     str_xcname = "page";
                 }
                 public override object Run(Hashtable xc)
                 {
+                    GasControl.Page.Page page = xc.GetCSVariableFromSpeType<GasControl.Page.Page>("page", "page");
+                    System.Diagnostics.Debug.WriteLine(page.Title);
 
-                    MainWindow mainWindow = MainWindow.MainApp;
-                    if (mainWindow.Pages.Count == 0)
+                    Task.Run(() =>
                     {
-                        throw new Exceptions.RunException(Exceptions.EXID.逻辑错误, "请先通过  Page.LoadApp(page)   方法确定主页面，然后再使用本方法");
-                    }
-                    lock (mainWindow)
-                    {
-                        GasControl.Page.GasPage page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("page", "page");
-                        mainWindow.GotoPage(page);
-                    }
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            await Task.Delay(20);
+                            //await (App.MainApp.MainPage as NavigationPage).CurrentPage.Navigation.PushAsync(page);
+                            await (App.MainApp.MainPage as NavigationPage).Navigation.PushAsync(page);
+                        });
+                    });
                     return new Variable(0);
                 }
             }
-            public class Page_Function_Load : Function
-            {
-                public Page_Function_Load()
-                {
-                    IInformation = "use this page as a root page";
-                    str_xcname = "page";
-                }
-                public override object Run(Hashtable xc)
-                {
 
-                    MainWindow mainWindow = MainWindow.MainApp;
-                    if (mainWindow.Pages.Count > 1)
-                    {
-                        throw new Exceptions.RunException(Exceptions.EXID.逻辑错误, "请勿多次调用本方法");
-                    }
-                    GasControl.Page.GasPage page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("page", "page");
-                    mainWindow.GotoPage(page);
-
-                    return new Variable(0);
-                }
-            }
             public class Page_Function_Return : Function
             {
                 public Page_Function_Return()
                 {
-                    IInformation = "return the last page";
                     str_xcname = "";
                 }
                 public override object Run(Hashtable xc)
                 {
-                    MainWindow mainWindow = MainWindow.MainApp;
-                    GasControl.Page.GasPage page = mainWindow.Return();
-                    return new Variable(page);
+                    var consolePage = App.MainApp.MainPage;
+                    Page p = consolePage.Navigation.PopAsync().Result;
+                    return new Variable(p);
                 }
             }
 
+
+            public class Page_Function_Load : Function
+            {
+                public Page_Function_Load()
+                {
+                    str_xcname = "page";
+                }
+                public override object Run(Hashtable xc)
+                {
+                    GasControl.Page.Page page = xc.GetCSVariableFromSpeType<GasControl.Page.Page>("page", "page");
+                    if ((App.MainApp.MainPage as NavigationPage).CurrentPage.GetType() != typeof(ConsolePage))
+                    {
+                        throw new Exceptions.RunException(Exceptions.EXID.逻辑错误, "请勿多次调用本方法");
+                    }
+
+                    Task.Run(() =>
+                    {
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+
+                            App.MainApp.MainPage = new NavigationPage(page);
+                        });
+                    });
+
+                    return new Variable(0);
+                }
+            }
             #region
             public Dictionary<string, Variable> myThing { get; set; } = new Dictionary<string, Variable>();
             public Dictionary<string, Variable> otherThing { get; set; } = new Dictionary<string, Variable>();

@@ -43,7 +43,7 @@ namespace GI
 
             public object IRun(Hashtable xc)
             {
-                throw new NotImplementedException();
+                return new Variable(0);
             }
 
             public virtual Task<object> Run(Hashtable xc)

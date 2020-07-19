@@ -167,7 +167,9 @@ namespace GI
                         {
                             var x_cls = libcontent;
                             GClassTemplate gClassTemplate = new GClassTemplate(x_cls.GetAttribute("name"), libname);
+                            var parent = x_cls.GetAttribute("parent");
                             gClassTemplate.LoadContent(x_cls.ChildNodes);
+                            gClassTemplate.parentclassname = parent;
                             libs[libname].myThing.Add(libcontent.GetAttribute("name"), new Variable(gClassTemplate));
                         }
                         else if (libcontent.Name == "deffun")

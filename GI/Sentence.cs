@@ -113,7 +113,6 @@ namespace GI
                 }
             }
         }
-        [Attribute.HasChildSentences]
         public class New_Sentence_if : Sentence
         {
             public string boolname;
@@ -231,7 +230,7 @@ namespace GI
             public New_Sentence_Usefunction(XmlNode me)
             {
                 mycode = me.GetAttribute("str");
-                resulter = new Variable.Resulter(me.FirstChild as XmlNode);
+                resulter = new Variable.Resulter(me.FirstChild);
             }
             public async override Task Run(Hashtable h)
             {
@@ -245,7 +244,6 @@ namespace GI
                 }
             }
         }
-        [Attribute.HasChildSentences]
         public class New_Sentence_while : Sentence
         {
             public Variable.Resulter resulter;
@@ -284,7 +282,6 @@ namespace GI
                 }
             }
         }
-        [Attribute.HasChildSentences]
         public class New_Sentence_try : Sentence
         {
             public string exname;
@@ -337,7 +334,6 @@ namespace GI
                 }
             }
         }
-        [Attribute.HasChildSentences]
         public class New_Sentence_foreach : Sentence
         {
             Variable.Resulter resulter;

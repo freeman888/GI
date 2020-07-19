@@ -15,6 +15,11 @@ namespace GTWPF
             public Control_Lib()
             {
                 myThing.Add("Bubble",new Variable( new BubbleClassTemplate()));
+                myThing.Add("Tip", new Variable(new TipClassTemplate()));
+                myThing.Add("EditText", new Variable(new EditTextTemplate()));
+                myThing.Add("GridFlat", new Variable(new GridClassTemplate()));
+                myThing.Add("Switcher", new Variable(new SwitcherClassTemplate()));
+                myThing.Add("ScrollFlat", new Variable(new ScrollFlatTemplate()));
             }
 
 
@@ -35,7 +40,12 @@ namespace GTWPF
             {
                 public TipClassTemplate():base("tip","Control")
                 {
-
+                    Istr_xcname = "name";
+                    csctor = (xc) =>
+                    {
+                        string text = Variable.GetTrueVariable<object>(xc, "name").ToString();
+                        return new GasControl.Control.Tip() { Name = text };
+                    };
                 } 
             }
 
@@ -43,7 +53,12 @@ namespace GTWPF
             {
                 public EditTextTemplate():base("edittext","Control")
                 {
-
+                    Istr_xcname = "name";
+                    csctor = (xc) =>
+                    {
+                        string text = Variable.GetTrueVariable<object>(xc, "name").ToString();
+                        return new GasControl.Control.EditText() { Name = text };
+                    };
                 }
             }
 
@@ -51,7 +66,12 @@ namespace GTWPF
             {
                 public GridClassTemplate():base("gridflat","Control")
                 {
-
+                    Istr_xcname = "name";
+                    csctor = (xc) =>
+                    {
+                        string text = Variable.GetTrueVariable<object>(xc, "name").ToString();
+                        return new GasControl.ContentControl.GridFlat() { Name = text };
+                    };
                 }
             }
 
@@ -59,7 +79,12 @@ namespace GTWPF
             {
                 public SwitcherClassTemplate():base("switcher","Control")
                 {
-
+                    Istr_xcname = "name";
+                    csctor = (xc) =>
+                    {
+                        string text = Variable.GetTrueVariable<object>(xc, "name").ToString();
+                        return new GasControl.Control.Switcher() { Name = text };
+                    };
                 }
             }
 
@@ -67,7 +92,12 @@ namespace GTWPF
             {
                 public ScrollFlatTemplate():base("scrollflat","Control")
                 {
-
+                    Istr_xcname = "name";
+                    csctor = (xc) =>
+                    {
+                        string text = Variable.GetTrueVariable<object>(xc, "name").ToString();
+                        return new GasControl.ContentControl.ScrollFlat() { Name = text };
+                    };
                 }
             }
 

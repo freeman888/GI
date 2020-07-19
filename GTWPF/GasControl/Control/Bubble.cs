@@ -26,7 +26,7 @@ namespace GTWPF.GasControl.Control
             VerticalAlignment = VerticalAlignment.Center;
             Click += Bubble_Click;
             Padding = new Thickness(12, 7, 12, 7);
-
+            #region
             members = new Dictionary<string, Variable>
             {
                 {"Width" ,new FVariable{
@@ -128,7 +128,7 @@ namespace GTWPF.GasControl.Control
                           );
                     return 0;
                 }} },
-                {"BackgroundColor",new FVariable{
+                {"Background",new FVariable{
                     ongetvalue = ()=>new Gstring(Background.ToString()),
                     onsetvalue = (value)=>
                     {
@@ -136,19 +136,28 @@ namespace GTWPF.GasControl.Control
                         return 0;
                     }
                 } },
-                {"ForegroundColor",new FVariable{ ongetvalue =()=>new Gstring(Foreground.ToString()),
+                {"Foreground",new FVariable{ ongetvalue =()=>new Gstring(Foreground.ToString()),
                 onsetvalue = (value)=>
                 {
                     Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
                     return 0;
                 } } },
-
+                {"Clickevent",new FVariable
+                {
+                    ongetvalue = ()=>event_click as IOBJ,
+                    onsetvalue = (value)=>
+                    {
+                        event_click = value;
+                        return 0;
+                    }
+                } }
 
 
 
 
             };
-
+            parent = new GTWPF.Control(this);
+            #endregion
         }
         private async void Bubble_Click(object sender, RoutedEventArgs e)
         {
@@ -161,12 +170,9 @@ namespace GTWPF.GasControl.Control
             {
 
                 IFunction function = event_click as IFunction;
-                Hashtable hashtable = Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables);
                 string[] sss = function.Istr_xcname.Split(',');
                 if (sss.Length == 2)
                 {
-                    hashtable.Add(sss[0], new Variable(p));
-                    hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
                     await Function.NewAsyncFuncStarter(function, new Variable(p), new Variable(new Glist { new Variable(this), new Variable(e) }));
                 }
 
@@ -401,9 +407,10 @@ namespace GTWPF.GasControl.Control
             else return null;
         }
 
+        GTWPF.Control parent;
         public IOBJ IGetParent()
         {
-            return null;
+            return parent;
         }
 
         #endregion
