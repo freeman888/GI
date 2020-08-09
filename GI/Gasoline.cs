@@ -6,6 +6,8 @@ using System.Threading;
 using System.Diagnostics.Tracing;
 using System.Net.Http.Headers;
 using static GI.Lib;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace GI
 {
@@ -72,28 +74,32 @@ namespace GI
 
         //}
 
-        public async static void StartGas(Dictionary<string,ILib> heads,XmlDocument codes)
+        /// <summary>
+        /// 拉起main请单另拉起,加载用户代码请单另加载
+        /// </summary>
+        /// <param name="heads"></param>
+        /// <param name="codes"></param>
+        public  static void StartGas(Dictionary<string,ILib> heads)
         {
             //1加载所有通用Lib
             libs.Add("System", new System_Lib());
-            libs.Add("String",new String_Lib());
+            libs.Add("String", new String_Lib());
             libs.Add("Math", new Math_Lib());
             libs.Add("List", new List_Lib());
             libs.Add("Socket", new Socket_Lib());
             libs.Add("Thread", new Thread_Lib());
+            libs.Add("File", new File_Lib());
             //2加载平台Lib
             foreach (var i in heads)
                 libs.Add(i.Key, i.Value);
 
-            //加载用户代码
-            Getfunandvar(codes);
-
+            
             //3加载库依赖
-            foreach(var lib in libs)
+            foreach (var lib in libs)
             {
-                foreach(string s_delib in lib.Value.waittoadd)
+                foreach (string s_delib in lib.Value.waittoadd)
                 {
-                    
+
                     var delib = libs[s_delib];
                     foreach (var i in delib.myThing)
                         lib.Value.otherThing.Add(i.Key, i.Value);
@@ -101,22 +107,29 @@ namespace GI
                 lib.Value.otherThing.Add("true", new Variable(true));
                 lib.Value.otherThing.Add("false", new Variable(false));
             }
+            //await StartMain();
+
+
+        }
+
+        public static async Task StartMain()
+        {
 
             //4拉起Main
             IFunction mainfunc = null;
-            foreach(var lib in libs)
+            foreach (var lib in libs)
             {
-                foreach(var libmems in lib.Value.myThing)
+                foreach (var libmems in lib.Value.myThing)
                 {
-                    if(libmems.Key == "Main")
+                    if (libmems.Key == "Main")
                     {
                         var res = libmems.Value.value.IGetCSValue();
                         mainfunc = libmems.Value.value.IGetCSValue() as IFunction;
                     }
                 }
             }
-            
-            if(mainfunc != null)
+
+            if (mainfunc != null)
             {
                 //string str_name = ((sarray_Sys_Variables["Main"] as Variable).value as IFunction).Istr_xcname;
                 string[] vs = Environment.GetCommandLineArgs();
@@ -125,24 +138,24 @@ namespace GI
                     arrayList.Add(new Variable(vv));
                 await Function.NewAsyncFuncStarter(mainfunc, new Variable(arrayList));
             }
-                
+        }
 
+        public static void Loadgasxml(XmlDocument codes)
+        {
+            //加载用户代码
+            Getfunandvar(codes);
 
-
-            //Hashtable ht = Variable.GetOwnVariables(sarray_Sys_Variables);
-            //string str_name = ((sarray_Sys_Variables["Main"] as Variable).value as IFunction).Istr_xcname;
-            //string[] vs = Environment.GetCommandLineArgs();
-            //var arrayList = new Glist();
-            //foreach (string vv in vs)
-            //    arrayList.Add(new Variable(vv));
-            //ht.Add(str_name, new Variable((arrayList)));
-            //await Function.AsyncFuncStarter("Main", ht);
         }
 
         static void Getfunandvar(XmlDocument codes)
         {
             if (!codes.HasChildNodes) Gdebug.WriteLine("bugging");
-            XmlNode root = codes.ChildNodes[1];
+            XmlNode root = null;
+            foreach(XmlNode i in codes.ChildNodes)
+            {
+                if (i.Name == "code")
+                    root = i;
+            }
             int minversion = Convert.ToInt32(root.Attributes["minversion"].InnerText);
             if (minversion > GIInfo.GIVersion) Gdebug.ThrowWrong("version not support");
             foreach(XmlNode i in root.ChildNodes)

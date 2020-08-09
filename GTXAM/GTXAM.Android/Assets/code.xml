@@ -1,160 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<code minversion="1902">
-  <get value="Page" />
-  <get value="IO" />
-  <get value="Math" />
-  <get value="Control" />
-  <get value="System" />
-  <get value="String" />
-  <get value="List" />
-  <get value="Alien" />
-  <deffun funname="Main" params="args" isref="False">
-    <getres_s str="open  = false;">
-      <arg value="open" con="var" />
-      <arg value="false" con="var" />
-    </getres_s>
-    <var_s varname="page" str="var page = Page.Creat(&quot;page1&quot;);" />
-    <getres_s str="var page = Page.Creat(&quot;page1&quot;);">
-      <arg value="page" con="var" />
-      <arg con="fun">
-        <fun>
-          <arg value="Page.Creat" con="var" />
-        </fun>
-        <params>
-          <arg value="page1" con="str" />
-        </params>
-      </arg>
-    </getres_s>
-    <var_s varname="bubble" str="var bubble = Control.Bubble.Creat(&quot;b&quot;);" />
-    <getres_s str="var bubble = Control.Bubble.Creat(&quot;b&quot;);">
-      <arg value="bubble" con="var" />
-      <arg con="fun">
-        <fun>
-          <arg value="Control.Bubble.Creat" con="var" />
-        </fun>
-        <params>
-          <arg value="b" con="str" />
-        </params>
-      </arg>
-    </getres_s>
-    <usefun_s str="bubble(&quot;text&quot;,&quot;clickme!&quot;);">
-      <arg con="fun">
-        <fun>
-          <arg value="bubble" con="var" />
-        </fun>
-        <params>
-          <arg value="text" con="str" />
-          <arg value="点点看!" con="str" />
-        </params>
-      </arg>
-    </usefun_s>
-    <var_s varname="gd" str="var gd = Control.GridFlat.Creat(&quot;gf&quot;);" />
-    <getres_s str="var gd = Control.GridFlat.Creat(&quot;gf&quot;);">
-      <arg value="gd" con="var" />
-      <arg con="fun">
-        <fun>
-          <arg value="Control.GridFlat.Creat" con="var" />
-        </fun>
-        <params>
-          <arg value="gf" con="str" />
-        </params>
-      </arg>
-    </getres_s>
-    <usefun_s str="bubble(&quot;clickevent&quot;,Click);">
-      <arg con="fun">
-        <fun>
-          <arg value="bubble" con="var" />
-        </fun>
-        <params>
-          <arg value="clickevent" con="str" />
-          <arg value="Click" con="var" />
-        </params>
-      </arg>
-    </usefun_s>
-    <usefun_s str="gd()(bubble,0,0);">
-      <arg con="fun">
-        <fun>
+<code minversion="2007">
+  <lib name="Program">
+    <get value="IO" />
+    <get value="Control" />
+    <get value="Page" />
+    <deffun funname="Main" params="args" isref="False">
+      <var_s varname="page" str="var page = MainPage(&quot;MainPage&quot;);" />
+      <getres_s str="var page = MainPage(&quot;MainPage&quot;);">
+        <arg value="page" con="var" />
+        <arg con="fun">
+          <fun>
+            <arg value="MainPage" con="var" />
+          </fun>
+          <params>
+            <arg value="MainPage" con="str" />
+          </params>
+        </arg>
+      </getres_s>
+      <usefun_s str="PageLoad(page);">
+        <arg con="fun">
+          <fun>
+            <arg value="PageLoad" con="var" />
+          </fun>
+          <params>
+            <arg value="page" con="var" />
+          </params>
+        </arg>
+      </usefun_s>
+    </deffun>
+    <cls name="MainPage" parent="Page">
+      <member value="bubble" />
+      <member value="tip" />
+      <memfun funname="init" params="title" isref="False" isstatic="False">
+        <getres_s str="this:bubble = Bubble(&quot;bu&quot;);">
+          <arg value="bubble" con="mem">
+            <arg value="this" con="var" />
+          </arg>
           <arg con="fun">
             <fun>
-              <arg value="gd" con="var" />
+              <arg value="Bubble" con="var" />
             </fun>
-            <params />
+            <params>
+              <arg value="bu" con="str" />
+            </params>
           </arg>
-        </fun>
-        <params>
-          <arg value="bubble" con="var" />
-          <arg value="0" con="num" />
-          <arg value="0" con="num" />
-        </params>
-      </arg>
-    </usefun_s>
-    <usefun_s str="page()(gd);">
-      <arg con="fun">
-        <fun>
+        </getres_s>
+        <getres_s str="this:bubble:Text = &quot;Click me!&quot;;">
+          <arg value="Text" con="mem">
+            <arg value="bubble" con="mem">
+              <arg value="this" con="var" />
+            </arg>
+          </arg>
+          <arg value="Click me!" con="str" />
+        </getres_s>
+        <getres_s str="this:bubble:Clickevent = this:BuClick;">
+          <arg value="Clickevent" con="mem">
+            <arg value="bubble" con="mem">
+              <arg value="this" con="var" />
+            </arg>
+          </arg>
+          <arg value="BuClick" con="mem">
+            <arg value="this" con="var" />
+          </arg>
+        </getres_s>
+        <usefun_s str="this:SetContent(this:bubble);">
           <arg con="fun">
             <fun>
-              <arg value="page" con="var" />
+              <arg value="SetContent" con="mem">
+                <arg value="this" con="var" />
+              </arg>
             </fun>
-            <params />
+            <params>
+              <arg value="bubble" con="mem">
+                <arg value="this" con="var" />
+              </arg>
+            </params>
           </arg>
-        </fun>
-        <params>
-          <arg value="gd" con="var" />
-        </params>
-      </arg>
-    </usefun_s>
-    <usefun_s str="Page.Load(page);">
-      <arg con="fun">
-        <fun>
-          <arg value="Page.Load" con="var" />
-        </fun>
-        <params>
-          <arg value="page" con="var" />
-        </params>
-      </arg>
-    </usefun_s>
-  </deffun>
-  <var value="open" />
-  <deffun funname="Click" params="page,e" isref="False">
-    <if_s str="if(open):">
-      <then>
-        <express>
-          <arg value="open" con="var" />
-        </express>
-        <run>
-          <usefun_s str="Alien.FlashLight.Close();">
-            <arg con="fun">
-              <fun>
-                <arg value="Alien.FlashLight.Close" con="var" />
-              </fun>
-              <params />
-            </arg>
-          </usefun_s>
-        </run>
-      </then>
-      <else>
-        <run>
-          <usefun_s str="Alien.FlashLight.Open();">
-            <arg con="fun">
-              <fun>
-                <arg value="Alien.FlashLight.Open" con="var" />
-              </fun>
-              <params />
-            </arg>
-          </usefun_s>
-        </run>
-      </else>
-    </if_s>
-    <getres_s str="open = !open;">
-      <arg value="open" con="var" />
-      <arg con="fun">
-        <fun>
-          <arg value="Math.Not" con="var" />
-        </fun>
-        <params>
-          <arg value="open" con="var" />
-        </params>
-      </arg>
-    </getres_s>
-  </deffun>
+        </usefun_s>
+      </memfun>
+      <memfun funname="BuClick" params="page,e" isref="False" isstatic="False">
+        <usefun_s str="Message(&quot;HHH&quot;);">
+          <arg con="fun">
+            <fun>
+              <arg value="Message" con="var" />
+            </fun>
+            <params>
+              <arg value="HHH" con="str" />
+            </params>
+          </arg>
+        </usefun_s>
+      </memfun>
+    </cls>
+  </lib>
 </code>

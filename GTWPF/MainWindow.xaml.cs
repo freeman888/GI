@@ -59,16 +59,14 @@ namespace GTWPF
             //获取GIInfo
             system_outputbox.Text += "Gasoline for GTWPF version " + GIInfo.GIVersion.ToString()+Environment.NewLine;
             
-            System.Xml.XmlDocument codes = new System.Xml.XmlDocument();
-            codes.LoadXml(App.xmlcodes);
-
+            
             WPFLib._function_Thread_override_.Load();
             Gasoline.StartGas(new System.Collections.Generic.Dictionary<string,GI.Lib.ILib> {
                 {"IO",new WPFLib.IO_Lib() },
                 {"Page",new WPFLib.Page_Lib() },
                 {"Control",new WPFLib.Control_Lib() }
-            }, codes);
-
+            });
+            Gasoline.StartMain();
 
         }
         private void Window_Closed(object sender, EventArgs e)

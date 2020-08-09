@@ -13,11 +13,8 @@ namespace GTXAM
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ConsolePage : ContentPage
     {
-        public ConsolePage()
+        static ConsolePage()
         {
-
-            InitializeComponent();
-            
             Task.Run(() =>
             {
                 Thread.Sleep(10);
@@ -31,8 +28,23 @@ namespace GTXAM
                      {"Control",new Lib.Control_Lib() }
 
                     }, GTXAMInfo.Codes);
+
+
+
                 });
             });
+        }
+        public ConsolePage()
+        {
+
+            InitializeComponent();
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                await Task.Delay(10);
+                await GI.Gasoline.StartMain();
+            });
+
+
             OutputLabel.Text += "Gasoline for GTXAM Version " + GI.GIInfo.GIVersion.ToString() + Environment.NewLine;
         }
         

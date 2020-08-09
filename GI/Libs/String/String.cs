@@ -19,6 +19,7 @@ namespace GI
             {
                 myThing.Add("StringAdd", new Variable(new String_Function_Add()));
                 myThing.Add("StringIsEqual", new Variable(new String_Function_IsEqual()));
+                myThing.Add("ReadStringFromStream", new Variable(new String_Function_ReadStream()));
             }
 
            
@@ -59,6 +60,25 @@ namespace GI
                 public override object Run(Hashtable xc)
                 {
                     return new Variable(xc.GetVariable<object>("s1").ToString() == xc.GetVariable<object>("s2").ToString());
+                }
+            }
+
+            public class String_Function_ReadStream:Function
+            {
+                public String_Function_ReadStream()
+                {
+                    IInformation = "read the string from file stream";
+                    str_xcname = "stream";
+                    poslib = "String";
+                }
+                public override object Run(Hashtable xc)
+                {
+                    var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "stream");
+                    using (System.IO.StreamReader streamReader = new System.IO.StreamReader(stream))
+                    {
+                        return new Variable(streamReader.ReadToEnd());
+                    }
+                    
                 }
             }
         }
