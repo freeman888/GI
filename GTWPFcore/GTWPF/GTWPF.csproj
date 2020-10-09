@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <StartupObject></StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\back1.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="GasControl\Page\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\gas\New_Gasoline\GI\GI\GI\GI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="GI">
+      <HintPath>..\..\..\gas\New_Gasoline\GI\GI\GI\bin\Debug\netstandard2.0\GI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\back1.png" />
+  </ItemGroup>
+
+</Project>

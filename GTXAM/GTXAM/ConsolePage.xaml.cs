@@ -20,6 +20,7 @@ namespace GTXAM
                 Thread.Sleep(10);
                 Device.BeginInvokeOnMainThread(() =>
                 {
+                    GI.Gasoline.Loadgasxml(GTXAMInfo.Codes);
                     Lib._function_Thread_override_.Load();
 
                     GI.Gasoline.StartGas(new System.Collections.Generic.Dictionary<string, GI.Lib.ILib> {
@@ -27,12 +28,11 @@ namespace GTXAM
                      {"Page",new Lib.Page_Lib() },
                      {"Control",new Lib.Control_Lib() }
 
-                    }, GTXAMInfo.Codes);
-
-
+                    });
+                    
 
                 });
-            });
+            }).Wait();
         }
         public ConsolePage()
         {

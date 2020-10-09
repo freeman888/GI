@@ -103,6 +103,10 @@
     <Folder Include="Resources\drawable-xxxhdpi\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\GI\GI.csproj">
+      <Project>{6f0cfe32-e97f-41e1-aeaf-31c8a28f0e4d}</Project>
+      <Name>GI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GTXAM\GTXAM.csproj">
       <Project>{997FCB3A-750A-4F6F-8821-186316161E96}</Project>
       <Name>GTXAM</Name>
@@ -117,4 +121,9 @@
     <AndroidResource Include="Resources\drawable\load.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionGTXAMAndroidHideInfoBar="True" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window
+	x:Class="GTWPF.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="MainWindow"
+	   Height="600"
+	   Width="800"
+	   Background="White"
+    Loaded="Window_Loaded"
+	   Closed="Window_Closed"
+    Closing="Window_Closing"
+    
+    WindowStyle ="None"
+    ResizeMode="CanResizeWithGrip" >
+    <Window.Resources>
+        <Style x:Key="windowbuttonstyle" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle Margin="2" StrokeDashArray="1 2" SnapsToDevicePixels="True" StrokeThickness="1" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#15000000"/>
+            <Setter Property="BorderBrush" Value="#00000000"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True">
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="transparent"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#20000000"/>
+                            </Trigger>
+                            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                                <Setter Property="Foreground" Value="#FF838383"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Background="Transparent" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+
+            <Button Style="{DynamicResource windowbuttonstyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="3" Click="Button_Click_3" Name="BackButton" BorderBrush="Transparent">
+                <Image Source="Resources/back1.png" Height="20" Width="20" Stretch="Fill"/>
+            </Button>
+            
+            
+            
+            <Label Content="Console" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" FontSize="16" Name="GasTitle"/>
+            <Button Style="{DynamicResource windowbuttonstyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5" Click="Button_Click"  BorderBrush="Transparent" >
+                <Ellipse Width="15" Height="15" Fill="#FF6556"/>
+            </Button>
+            
+            <Button Style="{DynamicResource windowbuttonstyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5,5,27,5" Click="Button_Click_1" BorderBrush="Transparent">
+                <Ellipse Width="15" Height="15" Fill="#FBBC0d"/>
+            </Button>
+            <Button Style="{DynamicResource windowbuttonstyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5,5,49,5" Click ="Button_Click_2" BorderBrush="Transparent">
+                <Ellipse Width="15" Height="15" Fill="#0fD042"/>
+            </Button>
+
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5,5,80,5" Click="ToolButtonClick" Name="ToolButton" Visibility="Visible" Padding="2">
+                <StackPanel Orientation="Vertical">
+                    <Ellipse Width="3" Height="3" Fill="Black" Margin="1"/>
+                    <Ellipse Width="3" Height="3" Fill="Black" Margin="1"/>
+                    <Ellipse Width="3" Height="3" Fill="Black" Margin="1"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+
+        <Grid Name="NomalPage" Grid.Row="1" Background="White" >
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Name="sys_roll" Background="Black" Foreground="Green">
+                <StackPanel >
+                    <TextBlock Name="system_outputbox" Text="" FontSize="16" Foreground="Green" LineHeight="10" />
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <Grid Visibility="Hidden" Grid.Row="1" Name="PageBase" Background="White"/>
+    </Grid>
+</Window>

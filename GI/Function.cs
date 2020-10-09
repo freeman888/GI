@@ -196,9 +196,9 @@ namespace GI
                 return await function.IAsyncRun(variable);
                 
             }
-            catch
+            catch(Exception ex)
             {
-                throw new Exceptions.RunException(Exceptions.EXID.参数错误);
+                throw new Exceptions.RunException(Exceptions.EXID.参数错误,ex.ToString());
             }
         }
 

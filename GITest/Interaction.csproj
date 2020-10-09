@@ -89,11 +89,5 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\gastool\gasc\gasc.csproj">
-      <Project>{fe0d75d3-ce00-45d6-8738-3d0adcc1ebca}</Project>
-      <Name>gasc</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
