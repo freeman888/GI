@@ -21,6 +21,9 @@ namespace GTWPF
                 myThing.Add("Switcher", new Variable(new SwitcherClassTemplate()));
                 myThing.Add("ScrollFlat", new Variable(new ScrollFlatTemplate()));
                 myThing.Add("Image", new Variable(new ImageClassTemplate()));
+                myThing.Add("ListFlat",new Variable(new ListFlatClassTemplate()));
+                myThing.Add("TextCell", new Variable(new TextCellClassTemplate()));
+
             }
 
 
@@ -112,6 +115,33 @@ namespace GTWPF
                         string name = xc.GetCSVariable<object>("name").ToString();
                         return new GasControl.Control.Image { Name = name };
                     };
+                }
+            }
+
+            public class ListFlatClassTemplate:GClassTemplate
+            {
+                public ListFlatClassTemplate():base("listflat","Control")
+                {
+                    Istr_xcname = "name";
+                    csctor = (xc) =>
+                    {
+                        string name = xc.GetCSVariable<object>("name").ToString();
+                        return new GasControl.ContentControl.ListFlat { Name = name };
+                    };
+                }
+            }
+
+            public class TextCellClassTemplate:GClassTemplate
+            {
+                public TextCellClassTemplate():base("textcell","Control")
+                {
+                    Istr_xcname = "name";
+                    csctor = (xc) =>
+                    {
+                        string name = xc.GetCSVariable<object>("name").ToString();
+                        return new GasControl.Control.TextCell { Name = name };
+                    };
+
                 }
             }
 

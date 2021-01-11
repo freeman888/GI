@@ -125,7 +125,7 @@ namespace GTXAM
                     csctor = (xc) =>
                     {
                         string name = xc.GetCSVariable<object>("name").ToString();
-                        return new GasControl.Control.Image { Name = name };
+                        return new GasControl.Control._TextCell { Name = name };
                     };
                 }
             }

@@ -158,8 +158,13 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\GTXAM\GTXAM.csproj">
-      <Project>{997FCB3A-750A-4F6F-8821-186316161E96}</Project>
+      <Project>{5F22BDF1-3A19-421A-B2B3-E70D958DCD1D}</Project>
       <Name>GTXAM</Name>
     </ProjectReference>
   </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarGTXAMiOSHideInfoBar="True" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

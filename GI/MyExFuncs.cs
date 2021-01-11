@@ -31,7 +31,6 @@ namespace GI
         public static T GetCSVariableFromSpeType<T>(this Hashtable hashtable, string varname,string typename)
         {
             IOBJ io = ((Variable)hashtable[varname]).value;
-            //Debug.Write(io.IGetType());
             while(io.IGetType() != typename)
             {
                 if (io.IGetType() == "")

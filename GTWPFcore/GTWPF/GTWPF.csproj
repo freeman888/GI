@@ -16,13 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\gas\New_Gasoline\GI\GI\GI\GI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="GI">
-      <HintPath>..\..\..\gas\New_Gasoline\GI\GI\GI\bin\Debug\netstandard2.0\GI.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\GI\GI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -26,53 +26,7 @@ namespace GI
 
 
 
-        //public async static void StartGas(Dictionary<string, Function.Head> heads, XmlDocument codes)
-        //{
-        //    //Del.Delate();
-        //    try
-        //    {
-        //        // 1 添加自己的Head
-        //        sHeads.Add("Math", new Function.Math_Head());
-        //        sHeads.Add("Socket", new Function.Socket_Head());
-        //        sHeads.Add("System", new Function.System_Head());
-        //        sHeads.Add("Thread", new Function.Thread_Head());
-        //        sHeads.Add("File", new Function.File_Head());
-        //        sHeads.Add("String", new Function.String_Head());
-        //        sHeads.Add("List", new Function.List_Head());
-
-
-
-        //        // 2 添加其他的Head
-        //        foreach (var i in heads)
-        //            sHeads.Add(i.Key, i.Value);
-
-
-        //        // 3 分析 get fun 外部var 
-
-        //        foreach (var i in Getfunandvar(codes))
-        //            sarray_Sys_Variables.Add(i.Key, new Variable(i.Value));
-
-        //        // 4 设置常量
-
-        //        sarray_Sys_Variables.Add("true", new Variable(true));
-
-        //        sarray_Sys_Variables.Add("false", new Variable(false));
-
-        //    }
-        //    catch (Exception e) {System.Diagnostics. Debug.WriteLine(e); }
-        //    // 5 拉起Main
-
-        //    Hashtable ht = Variable.GetOwnVariables(sarray_Sys_Variables);
-        //    string str_name = ((sarray_Sys_Variables["Main"] as Variable).value as IFunction).Istr_xcname;
-        //    string[] vs = Environment.GetCommandLineArgs();
-        //    var arrayList = new Glist();
-        //    foreach (string vv in vs)
-        //        arrayList.Add(new Variable(vv));
-        //    ht.Add(str_name, new Variable((arrayList)));
-        //    await Function.AsyncFuncStarter("Main", ht);
-            
-
-        //}
+        
 
         /// <summary>
         /// 拉起main请单另拉起,加载用户代码请单另加载

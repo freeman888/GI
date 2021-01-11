@@ -15,7 +15,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -29,10 +28,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <BundleAssemblies>false</BundleAssemblies>
-    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <Debugger>Xamarin</Debugger>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -44,10 +39,6 @@
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <BundleAssemblies>false</BundleAssemblies>
-    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -104,11 +95,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GI\GI.csproj">
-      <Project>{6f0cfe32-e97f-41e1-aeaf-31c8a28f0e4d}</Project>
+      <Project>{5BA518F4-88C1-4EC7-8676-FF39AC60BF16}</Project>
       <Name>GI</Name>
     </ProjectReference>
     <ProjectReference Include="..\GTXAM\GTXAM.csproj">
-      <Project>{997FCB3A-750A-4F6F-8821-186316161E96}</Project>
+      <Project>{5F22BDF1-3A19-421A-B2B3-E70D958DCD1D}</Project>
       <Name>GTXAM</Name>
     </ProjectReference>
   </ItemGroup>

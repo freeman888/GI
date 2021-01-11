@@ -100,8 +100,13 @@ namespace GTXAM
                     {
                         Device.BeginInvokeOnMainThread(async () =>
                         {
-
-                            App.MainApp.MainPage = new NavigationPage(page);
+                            if(Device.RuntimePlatform == Device.macOS)
+                            {
+                                await App.MainApp.MainPage.Navigation.PushAsync(page);
+                                App.MainApp.MainPage.Navigation.RemovePage(App.MainApp.MainPage.Navigation.NavigationStack[0]);
+                            }
+                            else
+                                App.MainApp.MainPage = new NavigationPage(page);
                         });
                     });
 

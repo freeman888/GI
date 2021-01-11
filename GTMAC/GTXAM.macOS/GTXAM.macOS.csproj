@@ -63,13 +63,13 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.4.8.0.1534\lib\Xamarin.Mac\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
     <Reference Include="GI">
-      <HintPath>..\GTXAM\GTXAM\bin\Debug\netstandard2.0\GI.dll</HintPath>
+      <HintPath>..\..\GTXAM\GTXAM\bin\Debug\netstandard2.0\GI.dll</HintPath>
     </Reference>
     <Reference Include="GTXAM">
-      <HintPath>..\GTXAM\GTXAM\bin\Debug\netstandard2.0\GTXAM.dll</HintPath>
+      <HintPath>..\..\GTXAM\GTXAM\bin\Debug\netstandard2.0\GTXAM.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />

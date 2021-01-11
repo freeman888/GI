@@ -1,17 +1,73 @@
 <code minversion="2007">
   <lib name="App1">
     <get value="IO" />
+    <get value="Control" />
+    <get value="Page" />
     <deffun funname="Main" params="args" isref="False">
-      <usefun_s str="WriteLine(&quot;hello worls&quot;);">
+      <var_s varname="page" str="var page = Page(&quot;mainpage&quot;);" />
+      <getres_s str="var page = Page(&quot;mainpage&quot;);">
+        <arg value="page" con="var" />
         <arg con="fun">
           <fun>
-            <arg value="WriteLine" con="var" />
+            <arg value="Page" con="var" />
           </fun>
           <params>
-            <arg value="hello world" con="str" />
+            <arg value="mainpage" con="str" />
+          </params>
+        </arg>
+      </getres_s>
+      <var_s varname="list" str="var list = ListFlat(&quot;lf&quot;);" />
+      <getres_s str="var list = ListFlat(&quot;lf&quot;);">
+        <arg value="list" con="var" />
+        <arg con="fun">
+          <fun>
+            <arg value="ListFlat" con="var" />
+          </fun>
+          <params>
+            <arg value="lf" con="str" />
+          </params>
+        </arg>
+      </getres_s>
+      <var_s varname="tc" str="var tc = TextCell(&quot;tc&quot;);" />
+      <getres_s str="var tc = TextCell(&quot;tc&quot;);">
+        <arg value="tc" con="var" />
+        <arg con="fun">
+          <fun>
+            <arg value="TextCell" con="var" />
+          </fun>
+          <params>
+            <arg value="tc" con="str" />
+          </params>
+        </arg>
+      </getres_s>
+      <usefun_s str="list:Add(tc);">
+        <arg con="fun">
+          <fun>
+            <arg value="Add" con="mem">
+              <arg value="list" con="var" />
+            </arg>
+          </fun>
+          <params>
+            <arg value="tc" con="var" />
           </params>
         </arg>
       </usefun_s>
+      <usefun_s str="PageLoad(page);">
+        <arg con="fun">
+          <fun>
+            <arg value="PageLoad" con="var" />
+          </fun>
+          <params>
+            <arg value="page" con="var" />
+          </params>
+        </arg>
+      </usefun_s>
+      <getres_s str="page:Content = list;">
+        <arg value="Content" con="mem">
+          <arg value="page" con="var" />
+        </arg>
+        <arg value="list" con="var" />
+      </getres_s>
     </deffun>
   </lib>
 </code>

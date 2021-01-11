@@ -118,7 +118,7 @@ namespace GTWPF.GasControl.ContentControl
         {
             return this;
         }
-        const string type = "gridflat";
+        const string type = "listflat";
         public string IGetType()
         {
             return type;
@@ -129,7 +129,7 @@ namespace GTWPF.GasControl.ContentControl
         }
         static ListFlat()
         {
-            GType.Sign("gridflat");
+            GType.Sign("listflat");
         }
         Dictionary<string, Variable> members = new Dictionary<string, Variable>();
         public Variable IGetMember(string name)
@@ -158,7 +158,7 @@ namespace GTWPF.GasControl.ContentControl
             public override object Run(Hashtable xc)
             {
                 var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "listflat");
-                var con = xc.GetCSVariableFromSpeType<UIElement>("con", "control");
+                var con = xc.GetCSVariableFromSpeType<UIElement>("con", "cell");
 
                 listflat.Items.Add(con);
 

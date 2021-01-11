@@ -13,7 +13,7 @@ namespace GTWPF
         [STAThread]
         public static void Main(string[] args)
         {
-            var path = "f:\\code.xml";
+            var path = "e:\\code.xml";
             var cd = Environment.CurrentDirectory+"\\program.xml";
             if (File.Exists(cd))
                 path = cd;

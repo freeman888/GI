@@ -58,19 +58,10 @@ namespace GTWPF
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            var path = "f:\\code.xml";
-            var cd = Environment.CurrentDirectory + "\\program.xml";
-            if (File.Exists(cd))
-                path = cd;
-            using (StreamReader sr = new StreamReader(path))
-            {
-                App.xmlcodes = sr.ReadToEnd();
-            }
             //获取GIInfo
             system_outputbox.Text += "Gasoline for GTWPF version " + GIInfo.GIVersion.ToString()+Environment.NewLine;
             
-            System.Xml.XmlDocument codes = new System.Xml.XmlDocument();
-            codes.LoadXml(App.xmlcodes);
+            
 
             WPFLib._function_Thread_override_.Load();
             Gasoline.StartGas(new System.Collections.Generic.Dictionary<string,GI.Lib.ILib> {
