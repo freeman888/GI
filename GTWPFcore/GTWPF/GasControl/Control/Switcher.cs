@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GTWPF.GasControl.Control
 {
-    public class Switcher : StackPanel, ISetter, IOBJ, IGetter
+    public class Switcher : StackPanel, IOBJ
     {
         private bool istoggled = false;
 
@@ -51,17 +51,17 @@ namespace GTWPF.GasControl.Control
             {
                 IsToggled = !IsToggled;
 
-                if (function_Click == null)
+                if (event_click == null)
                     return;
                 var p = Parent;
                 while (!(p is Page.GasPage))
                 {
                     p = (p as FrameworkElement).Parent;
                 }
-                string[] sss = function_Click.Istr_xcname.Split(',');
+                string[] sss = event_click.Istr_xcname.Split(',');
                 if (sss.Length == 2)
                 {
-                    await Function.NewAsyncFuncStarter(function_Click,new Variable(p),new Variable(e));
+                    await Function.NewAsyncFuncStarter(event_click,new Variable(p),new Variable(e));
                 }
             };
 
@@ -166,8 +166,18 @@ namespace GTWPF.GasControl.Control
                 {
                     ongetvalue = ()=>new Gbool(IsToggled),
                     onsetvalue = (value)=>{IsToggled =Convert.ToBoolean( value.IGetCSValue());return 0; }
+                } },
+                {"Clickevent",new FVariable
+                {
+                    ongetvalue = ()=>event_click as IOBJ,
+                    onsetvalue = (value)=>
+                    {
+                        event_click = value as IFunction;
+                        return 0;
+                    }
                 } }
-                
+
+
 
 
 
@@ -177,190 +187,8 @@ namespace GTWPF.GasControl.Control
             parent = new GTWPF.Control(this);
             #endregion
         }
-        IFunction function_Click;
+        IFunction event_click;
 
-        #region ISetter
-
-        void ISetter.ISetWidth(object value)
-        {
-            Width = Convert.ToDouble(value);
-        }
-
-        void ISetter.ISetHeight(object value)
-        {
-            Height = Convert.ToDouble(value);
-        }
-
-        void ISetter.ISetHorizontalAlignment(object value)
-        {
-            if (value.ToString() == "center")
-                HorizontalAlignment = HorizontalAlignment.Center;
-            else if (value.ToString() == "left")
-                HorizontalAlignment = HorizontalAlignment.Left;
-            else if (value.ToString() == "right")
-                HorizontalAlignment = HorizontalAlignment.Right;
-            else if (value.ToString() == "stretch")
-                HorizontalAlignment = HorizontalAlignment.Stretch;
-        }
-
-        void ISetter.ISetVerticalAlignment(object value)
-        {
-            if (value.ToString() == "center")
-                VerticalAlignment = VerticalAlignment.Center;
-            else if (value.ToString() == "bottom")
-                VerticalAlignment = VerticalAlignment.Bottom;
-            else if (value.ToString() == "stretch")
-                VerticalAlignment = VerticalAlignment.Stretch;
-            else if (value.ToString() == "top")
-                VerticalAlignment = VerticalAlignment.Top;
-
-        }
-
-        void ISetter.ISetMargin(object value)
-        {
-            double a1, a2, a3, a4;
-            string[] vs = value.ToString().Split(',');
-            a1 = Convert.ToDouble(vs[0]);
-            a2 = Convert.ToDouble(vs[1]);
-            a3 = Convert.ToDouble(vs[2]);
-            a4 = Convert.ToDouble(vs[3]);
-            Margin = new Thickness(a1, a2, a3, a4);
-        }
-
-        void ISetter.ISetVisibility(object value)
-        {
-            if (value.ToString() == "gone")
-                Visibility = Visibility.Collapsed;
-            else if (value.ToString() == "hidden")
-                Visibility = Visibility.Hidden;
-            else if (value.ToString() == "visible")
-                Visibility = Visibility.Visible;
-        }
-
-        void ISetter.ISetText(object value)
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 text 属性");
-        }
-
-        void ISetter.ISetFontSize(object value)
-        {
-            label.FontSize = Convert.ToDouble(value);
-        }
-
-        void ISetter.ISetPadding(object value)
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有padding 属性");
-        }
-
-        void ISetter.ISetBackgroundColor(object value)
-        {
-            Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
-        }
-
-        void ISetter.ISetForegroundColor(object value)
-        {
-            label.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
-        }
-
-
-        void ISetter.ISetClickEvent(object value)
-        {
-            function_Click = value as IFunction;
-        }
-
-
-        void ISetter.ISetScrollPosition(object value)
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 scrollposition 属性");
-        }
-
-        void ISetter.ISetTogged(object value)
-        {
-            IsToggled = Convert.ToBoolean(value);
-        }
-        #endregion
-
-        #region IGetter
-
-
-        public object IGetWidth()
-        {
-            return Width;
-        }
-
-        public object IGetHeight()
-        {
-            return Height;
-        }
-
-        object IGetter.IGetHorizontalAlignment()
-        {
-            return HorizontalAlignment.ToString();
-        }
-
-        object IGetter.IGetVerticalAlignment()
-        {
-            return VerticalAlignment.ToString();
-        }
-
-        object IGetter.IGetMargin()
-        {
-            string s = String.Format("{0},{0},{0},{0}", Margin.Left, Margin.Top, Margin.Right, Margin.Bottom);
-            return s;
-        }
-
-        object IGetter.IGetVisibility()
-        {
-            string s = "null";
-            switch (Visibility)
-            {
-                case Visibility.Collapsed: s = "gone"; break;
-                case Visibility.Hidden: s = "hidden"; break;
-                case Visibility.Visible: s = "visible"; break;
-            }
-            return s;
-        }
-
-        object IGetter.IGetText()
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 text 属性");
-        }
-
-        object IGetter.IGetFontSize()
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 fontsize 属性");
-        }
-
-        object IGetter.IGetPadding()
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 padding 属性");
-        }
-
-        object IGetter.IGetBackgroundColor()
-        {
-            return Background.ToString();
-        }
-
-        object IGetter.IGetForegroundColor()
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 foregroundcolor 属性");
-        }
-
-        object IGetter.IGetScrollPosition()
-        {
-            throw new Exceptions.RunException(Exceptions.EXID.无对应属性, "没有 scrollposition 属性");
-        }
-
-        object IGetter.IFindID(string id)
-        {
-            return id == Name ? this : null;
-        }
-
-        object IGetter.IGetTogged()
-        {
-            return IsToggled;
-        }
-        #endregion
 
         #region 实现Itype
         const string type = "switcher";

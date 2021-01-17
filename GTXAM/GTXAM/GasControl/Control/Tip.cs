@@ -12,7 +12,6 @@ namespace GTXAM.GasControl.Control
     {
         public Tip()
         {
-
             HorizontalOptions = LayoutOptions.Center;
             VerticalOptions = LayoutOptions.Center;
             #region

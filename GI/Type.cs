@@ -121,6 +121,12 @@ namespace GI
 
         public Func<Hashtable, IOBJ> csctor;
         internal string csstr_xc = "";
+        /// <summary>
+        /// 为内置类做gas的类模板。不外显的类无法在gasoline中被继承
+        /// </summary>
+        /// <param name="_type">类型名称</param>
+        /// <param name="poslib">所在类库</param>
+        /// <param name="_parent">父类名称。如果父类不外显，即不存在ClassTemplate，则自行注册父类，且此项不填</param>
         public GClassTemplate(string _type,string poslib,string _parent = "")  
         {
             this.poslib = poslib;
@@ -185,9 +191,6 @@ namespace GI
         {
             if (csctor == null)
             {
-                IOBJ parent;
-                if (!string.IsNullOrEmpty(parentclassname))
-                    parent = xc.GetCSVariable<GClassTemplate>(parentclassname);
                 GClass gClass = new GClass(classname, parentclassname, xc);
                 gClass.ctor = this.ctor;
                 foreach (var i in membernames) gClass.members.Add(i, new Variable(0));

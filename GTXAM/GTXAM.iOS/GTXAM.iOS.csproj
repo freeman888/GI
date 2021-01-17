@@ -164,7 +164,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarGTXAMiOSHideInfoBar="True" />
+      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadWrongLinkerErrorInfoBarGTXAMiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

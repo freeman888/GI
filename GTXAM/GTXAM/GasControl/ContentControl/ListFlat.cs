@@ -159,9 +159,9 @@ namespace GTXAM.GasControl.ContentControl
             public override object Run(Hashtable xc)
             {
                 var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "listflat");
-                var con = xc.GetCSVariableFromSpeType<Cell.Cell>("con", "cell");
+                var con = xc.GetCSVariableFromSpeType<Xamarin.Forms.Cell>("con", "cell");
 
-                listflat.cells.Add(con.IGetCSValue() as Xamarin.Forms.Cell);
+                listflat.cells.Add(con);
                 
 
                 return new Variable(0);

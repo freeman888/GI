@@ -23,7 +23,7 @@ namespace GTWPF
                 myThing.Add("Image", new Variable(new ImageClassTemplate()));
                 myThing.Add("ListFlat",new Variable(new ListFlatClassTemplate()));
                 myThing.Add("TextCell", new Variable(new TextCellClassTemplate()));
-
+                myThing.Add("WebView", new Variable(new WebViewClassTemplate()));
             }
 
 
@@ -140,6 +140,21 @@ namespace GTWPF
                     {
                         string name = xc.GetCSVariable<object>("name").ToString();
                         return new GasControl.Control.TextCell { Name = name };
+                    };
+
+                }
+            }
+            public class WebViewClassTemplate : GClassTemplate
+            {
+                public WebViewClassTemplate() : base("webview", "Control")
+                {
+                    Istr_xcname = "name";
+                    csctor = (xc) =>
+                    {
+                        string name = xc.GetCSVariable<object>("name").ToString();
+                        var r = new GasControl.Control.WebView ();
+                        r.webBrowser.Name = name;
+                        return r;
                     };
 
                 }

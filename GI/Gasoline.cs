@@ -2,12 +2,8 @@
 using System.Collections;
 using System.Xml;
 using System.Collections.Generic;
-using System.Threading;
-using System.Diagnostics.Tracing;
-using System.Net.Http.Headers;
 using static GI.Lib;
 using System.Threading.Tasks;
-using System.Diagnostics;
 
 namespace GI
 {
