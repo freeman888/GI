@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Win32;
 using static GI.Function;
 
 namespace GTWPF
@@ -21,6 +22,7 @@ namespace GTWPF
                 myThing.Add("WriteLine", new Variable(new IO_Function_WriteLine()));
                 myThing.Add("Input", new Variable(new IO_Function_Input()));
                 myThing.Add("Message", new Variable(new IO_Function_Tip()));
+                myThing.Add("PickFile", new Variable(new IO_Function_PickFile()));
             }
 
             public class IO_Function_WriteLine : Function
@@ -128,6 +130,48 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                 }
 
             }
+            public class IO_Function_PickFile:AFunction
+            {
+                public IO_Function_PickFile()
+                {
+                    IInformation = "let user to pick up a file and return a stream. if user do not pick ,return 0";
+                    Istr_xcname = "params";
+                }
+                public async override Task<object> Run(Hashtable xc)
+                {
+                    var list = xc.GetCSVariable<Glist>("params");
+                    
+                    OpenFileDialog openFileDialog = null;
+                    bool choosed = false;
+                    await MainWindow.MainApp.Dispatcher.InvokeAsync(() =>
+                    {
+                        openFileDialog = new OpenFileDialog();
+                        
+                        if (list.Count != 0)
+                        {
+                            string[] ss = new string[list.Count];
+                            for (int i = 0; i < list.Count; i++)
+                                ss[i] = list[i].value.ToString();
+                            try
+                            {
+                                openFileDialog.Filter = string.Join("|",ss);
+                            }
+                            catch
+                            {
+                                throw new Exceptions.RunException(Exceptions.EXID.参数错误, "筛选器参数错误。正确例如：图像文件(*.bmp, *.jpg)|*.bmp;*.jpg|所有文件(*.*)|*.*");
+                            }
+
+                        }
+                        choosed = openFileDialog.ShowDialog() == true ? true : false;
+                    });
+                    
+                    if (choosed) return new Variable(new GStream(System.IO.File.OpenRead(openFileDialog.FileName)));
+                    else return new Variable(0);
+                }
+
+
+            }
+
             #region
             public Dictionary<string, Variable> myThing { get; set; } = new Dictionary<string, Variable>();
             public Dictionary<string, Variable> otherThing { get; set; } = new Dictionary<string, Variable>();

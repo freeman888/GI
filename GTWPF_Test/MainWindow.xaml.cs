@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 
+
 namespace GTWPF_Test
 {
     /// <summary>
@@ -26,14 +27,19 @@ namespace GTWPF_Test
             InitializeComponent();
 
 
+
+            Hide();
+
             XmlDocument code = new XmlDocument();
-            code.Load("X:\\projects\\freestudio\\App1\\App1\\source\\code.xml");
+            code.Load("X:\\projects\\freestudio\\app1\\app1\\source\\code.xml");
             GI.Gasoline.Loadgasxml(code);
-        
+
             GTWPF.MainWindow mainWindow = new GTWPF.MainWindow();
             mainWindow.Show();
 
 
         }
+
+        
     }
 }

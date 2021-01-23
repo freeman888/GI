@@ -158,7 +158,7 @@ namespace GI
                     throw new Exceptions.RunException(Exceptions.EXID.参数错误,"参数传递错误");
                 for (int i = 0; i < xc_names.Length; i++)
                 {
-                    hashtable.Add(xc_names[i], newvariables[i]);
+                    hashtable.Add(xc_names[i], new Variable(((Variable)newvariables[i]).value) { isconst = ((Variable)newvariables[i]).isconst });
                 }
                 return hashtable;
 
@@ -169,8 +169,7 @@ namespace GI
 
                 var hashtable = GetOwnVariables(poslib);
 
-                if (xcname == "")
-                {
+                if (string.IsNullOrEmpty(xcname)) { 
                     return hashtable;
                 }
                 else if (xcname == "params")

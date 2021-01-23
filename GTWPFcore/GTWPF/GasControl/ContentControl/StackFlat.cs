@@ -1,59 +1,57 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using Xamarin.Forms;
+using System.Windows.Controls;
+using System.Windows;
 using GI;
-using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Collections;
 
-namespace GTXAM.GasControl.Control
+namespace GTWPF.GasControl.ContentControl
 {
-    public class Switcher : Switch, IOBJ, IName
+    public class StackFlat:StackPanel,IOBJ
     {
 
-        public Switcher()
-        {
-            HorizontalOptions = LayoutOptions.Center;
-            VerticalOptions = LayoutOptions.Center;
 
-            #region
+        public StackFlat()
+        {
             members = new Dictionary<string, Variable>
             {
                 {"Width" ,new FVariable{
                     ongetvalue = ()=>new Gnumber(Width),
-                    onsetvalue = (value)=>{WidthRequest =Convert.ToDouble( value); return 0; }}},
+                    onsetvalue = (value)=>{Width =Convert.ToDouble( value); return 0; }}},
                 {"Height" ,new FVariable
                 {
                     ongetvalue = ()=>new Gnumber(Height),
-                    onsetvalue = (value)=>{HeightRequest = Convert.ToDouble(value);return 0; }
+                    onsetvalue = (value)=>{Height = Convert.ToDouble(value);return 0; }
                 }},
                 {"Horizontal",new FVariable
                 {
-                    ongetvalue = ()=> new Gstring( HorizontalOptions.ToString()),
+                    ongetvalue = ()=> new Gstring( HorizontalAlignment.ToString()),
                     onsetvalue = (value) =>{
                         if (value.ToString() == "center")
-                            HorizontalOptions = LayoutOptions.Center;
+                            HorizontalAlignment = HorizontalAlignment.Center;
                         else if (value.ToString() == "left")
-                            HorizontalOptions = LayoutOptions.Start;
+                            HorizontalAlignment = HorizontalAlignment.Left;
                         else if (value.ToString() == "right")
-                            HorizontalOptions = LayoutOptions.End;
+                            HorizontalAlignment = HorizontalAlignment.Right;
                         else if (value.ToString() == "stretch")
-                            HorizontalOptions = LayoutOptions.Fill;
+                            HorizontalAlignment = HorizontalAlignment.Stretch;
                         return 0;
                     }
                 } },
                 {"Vertical",new FVariable{
-                ongetvalue = ()=>new Gstring(VerticalOptions.ToString()),
+                ongetvalue = ()=>new Gstring(VerticalAlignment.ToString()),
                 onsetvalue = (value)=>
                 {
                     if (value.ToString() == "center")
-                        VerticalOptions = LayoutOptions.Center;
+                        VerticalAlignment = VerticalAlignment.Center;
                     else if (value.ToString() == "bottom")
-                        VerticalOptions = LayoutOptions.End;
+                        VerticalAlignment = VerticalAlignment.Bottom;
                     else if (value.ToString() == "stretch")
-                        VerticalOptions = LayoutOptions.Fill;
+                        VerticalAlignment = VerticalAlignment.Stretch;
                     else if (value.ToString() == "top")
-                        VerticalOptions = LayoutOptions.Start;
+                        VerticalAlignment = VerticalAlignment.Top;
                     return 0;
                 }
                 } },
@@ -73,25 +71,22 @@ namespace GTXAM.GasControl.Control
                     ongetvalue = () =>
                     {
                         string s = "null";
-            switch (IsVisible)
+            switch (Visibility)
             {
-                case true:
-                                s = "visiable";
-                                break;
-                case false:
-                                s = "gone";
-                                break;
+                case Visibility.Collapsed: s = "gone"; break;
+                case Visibility.Hidden: s = "hidden"; break;
+                case Visibility.Visible: s = "visible"; break;
             }
             return new Gstring(s);
                     },
                     onsetvalue = (value)=>
                     {
                         if (value.ToString() == "gone")
-                IsVisible = false;
+                Visibility = Visibility.Collapsed;
             else if (value.ToString() == "hidden")
-                IsVisible = false;
+                Visibility = Visibility.Hidden;
             else if (value.ToString() == "visible")
-                IsVisible = true;
+                Visibility = Visibility.Visible;
                         return 0;
                     }
                 } },
@@ -99,43 +94,49 @@ namespace GTXAM.GasControl.Control
 
 
                 {"Background",new FVariable{
-                    ongetvalue = ()=>new Gstring(BackgroundColor.ToString()),
+                    ongetvalue = ()=>new Gstring(Background.ToString()),
                     onsetvalue = (value)=>
                     {
-                        BackgroundColor = (Color)new ColorTypeConverter().ConvertFromInvariantString(value.ToString());
+                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
                         return 0;
                     }
                 } },
-                {"Togged",new FVariable
                 {
-                     ongetvalue = ()=>new Gbool(IsToggled),
-                     onsetvalue = (value)=>
-                     {
-                         IsToggled = Convert.ToBoolean(value);
-                         return 0;
-                     }
-                } }
-
-
-
-
-
+                    "Orientation",new FVariable
+                    {
+                        ongetvalue = ()=>new Gstring(Orientation == Orientation.Horizontal?"horizontal":"veritical"),
+                        onsetvalue = (value)=>
+                        {
+                            Orientation = value.ToString() == "horizontal" ? Orientation.Horizontal: Orientation.Vertical;
+                            return 0;
+                        }
+                    }
+                },
+                {"Add",new Variable(new GI.Function.MFunction(add,this)) }, 
             };
-            
-            parent = new GTXAM.Control(this);
-            #endregion
+
+            parent = new GTWPF.Control(this);
+        }
+        static IFunction add = new StackFlat_Function_Add();
+        public class StackFlat_Function_Add:Function
+        {
+            public StackFlat_Function_Add()
+            {
+                
+                IInformation = "add a control to this stackflat";
+                str_xcname = "control";
+            }
+            public override object Run(Hashtable xc)
+            {
+                var stackflat = xc.GetCSVariableFromSpeType<StackFlat>("this", "stackflat");
+                var control = xc.GetCSVariableFromSpeType<UIElement>("control", "control");
+                stackflat.Children.Add(control);
+                return new Variable(0);
+            }
         }
 
-        #region 实现IName
-        public string Name { get; set; }
-        #endregion
-
-
-
-       
-
         #region 实现IType
-        const string type = "switcher";
+        const string type = "stackflat";
         public string IGetType()
         {
             return type;
@@ -144,15 +145,16 @@ namespace GTXAM.GasControl.Control
         {
             return IGetType();
         }
-
         public object IGetCSValue()
         {
             return this;
         }
 
-        static Switcher()
+
+
+        static StackFlat()
         {
-            GType.Sign("switcher");
+            GType.Sign("stackflat");
         }
         #endregion
 
@@ -164,14 +166,14 @@ namespace GTXAM.GasControl.Control
                 return members[name];
             else return null;
         }
-
-        GTXAM.Control parent;
+        GTWPF.Control parent;
         public IOBJ IGetParent()
         {
             return parent;
         }
 
         #endregion
+
 
     }
 }

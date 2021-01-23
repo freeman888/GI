@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace GI
 {
@@ -13,6 +14,7 @@ namespace GI
             public File_Lib()
             {
                 myThing.Add("ReadGaa", new Variable( new File_Function_ReadGaa()));
+                myThing.Add("FileOpen", new Variable(new File_Function_FileOpen()));
             }
 
             public class File_Function_ReadGaa:Function
@@ -33,8 +35,41 @@ namespace GI
 
                 }
             }
+            public class File_Function_FileOpen : Function
+            {
+                public File_Function_FileOpen()
+                {
+                    poslib = "File";
+                    str_xcname = "filepath,mode";
+                    IInformation = "不推荐此方法，平台差异性过大，读取文件，获得stream\nmode:open,creat,append";
+                }
 
-            
+                public override object Run(Hashtable xc)
+                {
+                    string filepath = xc.GetCSVariable<object>("filepath").ToString();
+                    string mode = xc.GetCSVariable<object>("mode").ToString();
+                    FileMode fmode;
+                    switch (mode)
+                    {
+                        case "open":
+                            fmode = FileMode.Open;
+                            break;
+                        case "creat":
+                            fmode = FileMode.Create;
+                            break;
+                        case "append":
+                            fmode = FileMode.Append;
+                            break;
+                        default:
+                            throw new Exceptions.RunException(Exceptions.EXID.参数错误, "无对应参数");
+                    }
+
+                    GI.GStream stream = new GStream(new FileStream(filepath,fmode));
+                    return new Variable(stream);
+
+                }
+            }
+
 
             #region
             public Dictionary<string, Variable> myThing { get; set; } = new Dictionary<string, Variable>();

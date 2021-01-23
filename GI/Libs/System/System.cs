@@ -105,7 +105,7 @@ time",
                 myThing.Add("async",new Variable( new Asyncfunc()));
                 myThing.Add("await", new Variable( new System_Function_Await()));
                 myThing.Add("wait",new Variable( new System_Function_Wait()));
-
+                myThing.Add("Shell", new Variable(new System_Function_Shell()));
             }
 
 
@@ -195,6 +195,39 @@ time",
                     Debug.WriteLine("done");
                     return new Variable(0);
                     //return xc.GetCSVariable<Task<Variable>>("task").Result;
+                }
+            }
+
+            public class System_Function_Shell : AFunction
+            {
+                public System_Function_Shell()
+                {
+                    IInformation = "shell some code in terminal";
+                    Istr_xcname = "params";
+                }
+                public async override Task<object> Run(Hashtable xc)
+                {
+                    var list = xc.GetCSVariable<Glist>("params");
+                    string filename = list[0].value.ToString();
+                    if(list.Count >1)
+                    {
+                        var arguments = new string[list.Count - 1];
+                        for(int i = 1;i<list.Count;i++)
+                        {
+                            arguments[i - 1] = list[i].value.ToString();
+                        }
+
+                        await Task.Run(() =>
+                    {
+                        System.Diagnostics.Process.Start(filename, string.Join(" ", arguments)).WaitForExit();
+                    });
+                    }
+                    else
+                    {
+                        await Task.Run(() => { System.Diagnostics.Process.Start(filename).WaitForExit(); });
+                    }
+                    return new Variable(0);
+
                 }
             }
 

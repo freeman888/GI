@@ -20,34 +20,15 @@ namespace GTXAM
 
             InitializeComponent();
             MainApp = this;
+            
+
+
             MainPage = new NavigationPage(new ConsolePage());
 
-            //var stack = new StackLayout()
-            //{
-            //};
-            //stack.Children.Add(new Button
-            //{
-            //    Text = "Hello",
-            //    HorizontalOptions = LayoutOptions.Center,
-            //    VerticalOptions = LayoutOptions.Center,
-
-            //});
-            //Button button = new Button
-            //{
-            //    Text = "World"
-            //};
-            //button.Clicked += (o, e) =>
-            //{
-            //    MainPage.Navigation.PushAsync(new ContentPage { Title = "ok" });
-            //};
-            //stack.Children.Add(button);
-            //MainPage = new NavigationPage(new MasterDetailPage
-            //{
-            //    Master = new ContentPage { Title = "fuck", Content = new ListView { ItemsSource = new string[] { "hello", "world" } } },
-            //    Detail = new ContentPage { Content = stack }
-            //});
-
+            
         }
+
+        
 
         protected override void OnStart()
         {

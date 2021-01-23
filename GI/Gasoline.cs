@@ -39,6 +39,7 @@ namespace GI
             libs.Add("Socket", new Socket_Lib());
             libs.Add("Thread", new Thread_Lib());
             libs.Add("File", new File_Lib());
+            libs.Add("Xml", new Xml_Lib());
             //2加载平台Lib
             foreach (var i in heads)
                 libs.Add(i.Key, i.Value);

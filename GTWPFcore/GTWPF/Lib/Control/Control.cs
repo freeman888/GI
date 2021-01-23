@@ -24,6 +24,7 @@ namespace GTWPF
                 myThing.Add("ListFlat",new Variable(new ListFlatClassTemplate()));
                 myThing.Add("TextCell", new Variable(new TextCellClassTemplate()));
                 myThing.Add("WebView", new Variable(new WebViewClassTemplate()));
+                myThing.Add("StackFlat", new Variable(new StackFlatClassTemplate()));
             }
 
 
@@ -159,7 +160,21 @@ namespace GTWPF
 
                 }
             }
+            public class StackFlatClassTemplate : GClassTemplate
+            {
+                public StackFlatClassTemplate() : base("stackfalt", "Control")
+                {
+                    Istr_xcname = "name";
+                    csctor = (xc) =>
+                    {
+                        string name = xc.GetCSVariable<object>("name").ToString();
+                        var r = new GasControl.ContentControl.StackFlat();
+                        r.Name = name;
+                        return r;
+                    };
 
+                }
+            }
             #region
             public Dictionary<string, Variable> myThing { get; set; } = new Dictionary<string, Variable>();
             public Dictionary<string, Variable> otherThing { get; set; } = new Dictionary<string, Variable>();

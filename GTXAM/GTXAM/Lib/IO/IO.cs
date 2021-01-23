@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 using static GI.Function;
 using static GI.Lib;
+
 
 namespace GTXAM
 {
@@ -16,6 +18,8 @@ namespace GTXAM
         {
             public IO_Lib()
             {
+                
+
                 myThing.Add("Write", new Variable(new IO_Function_Write()));
                 myThing.Add("WriteLine", new Variable(new IO_Function_WriteLine()));
                 myThing.Add("Input", new Variable(new IO_Function_Input()));
@@ -112,7 +116,20 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                     return new Variable(0);
                 }
             }
+            public class IO_Function_PickFile:AFunction
+            {
+                public IO_Function_PickFile()
+                {
+                    IInformation = "pick up a file by user";
+                    Istr_xcname = "params";
+                }
+                public async override Task<object> Run(Hashtable xc)
+                {
 
+                    var res =  await FilePicker.PickAsync();
+                    return new Variable(new GStream(await res.OpenReadAsync()));
+                }
+            }
             #region
             public Dictionary<string, Variable> myThing { get; set; } = new Dictionary<string, Variable>();
             public Dictionary<string, Variable> otherThing { get; set; } = new Dictionary<string, Variable>();
