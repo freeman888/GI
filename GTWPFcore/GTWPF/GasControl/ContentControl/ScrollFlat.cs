@@ -240,10 +240,10 @@ namespace GTWPF.GasControl.ContentControl
 
             public override object Run(Hashtable xc)
             {
-                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "gridflat");
+                var grid = xc.GetCSVariableFromSpeType<ScrollFlat>("this", "scrollflat");
                 var content = xc.GetCSVariableFromSpeType<UIElement>("control", "control");
-                
-                grid.Children.Add(content);
+
+                grid.Content = content;
                 return new Variable(0);
             }
         }

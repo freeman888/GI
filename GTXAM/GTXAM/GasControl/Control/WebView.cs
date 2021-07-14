@@ -1,25 +1,24 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
-using GTXAM.GasControl.Control;
-using System.Collections;
 using GI;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using static GI.Function;
 
-namespace GTXAM.GasControl.ContentControl
-{/// <summary>
- /// Gasoline 网格布局
- /// </summary>
-    public class GridFlat : Grid, IOBJ, IName
+namespace GTXAM.GasControl.Control
+{
+     public class WebView:Xamarin.Forms.WebView,IOBJ,IName
     {
-        public GridFlat()
-        {
-            
-            HorizontalOptions = LayoutOptions.FillAndExpand;
-            VerticalOptions = LayoutOptions.FillAndExpand;
 
+
+        public WebView()
+        {
+            HorizontalOptions = LayoutOptions.Fill;
+            VerticalOptions = LayoutOptions.Fill;
+            
             #region
             members = new Dictionary<string, Variable>
             {
@@ -46,7 +45,7 @@ namespace GTXAM.GasControl.ContentControl
                         return 0;
                     }
                 } },
-                {"Vertical",new FVariable{
+               {"Vertical",new FVariable{
                 ongetvalue = ()=>new Gstring(VerticalOptions.ToString()),
                 onsetvalue = (value)=>
                 {
@@ -99,30 +98,53 @@ namespace GTXAM.GasControl.ContentControl
                         return 0;
                     }
                 } },
-
-
-
-                {"Background",new FVariable{
-                    ongetvalue = ()=>new Gstring(BackgroundColor.ToString()),
-                    onsetvalue = (value)=>
+                { "Url" , new FVariable{
+                ongetvalue = ()=> new Gstring(this.Source.ToString()),
+                onsetvalue = (value)=>
+                {
+                    var path = value.ToString();
+                    if(GIInfo.Platform == "Mac_Xamarin")
                     {
-                        BackgroundColor = (Color)new ColorTypeConverter().ConvertFromInvariantString(value.ToString());
-                        return 0;
+
+                        path = path.Replace("\\","/");
                     }
-                } },
-
-                {"Add",new Variable(new MFunction(add,this)) },
-                {"AddRow",new Variable(new MFunction(addrow,this)) },
-                {"AddColumn",new Variable(new MFunction(addcolume,this)) }
-
-
-
+                    Source = new UrlWebViewSource{ Url = path };
+                    return 0;
+                } } },
+                {
+                    "InvokeJS",new Variable(new MFunction(invokejs,this))
+                }
             };
-
             parent = new GTXAM.Control(this);
             #endregion
-
         }
+        static IFunction invokejs = new WebView_Function_InvokeJS();
+        public class WebView_Function_InvokeJS : Function
+        {
+            public WebView_Function_InvokeJS()
+            {
+                IInformation = "invoke js function in gasoline";
+                str_xcname = "params";
+            }
+
+            public  override object Run(Hashtable xc)
+            {
+                var list = xc.GetCSVariable<Glist>("params");
+                string jsfun = list[0].value.IGetCSValue().ToString();
+                list.RemoveAt(0);
+                List<string> objs = new List<string>();
+                foreach (var i in list)
+                {
+                    objs.Add("'"+i.value.IGetCSValue().ToString()+"'");
+                }
+
+
+                var webview = xc.GetCSVariableFromSpeType<WebView>("this", "webview");
+                var res =  webview.funinvokejs?.Invoke($"{jsfun} ({string.Join(",", objs)})");
+                return new Variable(res);
+            }
+        }
+        public Func<string, string> funinvokejs = null;
 
 
         #region 实现IName
@@ -131,7 +153,7 @@ namespace GTXAM.GasControl.ContentControl
 
 
         #region 实现IType
-        const string type = "gridflat";
+        const string type = "webview";
         public string IGetType()
         {
             return type;
@@ -146,9 +168,9 @@ namespace GTXAM.GasControl.ContentControl
             return this;
         }
 
-        static GridFlat()
+        static WebView()
         {
-            GType.Sign("gridflat");
+            GType.Sign("webview");
         }
         #endregion
 
@@ -171,97 +193,5 @@ namespace GTXAM.GasControl.ContentControl
         #endregion
 
 
-        //memfunction
-
-        static IFunction add = new Function_Add();
-        public class Function_Add : Function
-        {
-            public Function_Add()
-            {
-                str_xcname = "con,row,column";
-                poslib = "Control";
-            }
-
-            public override object Run(Hashtable xc)
-            {
-                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "gridflat");
-                var con = xc.GetCSVariableFromSpeType<View>("con", "control");
-                var row = Convert.ToInt32(xc.GetCSVariable<object>("row"));
-                var column = Convert.ToInt32(xc.GetCSVariable<object>("column"));
-                SetRow(con, row);
-                SetColumn(con, column);
-                grid.Children.Add(con);
-                return new Variable(0);
-            }
-        }
-
-        static IFunction addrow = new Function_AddRow();
-        public class Function_AddRow : Function
-        {
-            public Function_AddRow()
-            {
-                str_xcname = "value,config";
-                poslib = "Control";
-
-            }
-            public override object Run(Hashtable xc)
-
-            {
-                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "gridflat");
-                var value = Convert.ToDouble(xc.GetCSVariable<object>("value"));
-                var config = xc.GetCSVariable<object>("config").ToString();
-                if (config == "value")
-                {
-                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(value, GridUnitType.Absolute) });
-                }
-                else if (config == "rate")
-                {
-                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(value, GridUnitType.Star) });
-                }
-                else if (config == "auto")
-                {
-                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(value, GridUnitType.Auto) });
-                }
-
-                return new Variable(0);
-
-            }
-
-
-        }
-
-        static IFunction addcolume = new Function_AddColumn();
-        public class Function_AddColumn : GI.Function
-        {
-            public Function_AddColumn()
-            {
-                IInformation = "set the column definition .\n[config(string)]:value ,rate ,auto";
-                str_xcname = "value,config";
-            }
-            public override object Run(Hashtable xc)
-            {
-                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "gridflat");
-                double value = Convert.ToDouble(Variable.GetTrueVariable<object>(xc, "value"));
-                string config = Variable.GetTrueVariable<object>(xc, "config").ToString();
-
-                if (config == "value")
-                {
-                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(value, GridUnitType.Absolute) });
-                }
-                else if (config == "rate")
-                {
-                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(value, GridUnitType.Star) });
-                }
-                else if (config == "auto")
-                {
-                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(value, GridUnitType.Auto) });
-                }
-
-                return new Variable(0);
-            }
-        }
-
-
     }
-
 }

@@ -23,32 +23,21 @@ namespace GTWPF.GwpfLib.IO
         {
             InitializeComponent();
         }
-        string content = "";
-        bool done = false;
-        public async Task<string> GetInput(string title = "Input", string tips = "")
+        public string content = "";
+        public static  bool done = false;
+        public void SetContent(string title,string tips)
         {
-            Show();
-            Title = title;
             Tips.Content = tips;
-
-            await Task.Run(() =>
-            {
-                while (!done) ;
-                return 1;
-            });
-            return content;
+            Title = title;
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             content = InputBox.Text;
+            done = true;
             Close();
 
         }
 
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            done = true;
-        }
+        
     }
 }

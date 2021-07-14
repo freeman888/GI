@@ -111,7 +111,7 @@ namespace GTWPF.GasControl.ContentControl
 
                 {"Add",new Variable(new MFunction(add,this)) },
                 {"AddRow",new Variable(new MFunction(addrow,this)) },
-                {"AddColume",new Variable(new MFunction(addcolume,this)) }
+                {"AddColumn",new Variable(new MFunction(addcolume,this)) }
 
 
 

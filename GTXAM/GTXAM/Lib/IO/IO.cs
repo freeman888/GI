@@ -8,7 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Essentials;
 using static GI.Function;
 using static GI.Lib;
-
+using System.Diagnostics;
 
 namespace GTXAM
 {
@@ -24,6 +24,7 @@ namespace GTXAM
                 myThing.Add("WriteLine", new Variable(new IO_Function_WriteLine()));
                 myThing.Add("Input", new Variable(new IO_Function_Input()));
                 myThing.Add("Message", new Variable(new IO_Function_Tip()));
+                myThing.Add("FilePicker", new Variable(new FilePicker_ClassTemplate()));
             }
 
             public class IO_Function_Input : AFunction
@@ -45,6 +46,24 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                     Variable ret = new Variable(0);
                     await Device.InvokeOnMainThreadAsync(async () =>
                     {
+                        if(Device.RuntimePlatform == Device.macOS)
+                        {
+                            if (list.Count == 0)
+                                GTXAMInfo.InputFunction?.Invoke("Input","","");
+                            else if (list.Count == 1)
+                                GTXAMInfo.InputFunction?.Invoke(list[0].value.IGetCSValue().ToString(), "", "");
+                            else if (list.Count == 2)
+                                GTXAMInfo.InputFunction?.Invoke(list[0].value.IGetCSValue().ToString(), list[1].value.IGetCSValue().ToString(), "");
+                            else throw new Exceptions.RunException(Exceptions.EXID.参数错误);
+                            GTXAMInfo.Inputdone = false;
+                            GTXAM.GTXAMInfo.InputResult = "";
+                            await Task.Run(() =>
+                            {
+                                while (!GTXAMInfo.Inputdone) ;
+                            });
+                            ret = new Variable(GTXAMInfo.InputResult);
+                            return;
+                        }
                         if (list.Count == 0)
                             ret = new Variable(await App.MainApp.MainPage.DisplayPromptAsync("Input", "", initialValue: ""));
                         else if (list.Count == 1)
@@ -126,8 +145,20 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                 public async override Task<object> Run(Hashtable xc)
                 {
 
-                    var res =  await FilePicker.PickAsync();
+                    var res =  await Xamarin.Essentials. FilePicker.PickAsync();
                     return new Variable(new GStream(await res.OpenReadAsync()));
+                }
+            }
+            public class FilePicker_ClassTemplate : GClassTemplate
+            {
+                public FilePicker_ClassTemplate() : base("filepicker", "IO")
+                {
+                    Istr_xcname = "";
+                    csctor = (xc) =>
+                    {
+
+                        return new FilePicker();
+                    };
                 }
             }
             #region

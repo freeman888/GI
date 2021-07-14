@@ -33,7 +33,8 @@ namespace GI.Libs.Xml
                     },
                     onsetvalue = (value)=>
                     {
-                        RemoveChild(FirstChild);
+                        if(FirstChild != null)
+                            RemoveChild(FirstChild);
                         AppendChild((SXml.XmlNode)value.IGetCSValue());
                         return 0;
                     }
@@ -41,7 +42,8 @@ namespace GI.Libs.Xml
                 {"CreatElement" ,new Variable(new MFunction(createlement,this))},
                 {"CreatComment" ,new Variable(new MFunction(creatcomment,this))},
                 {"Save" , new Variable(new MFunction(save,this))},
-                {"Load",new Variable(new MFunction(load,this)) }
+                {"Load",new Variable(new MFunction(load,this)) },
+                {"LoadFromText" ,new Variable(new MFunction(loadfromtext,this))}
             };
         }
 
@@ -109,6 +111,25 @@ namespace GI.Libs.Xml
                 var xmld = xc.GetCSVariableFromSpeType<XmlDocument>("this", "xmldocument");
                 var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "stream");
                 xmld.Load(stream);
+                return new Variable(0);
+            }
+        }
+
+        static IFunction loadfromtext = new XmlDocument_Function_LoadFromText();
+        public class XmlDocument_Function_LoadFromText : Function
+        {
+            public XmlDocument_Function_LoadFromText()
+            {
+                IInformation = "load xmldocument from stram";
+                str_xcname = "text";
+
+            }
+
+            public override object Run(Hashtable xc)
+            {
+                var xmld = xc.GetCSVariableFromSpeType<XmlDocument>("this", "xmldocument");
+                var stream = xc.GetCSVariable<object>("text").ToString();
+                xmld.LoadXml(stream);
                 return new Variable(0);
             }
         }

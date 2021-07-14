@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml;
 using System.Windows.Media;
 using GI;
 using static GI.Function;
@@ -28,7 +29,8 @@ namespace GTWPF.GasControl.Page
             {
                 {"SetContent",new Variable(new MFunction(setcontent,this)) },
                 {"SetTitle",new Variable(new MFunction(settitle,this)) },
-                {"AddTool",new Variable(new MFunction(addtool,this)) }
+                {"AddTool",new Variable(new MFunction(addtool,this)) },
+                {"LoadFromXml",new Variable(new MFunction(loadfromxml,this)) }
             };
         }
 
@@ -184,6 +186,44 @@ namespace GTWPF.GasControl.Page
                 var text = xc.GetCSVariable<object>("text").ToString();
                 var click = xc.GetCSVariable<object>("clickevent");
                 page.AddTool(text, click);
+                return new Variable(0);
+            }
+        }
+
+        static IFunction loadfromxml = new Page_LoadFromXml();
+        public class Page_LoadFromXml: Function
+        {
+            public Page_LoadFromXml()
+            {
+                str_xcname = "xmlstream";
+                IInformation = "Load a page from xml file";
+            }
+
+            public override object Run(Hashtable xc)
+            {
+                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "page");
+                var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("xmlstream", "stream");
+                XmlDocument xmlDocument = new XmlDocument();
+                xmlDocument.Load(stream);
+
+                XmlElement xmlElement = xmlDocument.DocumentElement;
+                //Title属性
+                try
+                {
+                    var title = xmlElement.GetAttribute("Title");
+                    if (MainWindow.MainApp.PageBase.Children.Contains(page))
+                    {
+                        MainWindow.MainApp.GasTitle.Content = title;
+                    }
+                    page.title = title;
+                }
+                catch { }
+                //加载页面内容
+                XmlElement xe_content = xmlElement.FirstChild as XmlElement;
+                var content = GTWPF.Control.GetControlFromXmlElement(xe_content);
+
+                page.SetContent(content.IGetCSValue() as UIElement);
+
                 return new Variable(0);
             }
         }

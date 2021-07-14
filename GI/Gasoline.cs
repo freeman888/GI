@@ -12,7 +12,6 @@ namespace GI
 
         /*Gasoline的方法*/
         public static Hashtable sarray_Sys_Variables = new Hashtable();
-        public static Dictionary<string, Function.Head> sHeads = new Dictionary<string, Function.Head>();
 
         //总lib库
         public static Dictionary<string, ILib> libs = new Dictionary<string, ILib>();

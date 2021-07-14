@@ -19,8 +19,7 @@ namespace GTWPF.GasControl.Control
             this.Children.Add(text);
             this.Children.Add(detail);
 
-            
-            MouseDown += TextCell_MouseDown;
+            MouseUp += TextCell_MouseDown;
             #region
             members = new Dictionary<string, Variable>
             {

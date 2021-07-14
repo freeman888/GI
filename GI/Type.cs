@@ -110,7 +110,7 @@ namespace GI
     {
         static GClassTemplate()
         {
-            GType.Sign("ClassTemplate");
+            GType.Sign("class");
         }
         internal string classname, parentclassname;
         public string poslib { get; set; }
@@ -245,11 +245,14 @@ namespace GI
 
         public string IGetType()
         {
-            return "ClassTemplate";
+            return "class";
         }
 
+        public override string ToString()
+        {
+            return IGetType();
+        }
 
-       
 
         #endregion
 

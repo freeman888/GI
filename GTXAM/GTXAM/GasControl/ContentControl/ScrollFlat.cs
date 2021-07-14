@@ -189,7 +189,7 @@ namespace GTXAM.GasControl.ContentControl
 
 
         #region 实现IType
-        const string type = "scrollflat,function";
+        const string type = "scrollflat";
         public string IGetType()
         {
             return type;
@@ -240,10 +240,10 @@ namespace GTXAM.GasControl.ContentControl
 
             public override object Run(Hashtable xc)
             {
-                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "gridflat");
+                var sf = xc.GetCSVariableFromSpeType<ScrollFlat>("this", "scrollflat");
                 var content = xc.GetCSVariableFromSpeType<View>("control", "control");
 
-                grid.Children.Add(content);
+                sf.Content = content;
                 return new Variable(0);
             }
         }

@@ -168,33 +168,19 @@ namespace GTXAM.GasControl.Control
             {
                 p = (p as Element).Parent;
             }
+
             if (event_click != null && p != null)
             {
-                if (event_click is IFunction)
+
+                IFunction function = event_click as IFunction;
+                string[] sss = function.Istr_xcname.Split(',');
+                if (sss.Length == 2)
                 {
-                    IFunction function = event_click as IFunction;
-                    Hashtable hashtable = Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables);
-                    string[] sss = function.Istr_xcname.Split(',');
-                    if (sss.Length == 2)
-                    {
-                        hashtable.Add(sss[0], new Variable(p));
-                        hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
-                        await Function.NewAsyncFuncStarter(function, new Variable(p),new Variable(e));
-                    }
+                    await Function.NewAsyncFuncStarter(function, new Variable(p), new Variable(new Glist { new Variable(this), new Variable(e) }));
                 }
-                else
-                {
-                    IFunction function = Variable.GetTrueVariable<IFunction>(Gasoline.sarray_Sys_Variables, event_click.ToString());
-                    Hashtable hashtable = Variable.GetOwnVariables(Gasoline.sarray_Sys_Variables);
-                    string[] sss = function.Istr_xcname.Split(',');
-                    if (sss.Length == 2)
-                    {
-                        hashtable.Add(sss[0], new Variable(p));
-                        hashtable.Add(sss[1], new Variable(new Glist { new Variable(this), new Variable(e) }));
-                        await Function.NewAsyncFuncStarter(function,new Variable(p),new Variable(e));
-                    }
-                }
+
             }
+
         }
         #region 实现IName
         public string Name { get; set; }

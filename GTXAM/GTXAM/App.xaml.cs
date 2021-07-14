@@ -20,15 +20,28 @@ namespace GTXAM
 
             InitializeComponent();
             MainApp = this;
-            
+
 
 
             MainPage = new NavigationPage(new ConsolePage());
 
-            
+            //var bu = new Button { Text = "ClickMe", FontSize = 222 };
+            //MainPage = new ContentPage
+            //{
+            //    Title = "test",
+            //    Content = new Grid
+            //    {
+            //        Children =
+            //        {
+            //            bu
+            //        }
+            //    }
+            //};
+
+
         }
 
-        
+
 
         protected override void OnStart()
         {

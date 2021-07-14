@@ -14,6 +14,8 @@ namespace GTXAM.GasControl.ContentControl
         public ListFlat()
         {
             this.Root = new TableRoot();
+            cells.Title = "List";
+            Root.Title = "title";
             Root.Add(cells);
             
             members = new Dictionary<string, Variable>
@@ -68,6 +70,15 @@ namespace GTXAM.GasControl.ContentControl
                 }
 
                 } },
+                {"Background",new FVariable{
+                    ongetvalue = ()=>new Gstring(BackgroundColor.ToString()),
+                    onsetvalue = (value)=>
+                    {
+                        BackgroundColor = (Color)new ColorTypeConverter().ConvertFromInvariantString(value.ToString());
+                        return 0;
+                    }
+                } },
+
               {"Visibility",new FVariable{
                     ongetvalue = () =>
                     {
@@ -99,13 +110,13 @@ namespace GTXAM.GasControl.ContentControl
 
 
                 {"Add",new Variable(new MFunction(add,this)) },
-
+                {"Clear",new Variable(new MFunction(clear,this)) }
 
 
 
 
             };
-
+            
             parent = new GTXAM.Control(this);
         }
 
@@ -164,6 +175,21 @@ namespace GTXAM.GasControl.ContentControl
                 listflat.cells.Add(con);
                 
 
+                return new Variable(0);
+            }
+        }
+        static IFunction clear = new Function_ListFlat_Clear();
+        public class Function_ListFlat_Clear:Function
+        {
+            public Function_ListFlat_Clear()
+            {
+                IInformation = "";
+                str_xcname = "";
+            }
+            public override object Run(Hashtable xc)
+            {
+                var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "listflat");
+                listflat.cells.Clear();
                 return new Variable(0);
             }
         }

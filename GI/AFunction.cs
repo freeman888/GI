@@ -36,9 +36,17 @@ namespace GI
                 return this;
             }
 
+
+            public const string type = "function";
+
             public string IGetType()
             {
-                throw new NotImplementedException();
+                return type;
+            }
+
+            public override string ToString()
+            {
+                return IGetType();
             }
 
             public object IRun(Hashtable xc)

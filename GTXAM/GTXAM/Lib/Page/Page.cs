@@ -67,18 +67,20 @@ namespace GTXAM
                 }
             }
 
-            public class Page_Function_Return : Function
+            public class Page_Function_Return : Function. AFunction
             {
                 public Page_Function_Return()
                 {
-                    str_xcname = "";
+                    IInformation = "return the latest page";
+                    Istr_xcname = "";
                 }
-                public override object Run(Hashtable xc)
+                public async override Task<object> Run(Hashtable xc)
                 {
-                    var consolePage = App.MainApp.MainPage;
-                    Page p = consolePage.Navigation.PopAsync().Result;
-                    return new Variable(p);
+                    var page = App.MainApp.MainPage as NavigationPage;
+                    var res = await page.PopAsync();
+                    return new Variable(res);
                 }
+
             }
 
 

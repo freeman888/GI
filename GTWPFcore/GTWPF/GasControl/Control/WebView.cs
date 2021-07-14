@@ -135,9 +135,7 @@ namespace GTWPF.GasControl.Control
                 //string jsfun = xc.GetCSVariable<object>("jsfun").ToString();
                 var webview = xc.GetCSVariableFromSpeType<System.Windows.Controls.WebBrowser>("this", "webview");
                 var res =  webview.InvokeScript(jsfun,objs.ToArray());
-                Debug.WriteLine(res);
-                Debug.WriteLine("ok");
-                return new Variable(0);
+                return new Variable(res);
             }
         }
 

@@ -9,6 +9,7 @@ NETSTANDARD2_0</Description>
     <Company>Gasoline.Inc_Freeman</Company>
     <Product>Gasoline Interpreter</Product>
     <Copyright>Gasolinec.Inc</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

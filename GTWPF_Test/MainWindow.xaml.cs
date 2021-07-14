@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
-
+using GI;
 
 namespace GTWPF_Test
 {
@@ -24,22 +26,35 @@ namespace GTWPF_Test
     {
         public MainWindow()
         {
+           
             InitializeComponent();
 
 
 
             Hide();
 
-            XmlDocument code = new XmlDocument();
-            code.Load("X:\\projects\\freestudio\\app1\\app1\\source\\code.xml");
-            GI.Gasoline.Loadgasxml(code);
+            Stream stream = new FileStream("D:\\projects\\freestudio\\App1\\debug\\App1.gaa", FileMode.Open);
+            ZipArchive zipArchive = new ZipArchive(stream);
+
+            GI.GStream.gaas.Add("App1", zipArchive);
+            var entry = zipArchive.GetEntry("App1" + "/information.xml");
+
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(entry.Open());
+            var type = xmlDocument.ChildNodes[0].GetAttribute("source");
+            if (type == "gas")
+            {
+                XmlDocument code = new XmlDocument();
+                code.Load(zipArchive.GetEntry("App1" + "/source/code.xml").Open());
+                GI.Gasoline.Loadgasxml(code);
+            }
 
             GTWPF.MainWindow mainWindow = new GTWPF.MainWindow();
             mainWindow.Show();
 
 
         }
-
         
+
     }
 }

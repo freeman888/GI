@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="GasControl\Control\SwitcherRes\off.png" />
+    <None Remove="GasControl\Control\SwitcherRes\on.png" />
     <None Remove="Resources\back1.png" />
   </ItemGroup>
 
@@ -20,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="GasControl\Control\SwitcherRes\off.png" />
+    <Resource Include="GasControl\Control\SwitcherRes\on.png" />
     <Resource Include="Resources\back1.png" />
   </ItemGroup>
 

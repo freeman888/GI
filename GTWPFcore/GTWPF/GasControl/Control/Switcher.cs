@@ -33,7 +33,7 @@ namespace GTWPF.GasControl.Control
         public bool Iisreffunction { get => false; set => throw new Exception(); }
         public string IInformation { get => "to be added"; set => throw new Exception(); }
 
-        static BitmapImage on = new BitmapImage(new Uri(@"pack://application:,,,/GasControl/Control/SwitcherRes/on.png")), off = new BitmapImage(new Uri(@"pack://application:,,,/GasControl/Control/SwitcherRes/off.png"));
+        static BitmapImage on = new BitmapImage(new Uri(@"pack://application:,,,/GTWPF;component/GasControl/Control/SwitcherRes/on.png")), off = new BitmapImage(new Uri(@"pack://application:,,,/GTWPF;component/GasControl/Control/SwitcherRes/off.png"));
         private Image pic = new Image() { Source = on, VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center, Margin = new System.Windows.Thickness(1) };
         Brush background = Brushes.Transparent;
         private Label label;

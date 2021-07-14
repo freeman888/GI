@@ -491,7 +491,7 @@ namespace GTMAC
     </cls>
   </lib>
 </code>");
-            GTXAMInfo.Codes = xmlDocument;
+            GTXAMInfo.Codes.Add(  xmlDocument);
             GTXAMInfo.SetPlatform("Mac_Xamarin");
 
             Forms.Init();

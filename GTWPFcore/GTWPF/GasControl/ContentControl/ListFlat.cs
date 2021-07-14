@@ -102,7 +102,7 @@ namespace GTWPF.GasControl.ContentControl
                 } },
 
                 {"Add",new Variable(new MFunction(add,this)) },
-                
+                {"Clear",new Variable(new MFunction(clear,this)) },
 
 
 
@@ -162,6 +162,23 @@ namespace GTWPF.GasControl.ContentControl
 
                 listflat.Items.Add(con);
 
+                return new Variable(0);
+            }
+        }
+        static IFunction clear = new Function_Clear();
+        public class Function_Clear:Function
+        {
+            public Function_Clear()
+            {
+
+                IInformation = "";
+                str_xcname = "";
+                poslib = "Control";
+            }
+            public override object Run(Hashtable xc)
+            {
+                var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "listflat");
+                listflat.Items.Clear();
                 return new Variable(0);
             }
         }

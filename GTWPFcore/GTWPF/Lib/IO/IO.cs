@@ -22,7 +22,7 @@ namespace GTWPF
                 myThing.Add("WriteLine", new Variable(new IO_Function_WriteLine()));
                 myThing.Add("Input", new Variable(new IO_Function_Input()));
                 myThing.Add("Message", new Variable(new IO_Function_Tip()));
-                myThing.Add("PickFile", new Variable(new IO_Function_PickFile()));
+                myThing.Add("FilePicker", new Variable(new FilePicker_ClassTemplate()));
             }
 
             public class IO_Function_WriteLine : Function
@@ -84,30 +84,42 @@ when tap 'cancel' or close the inputwindow , return a empty string";
 
                     var list = xc.GetCSVariable<Glist>("params");
                     Variable ret = new Variable(0);
-                    object done = false;
+                    
+                    GwpfLib.IO.Input input = null;
                     try
                     {
-                        await MainWindow.MainApp.Dispatcher.InvokeAsync(async () =>
+                        string title = "Input", inf = "";
+                        if (list.Count == 0)
+                        { }
+                        else if (list.Count == 1)
+                            title = list[0].value.IGetCSValue().ToString();
+                        else if (list.Count == 2)
                         {
-                            var input = new GwpfLib.IO.Input();
-                            if (list.Count == 0)
-                                ret = new Variable(await input.GetInput());
-                            else if (list.Count == 1)
-                                ret = new Variable(await input.GetInput(list[0].value.IGetCSValue().ToString(), ""));
-                            else if (list.Count == 2)
-                                ret = new Variable(await input.GetInput(list[0].value.IGetCSValue().ToString(), list[1].value.IGetCSValue().ToString()));
-                            else throw new Exceptions.RunException(Exceptions.EXID.参数错误);
-                            done = true;
+                            title = list[0].value.IGetCSValue().ToString();
+                            inf = list[1].value.IGetCSValue().ToString();
+                        }
+                        else throw new Exceptions.RunException(Exceptions.EXID.参数错误);
+                        MainWindow.MainApp.Dispatcher.Invoke(() =>
+                        {
+                            input = new GwpfLib.IO.Input();
+                            GwpfLib.IO.Input.done = false;
+                            input.SetContent(title, inf);
+                            input.Show();
                         });
+
+                        
+                        
+
                         await Task.Run(() =>
                         {
-                            while (!Convert.ToBoolean(done)) ;
+                            while (!Convert.ToBoolean(GwpfLib.IO.Input.done)) ;
                         });
                     }
                     catch
                     {
                         throw new Exceptions.RunException(Exceptions.EXID.未知);
                     }
+                    ret = new Variable(input.content);
                     return ret;
                 }
             }
@@ -130,46 +142,18 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                 }
 
             }
-            public class IO_Function_PickFile:AFunction
+
+            public class FilePicker_ClassTemplate:GClassTemplate
             {
-                public IO_Function_PickFile()
+                public FilePicker_ClassTemplate():base("filepicker","IO")
                 {
-                    IInformation = "let user to pick up a file and return a stream. if user do not pick ,return 0";
-                    Istr_xcname = "params";
-                }
-                public async override Task<object> Run(Hashtable xc)
-                {
-                    var list = xc.GetCSVariable<Glist>("params");
-                    
-                    OpenFileDialog openFileDialog = null;
-                    bool choosed = false;
-                    await MainWindow.MainApp.Dispatcher.InvokeAsync(() =>
+                    Istr_xcname = "";
+                    csctor = (xc) =>
                     {
-                        openFileDialog = new OpenFileDialog();
-                        
-                        if (list.Count != 0)
-                        {
-                            string[] ss = new string[list.Count];
-                            for (int i = 0; i < list.Count; i++)
-                                ss[i] = list[i].value.ToString();
-                            try
-                            {
-                                openFileDialog.Filter = string.Join("|",ss);
-                            }
-                            catch
-                            {
-                                throw new Exceptions.RunException(Exceptions.EXID.参数错误, "筛选器参数错误。正确例如：图像文件(*.bmp, *.jpg)|*.bmp;*.jpg|所有文件(*.*)|*.*");
-                            }
 
-                        }
-                        choosed = openFileDialog.ShowDialog() == true ? true : false;
-                    });
-                    
-                    if (choosed) return new Variable(new GStream(System.IO.File.OpenRead(openFileDialog.FileName)));
-                    else return new Variable(0);
+                        return new Lib.IO.FilePicker();
+                    };
                 }
-
-
             }
 
             #region

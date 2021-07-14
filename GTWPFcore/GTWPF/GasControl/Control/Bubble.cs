@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Xml;
 
 namespace GTWPF.GasControl.Control
 {
@@ -227,6 +228,123 @@ namespace GTWPF.GasControl.Control
         }
 
         #endregion
+
+        public static IOBJ GetBubbleFromXml(XmlElement xmlelement)
+        {
+            var bubble = new Bubble();
+            //Name
+            bubble.Name = xmlelement.GetAttribute("Name");
+            //Width
+            {
+                var value = xmlelement.GetAttribute("Width");
+                if (!string.IsNullOrEmpty(value))
+                    bubble.Width = Convert.ToDouble(value);
+            }
+            //Height
+            {
+                var value = xmlelement.GetAttribute("Height");
+                if (!string.IsNullOrEmpty(value))
+                    bubble.Height = Convert.ToDouble(value);
+            }
+            //Horizontal
+            {var value = xmlelement.GetAttribute("Horizontal");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    
+                    if (value.ToString() == "center")
+                        bubble.HorizontalAlignment = HorizontalAlignment.Center;
+                    else if (value.ToString() == "left")
+                        bubble.HorizontalAlignment = HorizontalAlignment.Left;
+                    else if (value.ToString() == "right")
+                        bubble.HorizontalAlignment = HorizontalAlignment.Right;
+                    else if (value.ToString() == "stretch")
+                        bubble.HorizontalAlignment = HorizontalAlignment.Stretch;
+                }
+                
+            }
+            //Vertical
+
+            {
+
+                var value = xmlelement.GetAttribute("Vertical");
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "center")
+                        bubble.VerticalAlignment = VerticalAlignment.Center;
+                    else if (value.ToString() == "bottom")
+                        bubble.VerticalAlignment = VerticalAlignment.Bottom;
+                    else if (value.ToString() == "stretch")
+                        bubble.VerticalAlignment = VerticalAlignment.Stretch;
+                    else if (value.ToString() == "top")
+                        bubble.VerticalAlignment = VerticalAlignment.Top;
+                }
+            }
+            //Margin
+            {
+                var value = xmlelement.GetAttribute("Margin");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var list = value.Split(',');
+                    bubble.Margin = new Thickness(
+                         Convert.ToDouble(list[0]), Convert.ToDouble(list[1]), Convert.ToDouble(list[2]), Convert.ToDouble(list[3])
+                           );
+                }
+            }
+            //Visibility
+            {
+                var value = xmlelement.GetAttribute("Visibility");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "gone")
+                        bubble.Visibility = Visibility.Collapsed;
+                    else if (value.ToString() == "hidden")
+                        bubble.Visibility = Visibility.Hidden;
+                    else if (value.ToString() == "visible")
+                        bubble.Visibility = Visibility.Visible;
+                }
+            }
+            //Text
+            {
+                var value = xmlelement.GetAttribute("Text");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    bubble.Content = value;
+                }
+            }
+            //Fontsize
+            {
+                var value = xmlelement.GetAttribute("FontSize");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    bubble.FontSize = Convert.ToDouble(value);
+                }
+            }
+            //Padding
+            {
+                var value = xmlelement.GetAttribute("Padding");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var list = value.Split(',');
+                    bubble.Padding = new Thickness(
+                         Convert.ToDouble(list[0]), Convert.ToDouble(list[1]), Convert.ToDouble(list[2]), Convert.ToDouble(list[3])
+                           );
+                }
+            }
+            //BackGround
+            {
+                var value = xmlelement.GetAttribute("Background");
+                if (!string.IsNullOrEmpty(value))
+                    bubble. Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+            }
+            //Foreground
+            {
+                var value = xmlelement.GetAttribute("Foreground");
+                if (!string.IsNullOrEmpty(value))
+                    bubble.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+            }
+            return bubble;
+        }
     }
 
 

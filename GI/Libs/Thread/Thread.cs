@@ -17,7 +17,8 @@ namespace GI
                 myThing.Add("StartThread",new Variable( start));
                 myThing.Add("Sleep", new Variable(sleep));
                 myThing.Add("RunOnUI", new Variable(runonui));
-                myThing.Add("StartTask", new Variable(taskrun));            }
+                myThing.Add("StartTask", new Variable(taskrun));            
+            }
             IFunction start = new Thread_Function_Start();
             public class Thread_Function_Start : Function
             {

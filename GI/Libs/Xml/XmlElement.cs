@@ -20,7 +20,8 @@ namespace GI.Libs.Xml
                 {"GetChild"  , new Variable(new MFunction(getchild,this)) },
                 {"Count" ,new FVariable{ ongetvalue = ()=>new Gnumber( value.ChildNodes.Count) ,isconst = true} },
                 {"AddChild", new Variable(new MFunction(addchild,this)) },
-                {"RemoveChild" ,new Variable(new MFunction(removechild,this))}
+                {"RemoveChild" ,new Variable(new MFunction(removechild,this))},
+                {"Name",new FVariable{ongetvalue = ()=>new Gstring(value.Name),onsetvalue = (v)=>throw new Exceptions.RunException(Exceptions.EXID.未知,"不允许赋值" )} }
             };
         }
         static IFunction setattribute = new XmlElement_Function_SetAttribute();

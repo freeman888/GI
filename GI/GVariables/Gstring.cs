@@ -16,7 +16,7 @@ namespace GI
         }
 
         static IFunction find = new String_Function_Find();
-        static IFunction split = new String_Function_Find();
+        static IFunction split = new String_Function_Split();
         static IFunction sub = new String_Function_SubString();
         static IFunction replace = new DFunction
         {
@@ -30,6 +30,7 @@ namespace GI
                 return new Variable(str.Replace(old, _new));
             }
         };
+        static IFunction findlast = new String_Function_FindLast();
         public Gstring(string v)
         {
             value = v;
@@ -39,7 +40,8 @@ namespace GI
                     {"Find",new Variable(new MFunction( find,this) )},
                     {"Split",new Variable(new MFunction( split,this) )},
                     {"SubString",new Variable(new MFunction(sub,this)) },
-                    {"Replace",new Variable(new MFunction( replace,this)) }
+                    {"Replace",new Variable(new MFunction( replace,this)) },
+                {"FindLast",new Variable(new MFunction(findlast,this)) }
 
             };
 
@@ -184,6 +186,34 @@ namespace GI
                     string s2 = list[0].value.ToString();
                     int i = Convert.ToInt32(list[1].value);
                     return new Variable(s1.IndexOf(s2, i));
+                }
+                else throw new Exceptions.RunException(Exceptions.EXID.参数错误, "参数错误");
+            }
+        }
+
+        public class String_Function_FindLast:Function
+        {
+            public String_Function_FindLast()
+            {
+                IInformation = "";
+                str_xcname = "str";
+            }
+            public override object Run(Hashtable xc)
+            {
+                var list = xc.GetCSVariable<Glist>("params");
+                Gdebug.WriteLine(list.Count.ToString());
+                if (list.Count == 1)
+                {
+                    string s1 = xc.GetCSVariable<object>("this").ToString();
+                    string s2 = list[0].value.ToString();
+                    return new Variable(s1.LastIndexOf(s2));
+                }
+                else if (list.Count == 2)
+                {
+                    string s1 = xc.GetCSVariable<object>("this").ToString();
+                    string s2 = list[0].value.ToString();
+                    int i = Convert.ToInt32(list[1].value);
+                    return new Variable(s1.LastIndexOf(s2, i));
                 }
                 else throw new Exceptions.RunException(Exceptions.EXID.参数错误, "参数错误");
             }

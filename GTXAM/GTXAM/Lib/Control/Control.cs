@@ -22,6 +22,8 @@ namespace GTXAM
                 myThing.Add("Image", new Variable(new ImageClassTemplate()));
                 myThing.Add("TextCell", new Variable(new TextCellClassTemplate()));
                 myThing.Add("ListFlat", new Variable(new ListFlatClassTemplate()));
+                myThing.Add("WebView", new Variable(new WebViewClassTemplate()));
+                myThing.Add("StackFlat", new Variable(new StackFlatClassTemplate()));
             }
 
 
@@ -142,7 +144,30 @@ namespace GTXAM
                     };
                 }
             }
-
+            public class WebViewClassTemplate : GClassTemplate
+            {
+                public WebViewClassTemplate() : base("webview", "Control")
+                {
+                    Istr_xcname = "name";
+                    csctor = (xc) =>
+                    {
+                        string name = xc.GetCSVariable<object>("name").ToString();
+                        return new GasControl.Control.WebView { Name = name };
+                    };
+                }
+            }
+            public class StackFlatClassTemplate : GClassTemplate
+            {
+                public StackFlatClassTemplate() : base("stackflat", "Control")
+                {
+                    Istr_xcname = "name";
+                    csctor = (xc) =>
+                    {
+                        string name = xc.GetCSVariable<object>("name").ToString();
+                        return new GasControl.ContentControl.StackFlat { Name = name };
+                    };
+                }
+            }
 
             #region
             public Dictionary<string, Variable> myThing { get; set; } = new Dictionary<string, Variable>();

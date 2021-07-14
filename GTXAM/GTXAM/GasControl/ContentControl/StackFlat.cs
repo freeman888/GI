@@ -9,17 +9,12 @@ using System.Threading.Tasks;
 using static GI.Function;
 
 namespace GTXAM.GasControl.ContentControl
-{/// <summary>
- /// Gasoline 网格布局
- /// </summary>
-    public class GridFlat : Grid, IOBJ, IName
+{
+    public class StackFlat:StackLayout,IOBJ,IName
     {
-        public GridFlat()
-        {
-            
-            HorizontalOptions = LayoutOptions.FillAndExpand;
-            VerticalOptions = LayoutOptions.FillAndExpand;
 
+        public StackFlat()
+        {
             #region
             members = new Dictionary<string, Variable>
             {
@@ -112,18 +107,41 @@ namespace GTXAM.GasControl.ContentControl
                 } },
 
                 {"Add",new Variable(new MFunction(add,this)) },
-                {"AddRow",new Variable(new MFunction(addrow,this)) },
-                {"AddColumn",new Variable(new MFunction(addcolume,this)) }
-
+                {"Orientation" ,new FVariable
+                    {
+                        ongetvalue = ()=>new Gstring(Orientation == StackOrientation.Horizontal?"horizontal":"veritical"),
+                        onsetvalue = (value)=>
+                        {
+                            Orientation = value.ToString() == "horizontal" ? StackOrientation.Horizontal: StackOrientation.Vertical;
+                            return 0;
+                        }
+                    }}
 
 
             };
 
             parent = new GTXAM.Control(this);
             #endregion
-
         }
 
+
+        static IFunction add = new StackFlat_Function_Add();
+        public class StackFlat_Function_Add : Function
+        {
+            public StackFlat_Function_Add()
+            {
+
+                IInformation = "add a control to this stackflat";
+                str_xcname = "control";
+            }
+            public override object Run(Hashtable xc)
+            {
+                var stackflat = xc.GetCSVariableFromSpeType<StackFlat>("this", "stackflat");
+                var control = xc.GetCSVariableFromSpeType<View>("control", "control");
+                stackflat.Children.Add(control);
+                return new Variable(0);
+            }
+        }
 
         #region 实现IName
         public string Name { get; set; }
@@ -131,7 +149,7 @@ namespace GTXAM.GasControl.ContentControl
 
 
         #region 实现IType
-        const string type = "gridflat";
+        const string type = "stackflat";
         public string IGetType()
         {
             return type;
@@ -146,9 +164,9 @@ namespace GTXAM.GasControl.ContentControl
             return this;
         }
 
-        static GridFlat()
+        static StackFlat()
         {
-            GType.Sign("gridflat");
+            GType.Sign("stackflat");
         }
         #endregion
 
@@ -169,99 +187,5 @@ namespace GTXAM.GasControl.ContentControl
         }
 
         #endregion
-
-
-        //memfunction
-
-        static IFunction add = new Function_Add();
-        public class Function_Add : Function
-        {
-            public Function_Add()
-            {
-                str_xcname = "con,row,column";
-                poslib = "Control";
-            }
-
-            public override object Run(Hashtable xc)
-            {
-                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "gridflat");
-                var con = xc.GetCSVariableFromSpeType<View>("con", "control");
-                var row = Convert.ToInt32(xc.GetCSVariable<object>("row"));
-                var column = Convert.ToInt32(xc.GetCSVariable<object>("column"));
-                SetRow(con, row);
-                SetColumn(con, column);
-                grid.Children.Add(con);
-                return new Variable(0);
-            }
-        }
-
-        static IFunction addrow = new Function_AddRow();
-        public class Function_AddRow : Function
-        {
-            public Function_AddRow()
-            {
-                str_xcname = "value,config";
-                poslib = "Control";
-
-            }
-            public override object Run(Hashtable xc)
-
-            {
-                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "gridflat");
-                var value = Convert.ToDouble(xc.GetCSVariable<object>("value"));
-                var config = xc.GetCSVariable<object>("config").ToString();
-                if (config == "value")
-                {
-                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(value, GridUnitType.Absolute) });
-                }
-                else if (config == "rate")
-                {
-                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(value, GridUnitType.Star) });
-                }
-                else if (config == "auto")
-                {
-                    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(value, GridUnitType.Auto) });
-                }
-
-                return new Variable(0);
-
-            }
-
-
-        }
-
-        static IFunction addcolume = new Function_AddColumn();
-        public class Function_AddColumn : GI.Function
-        {
-            public Function_AddColumn()
-            {
-                IInformation = "set the column definition .\n[config(string)]:value ,rate ,auto";
-                str_xcname = "value,config";
-            }
-            public override object Run(Hashtable xc)
-            {
-                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "gridflat");
-                double value = Convert.ToDouble(Variable.GetTrueVariable<object>(xc, "value"));
-                string config = Variable.GetTrueVariable<object>(xc, "config").ToString();
-
-                if (config == "value")
-                {
-                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(value, GridUnitType.Absolute) });
-                }
-                else if (config == "rate")
-                {
-                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(value, GridUnitType.Star) });
-                }
-                else if (config == "auto")
-                {
-                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(value, GridUnitType.Auto) });
-                }
-
-                return new Variable(0);
-            }
-        }
-
-
     }
-
 }

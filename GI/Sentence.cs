@@ -49,6 +49,9 @@ namespace GI
                     case "return_s":
                     list.Add(new Sentence.New_Sentence_Return(sentence));
                     break;
+                    case "breakpoint":
+                        list.Add(new Sentence.New_Sentence_BreakPoint(sentence));
+                        break;
                     default:
                     throw new Exceptions.RunException( Exceptions.EXID.未知,"bug");
                 }
@@ -86,6 +89,28 @@ namespace GI
                     throw new Exception(ex.Message+Environment.NewLine+"位置:"+mycode);
                 }
                 return ;
+            }
+        }
+        public class New_Sentence_BreakPoint : Sentence
+        { 
+            public New_Sentence_BreakPoint(XmlNode me)
+            {
+
+
+            }
+            public async override Task Run(Hashtable htxc)
+            {
+                try
+                {
+
+                    Debugger.Chatwithclient(htxc);
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
+                }
+                return;
             }
         }
         public class New_Sentence_Return : Sentence

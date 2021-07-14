@@ -138,7 +138,7 @@ namespace GTXAM.GTK
     </usefun_s>
   </deffun>
 </code>");
-            GTXAMInfo.Codes = xmlDocument;
+            GTXAMInfo.Codes.Add(  xmlDocument);
             GTXAMInfo.SetPlatform("WPF_Xamarin");
 
             Gtk.Application.Init();

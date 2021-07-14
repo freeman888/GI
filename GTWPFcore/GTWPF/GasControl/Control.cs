@@ -1,10 +1,6 @@
 ﻿using GI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Xml;
 
 namespace GTWPF
 {
@@ -38,6 +34,19 @@ namespace GTWPF
             return "control";
         }
 
+        public static IOBJ GetControlFromXmlElement(XmlElement xmlelement)
+        {
+            var cname = xmlelement.Name;
+            switch (cname)
+            {
+                case "Bubble":
+                    return GasControl.Control.Bubble.GetBubbleFromXml(xmlelement);
+                    
+                default:
+                    throw new Exceptions.RunException(Exceptions.EXID.无对应属性);
+                    
+            }
+        }
 
     }
 }

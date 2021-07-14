@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using static GI.Function;
@@ -25,6 +26,7 @@ namespace GI
                 myThing.Add("GetInterpreterVersion", new Variable(new DFunction { IInformation = "get the version of interpreter", dRun = (xc) => new Variable(GIInfo.GIVersion) }));
                 myThing.Add("GetInterpreter", new Variable( new DFunction { IInformation = "get the name of interpreter", dRun = (xc) => new Variable("GI") }));
                 myThing.Add("GetPlatform", new Variable( new DFunction { IInformation = "get the paltform", dRun = (xc) => new Variable(GIInfo.Platform) }));
+                myThing.Add("GetFolderPath", new Variable(new System_Function_GetFolderPath()));
                 #region 获取时间
          myThing.Add("GetTime", new Variable( new DFunction
                 {
@@ -106,6 +108,8 @@ time",
                 myThing.Add("await", new Variable( new System_Function_Await()));
                 myThing.Add("wait",new Variable( new System_Function_Wait()));
                 myThing.Add("Shell", new Variable(new System_Function_Shell()));
+                myThing.Add("GetAppPath", new Variable(new System_Function_GetAppPath()));
+                myThing.Add("GetResourcesPath", new Variable(new System_Function_GetResourcesPath()));
             }
 
 
@@ -168,7 +172,6 @@ time",
 
                 public async override Task<object> Run(Hashtable xc)
                 {
-
                     try
                     {
                         var task = xc.GetCSVariable<Task<Variable>>("task");
@@ -197,7 +200,87 @@ time",
                     //return xc.GetCSVariable<Task<Variable>>("task").Result;
                 }
             }
+            public class System_Function_GetAppPath : Function
+            {
+                public System_Function_GetAppPath()
+                {
+                    str_xcname = "";
+                    IInformation = "get the current application path";
+                }
+                public override object Run(Hashtable xc)
+                {
+                    if(GIInfo.Platform == "Mac_Xamarin")
+                    {
 
+                        var res = AppDomain.CurrentDomain.BaseDirectory.Replace("/Contents/MonoBundle/", "");
+                        res = res.Substring(0, res.LastIndexOf('/')+1);
+                        
+
+                        return new Variable(res);
+                    }
+                    else
+                        return new Variable(AppDomain.CurrentDomain.BaseDirectory);
+                }
+            }
+
+            public class System_Function_GetResourcesPath : Function
+            {
+                public System_Function_GetResourcesPath()
+                {
+                    str_xcname = "";
+                    IInformation = "get the current application path";
+                }
+                public override object Run(Hashtable xc)
+                {
+                    if (GIInfo.Platform == "Mac_Xamarin")
+                    {
+
+                        var res = AppDomain.CurrentDomain.BaseDirectory.Replace("MonoBundle", "Resources");
+
+
+                        return new Variable(res);
+                    }
+                    else
+                        return new Variable(AppDomain.CurrentDomain.BaseDirectory);
+                }
+            }
+            public class System_Function_GetFolderPath:Function
+            {
+                public System_Function_GetFolderPath()
+                {
+                    str_xcname = "name";
+                    IInformation = "get specific folder of the system";
+                }
+                public override object Run(Hashtable xc)
+                {
+                    var name = xc.GetCSVariable<object>("name").ToString();
+                    Environment.SpecialFolder specialFolder;
+                    switch(name)
+                    {
+                        case "desktop":
+                            specialFolder = Environment.SpecialFolder.Desktop;
+                            break;
+                        case "document":
+                            specialFolder = Environment.SpecialFolder.MyDocuments;
+                            break;
+                        case "music":
+                            specialFolder = Environment.SpecialFolder.MyMusic;
+                            break;
+                        case "picture":
+                            specialFolder = Environment.SpecialFolder.MyPictures;
+                            break;
+                        case "video":
+                            specialFolder = Environment.SpecialFolder.MyVideos;
+                            break;
+                        case "personal":
+                            specialFolder = Environment.SpecialFolder.Personal;
+                            break;
+                        default:
+                            throw new Exceptions.RunException(Exceptions.EXID.无对应属性);
+                    }
+                    return new Variable(Environment.GetFolderPath(specialFolder));
+                }
+            }
             public class System_Function_Shell : AFunction
             {
                 public System_Function_Shell()
@@ -219,7 +302,12 @@ time",
 
                         await Task.Run(() =>
                     {
-                        System.Diagnostics.Process.Start(filename, string.Join(" ", arguments)).WaitForExit();
+                        var shell = string.Join(" ", arguments);
+                        ProcessStartInfo processStartInfo = new ProcessStartInfo(filename);
+                        processStartInfo.CreateNoWindow = false;
+                        processStartInfo.Arguments = shell;
+                        
+                        System.Diagnostics.Process.Start(processStartInfo ).WaitForExit();
                     });
                     }
                     else
@@ -227,7 +315,6 @@ time",
                         await Task.Run(() => { System.Diagnostics.Process.Start(filename).WaitForExit(); });
                     }
                     return new Variable(0);
-
                 }
             }
 

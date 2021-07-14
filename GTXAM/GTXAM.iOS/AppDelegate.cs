@@ -177,7 +177,7 @@ namespace GTXAM.iOS
     </deffun>
   </lib>
 </code>");
-            GTXAMInfo.Codes = xmlDocument;
+            GTXAMInfo.Codes.Add(xmlDocument);
             GTXAMInfo.SetPlatform("IOS_Xamarin");
 
             global::Xamarin.Forms.Forms.Init();
