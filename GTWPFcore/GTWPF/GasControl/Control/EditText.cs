@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Xml;
 using GI;
 using static GI.Function;
 
@@ -188,5 +189,112 @@ namespace GTWPF.GasControl.Control
 
 
         #endregion
+
+        public static IOBJ GetEditTextFromXml(XmlElement xmlelement)
+        {
+            var edittext = new EditText();
+            edittext.Name = xmlelement.GetAttribute("Name");
+            //Width
+            {
+                var value = xmlelement.GetAttribute("Width");
+                if (!string.IsNullOrEmpty(value))
+                    edittext.Width = Convert.ToDouble(value);
+            }
+            //Height
+            {
+                var value = xmlelement.GetAttribute("Height");
+                if (!string.IsNullOrEmpty(value))
+                    edittext.Height = Convert.ToDouble(value);
+            }
+            //Horizontal
+            {
+                var value = xmlelement.GetAttribute("Horizontal");
+                if (!string.IsNullOrEmpty(value))
+                {
+
+                    if (value.ToString() == "center")
+                        edittext.HorizontalAlignment = HorizontalAlignment.Center;
+                    else if (value.ToString() == "left")
+                        edittext.HorizontalAlignment = HorizontalAlignment.Left;
+                    else if (value.ToString() == "right")
+                        edittext.HorizontalAlignment = HorizontalAlignment.Right;
+                    else if (value.ToString() == "stretch")
+                        edittext.HorizontalAlignment = HorizontalAlignment.Stretch;
+                }
+
+            }
+            //Vertical
+
+            {
+
+                var value = xmlelement.GetAttribute("Vertical");
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "center")
+                        edittext.VerticalAlignment = VerticalAlignment.Center;
+                    else if (value.ToString() == "bottom")
+                        edittext.VerticalAlignment = VerticalAlignment.Bottom;
+                    else if (value.ToString() == "stretch")
+                        edittext.VerticalAlignment = VerticalAlignment.Stretch;
+                    else if (value.ToString() == "top")
+                        edittext.VerticalAlignment = VerticalAlignment.Top;
+                }
+            }
+            //Margin
+            {
+                var value = xmlelement.GetAttribute("Margin");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var list = value.Split(',');
+                    edittext.Margin = new Thickness(
+                         Convert.ToDouble(list[0]), Convert.ToDouble(list[1]), Convert.ToDouble(list[2]), Convert.ToDouble(list[3])
+                           );
+                }
+            }
+            //Visibility
+            {
+                var value = xmlelement.GetAttribute("Visibility");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "gone")
+                        edittext.Visibility = Visibility.Collapsed;
+                    else if (value.ToString() == "hidden")
+                        edittext.Visibility = Visibility.Hidden;
+                    else if (value.ToString() == "visible")
+                        edittext.Visibility = Visibility.Visible;
+                }
+            }
+            //Text
+            {
+                var value = xmlelement.GetAttribute("Text");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    edittext.Text = value;
+                }
+            }
+            //Fontsize
+            {
+                var value = xmlelement.GetAttribute("FontSize");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    edittext.FontSize = Convert.ToDouble(value);
+                }
+            }
+            
+            //BackGround
+            {
+                var value = xmlelement.GetAttribute("Background");
+                if (!string.IsNullOrEmpty(value))
+                    edittext.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+            }
+            //Foreground
+            {
+                var value = xmlelement.GetAttribute("Foreground");
+                if (!string.IsNullOrEmpty(value))
+                    edittext.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+            }
+            return edittext;
+        }
     }
 }

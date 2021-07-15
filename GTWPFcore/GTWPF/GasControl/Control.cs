@@ -41,7 +41,11 @@ namespace GTWPF
             {
                 case "Bubble":
                     return GasControl.Control.Bubble.GetBubbleFromXml(xmlelement);
-                    
+
+                case "EditText":
+                    return GasControl.Control.EditText.GetEditTextFromXml(xmlelement);
+
+                case ""
                 default:
                     throw new Exceptions.RunException(Exceptions.EXID.无对应属性);
                     
