@@ -30,9 +30,11 @@ namespace GTWPF.GasControl.Page
                 {"SetContent",new Variable(new MFunction(setcontent,this)) },
                 {"SetTitle",new Variable(new MFunction(settitle,this)) },
                 {"AddTool",new Variable(new MFunction(addtool,this)) },
-                {"LoadFromXml",new Variable(new MFunction(loadfromxml,this)) }
+                {"LoadFromXml",new Variable(new MFunction(loadfromxml,this)) },
+                {"GetControlByName",new Variable(new MFunction(getcontrolbyname,this)) }
             };
         }
+        internal Dictionary<string, IOBJ> controls = new Dictionary<string, IOBJ>();
 
         internal StackPanel sp_tools = new StackPanel
         {
@@ -220,11 +222,26 @@ namespace GTWPF.GasControl.Page
                 catch { }
                 //加载页面内容
                 XmlElement xe_content = xmlElement.FirstChild as XmlElement;
-                var content = GTWPF.Control.GetControlFromXmlElement(xe_content);
+                var content = GTWPF.Control.GetControlFromXmlElement(page,xe_content);
 
                 page.SetContent(content.IGetCSValue() as UIElement);
 
                 return new Variable(0);
+            }
+        }
+
+        static IFunction getcontrolbyname = new Page_GetControlByName();
+        public class Page_GetControlByName:Function
+        {
+            public Page_GetControlByName()
+            {
+                str_xcname = "name";
+                IInformation = "get control by name from page";
+            }
+
+            public override object Run(Hashtable xc)
+            {
+                return new Variable(xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "page").controls[xc.GetCSVariable<object>("name").ToString()]);
             }
         }
     }

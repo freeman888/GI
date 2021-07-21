@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Xml;
 
 namespace GTWPF.GasControl.Control
 {
@@ -153,5 +154,97 @@ namespace GTWPF.GasControl.Control
         }
 
         #endregion
+
+        public static IOBJ GetImageFromXml(XmlElement xmlelement)
+        {
+            var image = new Image();
+            image.Name = xmlelement.GetAttribute("Name");
+            //Width
+            {
+                var value = xmlelement.GetAttribute("Width");
+                if (!string.IsNullOrEmpty(value))
+                    image.Width = Convert.ToDouble(value);
+            }
+            //Height
+            {
+                var value = xmlelement.GetAttribute("Height");
+                if (!string.IsNullOrEmpty(value))
+                    image.Height = Convert.ToDouble(value);
+            }
+            //Horizontal
+            {
+                var value = xmlelement.GetAttribute("Horizontal");
+                if (!string.IsNullOrEmpty(value))
+                {
+
+                    if (value.ToString() == "center")
+                        image.HorizontalAlignment = HorizontalAlignment.Center;
+                    else if (value.ToString() == "left")
+                        image.HorizontalAlignment = HorizontalAlignment.Left;
+                    else if (value.ToString() == "right")
+                        image.HorizontalAlignment = HorizontalAlignment.Right;
+                    else if (value.ToString() == "stretch")
+                        image.HorizontalAlignment = HorizontalAlignment.Stretch;
+                }
+
+            }
+            //Vertical
+
+            {
+
+                var value = xmlelement.GetAttribute("Vertical");
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "center")
+                        image.VerticalAlignment = VerticalAlignment.Center;
+                    else if (value.ToString() == "bottom")
+                        image.VerticalAlignment = VerticalAlignment.Bottom;
+                    else if (value.ToString() == "stretch")
+                        image.VerticalAlignment = VerticalAlignment.Stretch;
+                    else if (value.ToString() == "top")
+                        image.VerticalAlignment = VerticalAlignment.Top;
+                }
+            }
+            //Margin
+            {
+                var value = xmlelement.GetAttribute("Margin");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var list = value.Split(',');
+                    image.Margin = new Thickness(
+                         Convert.ToDouble(list[0]), Convert.ToDouble(list[1]), Convert.ToDouble(list[2]), Convert.ToDouble(list[3])
+                           );
+                }
+            }
+            //Visibility
+            {
+                var value = xmlelement.GetAttribute("Visibility");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "gone")
+                        image.Visibility = Visibility.Collapsed;
+                    else if (value.ToString() == "hidden")
+                        image.Visibility = Visibility.Hidden;
+                    else if (value.ToString() == "visible")
+                        image.Visibility = Visibility.Visible;
+                }
+            }
+            //Row
+            {
+                var value = xmlelement.GetAttribute("Row");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetRow(image, Convert.ToInt32(value));
+
+            }
+            //Column
+            {
+                var value = xmlelement.GetAttribute("Column");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetColumn(image, Convert.ToInt32(value));
+            }
+            return image;
+            
+        }
     }
 }

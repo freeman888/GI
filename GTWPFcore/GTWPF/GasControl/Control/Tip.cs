@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Xml;
 using GI;
 
 namespace GTWPF.GasControl.Control
@@ -184,5 +185,136 @@ namespace GTWPF.GasControl.Control
         }
 
         #endregion
+
+        public static IOBJ GetTipFromXml(XmlElement xmlelement)
+        {
+            var tip = new Tip();
+            tip.Name = xmlelement.GetAttribute("Name");
+            //Width
+            {
+                var value = xmlelement.GetAttribute("Width");
+                if (!string.IsNullOrEmpty(value))
+                    tip.Width = Convert.ToDouble(value);
+            }
+            //Height
+            {
+                var value = xmlelement.GetAttribute("Height");
+                if (!string.IsNullOrEmpty(value))
+                    tip.Height = Convert.ToDouble(value);
+            }
+            //Horizontal
+            {
+                var value = xmlelement.GetAttribute("Horizontal");
+                if (!string.IsNullOrEmpty(value))
+                {
+
+                    if (value.ToString() == "center")
+                        tip.HorizontalAlignment = HorizontalAlignment.Center;
+                    else if (value.ToString() == "left")
+                        tip.HorizontalAlignment = HorizontalAlignment.Left;
+                    else if (value.ToString() == "right")
+                        tip.HorizontalAlignment = HorizontalAlignment.Right;
+                    else if (value.ToString() == "stretch")
+                        tip.HorizontalAlignment = HorizontalAlignment.Stretch;
+                }
+
+            }
+            //Vertical
+
+            {
+
+                var value = xmlelement.GetAttribute("Vertical");
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "center")
+                        tip.VerticalAlignment = VerticalAlignment.Center;
+                    else if (value.ToString() == "bottom")
+                        tip.VerticalAlignment = VerticalAlignment.Bottom;
+                    else if (value.ToString() == "stretch")
+                        tip.VerticalAlignment = VerticalAlignment.Stretch;
+                    else if (value.ToString() == "top")
+                        tip.VerticalAlignment = VerticalAlignment.Top;
+                }
+            }
+            //Margin
+            {
+                var value = xmlelement.GetAttribute("Margin");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var list = value.Split(',');
+                    tip.Margin = new Thickness(
+                         Convert.ToDouble(list[0]), Convert.ToDouble(list[1]), Convert.ToDouble(list[2]), Convert.ToDouble(list[3])
+                           );
+                }
+            }
+            //Visibility
+            {
+                var value = xmlelement.GetAttribute("Visibility");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "gone")
+                        tip.Visibility = Visibility.Collapsed;
+                    else if (value.ToString() == "hidden")
+                        tip.Visibility = Visibility.Hidden;
+                    else if (value.ToString() == "visible")
+                        tip.Visibility = Visibility.Visible;
+                }
+            }
+            //Text
+            {
+                var value = xmlelement.GetAttribute("Text");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    tip.Text = value;
+                }
+            }
+            //Fontsize
+            {
+                var value = xmlelement.GetAttribute("FontSize");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    tip.FontSize = Convert.ToDouble(value);
+                }
+            }
+            //Padding
+            {
+                var value = xmlelement.GetAttribute("Padding");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var list = value.Split(',');
+                    tip.Padding = new Thickness(
+                         Convert.ToDouble(list[0]), Convert.ToDouble(list[1]), Convert.ToDouble(list[2]), Convert.ToDouble(list[3])
+                           );
+                }
+            }
+            //BackGround
+            {
+                var value = xmlelement.GetAttribute("Background");
+                if (!string.IsNullOrEmpty(value))
+                    tip.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+            }
+            //Foreground
+            {
+                var value = xmlelement.GetAttribute("Foreground");
+                if (!string.IsNullOrEmpty(value))
+                    tip.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+            }
+            //Row
+            {
+                var value = xmlelement.GetAttribute("Row");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetRow(tip, Convert.ToInt32(value));
+
+            }
+            //Column
+            {
+                var value = xmlelement.GetAttribute("Column");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetColumn(tip, Convert.ToInt32(value));
+            }
+            return tip;
+
+        }
     }
 }

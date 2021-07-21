@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Collections;
 using GI;
 using static GI.Function;
+using System.Xml;
 
 namespace GTWPF.GasControl.ContentControl
 {
@@ -255,7 +256,162 @@ namespace GTWPF.GasControl.ContentControl
         }
 
 
+        public static IOBJ GetGridFlatFromXml(GTWPF.GasControl.Page.GasPage basepage, XmlElement xmlelement)
+        {
+            var gridflat = new GridFlat();
+            gridflat.Name = xmlelement.GetAttribute("Name");
+            //Width
+            {
+                var value = xmlelement.GetAttribute("Width");
+                if (!string.IsNullOrEmpty(value))
+                    gridflat.Width = Convert.ToDouble(value);
+            }
+            //Height
+            {
+                var value = xmlelement.GetAttribute("Height");
+                if (!string.IsNullOrEmpty(value))
+                    gridflat.Height = Convert.ToDouble(value);
+            }
+            //Horizontal
+            {
+                var value = xmlelement.GetAttribute("Horizontal");
+                if (!string.IsNullOrEmpty(value))
+                {
 
+                    if (value.ToString() == "center")
+                        gridflat.HorizontalAlignment = HorizontalAlignment.Center;
+                    else if (value.ToString() == "left")
+                        gridflat.HorizontalAlignment = HorizontalAlignment.Left;
+                    else if (value.ToString() == "right")
+                        gridflat.HorizontalAlignment = HorizontalAlignment.Right;
+                    else if (value.ToString() == "stretch")
+                        gridflat.HorizontalAlignment = HorizontalAlignment.Stretch;
+                }
+
+            }
+            //Vertical
+
+            {
+
+                var value = xmlelement.GetAttribute("Vertical");
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "center")
+                        gridflat.VerticalAlignment = VerticalAlignment.Center;
+                    else if (value.ToString() == "bottom")
+                        gridflat.VerticalAlignment = VerticalAlignment.Bottom;
+                    else if (value.ToString() == "stretch")
+                        gridflat.VerticalAlignment = VerticalAlignment.Stretch;
+                    else if (value.ToString() == "top")
+                        gridflat.VerticalAlignment = VerticalAlignment.Top;
+                }
+            }
+            //Margin
+            {
+                var value = xmlelement.GetAttribute("Margin");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var list = value.Split(',');
+                    gridflat.Margin = new Thickness(
+                         Convert.ToDouble(list[0]), Convert.ToDouble(list[1]), Convert.ToDouble(list[2]), Convert.ToDouble(list[3])
+                           );
+                }
+            }
+            //Visibility
+            {
+                var value = xmlelement.GetAttribute("Visibility");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "gone")
+                        gridflat.Visibility = Visibility.Collapsed;
+                    else if (value.ToString() == "hidden")
+                        gridflat.Visibility = Visibility.Hidden;
+                    else if (value.ToString() == "visible")
+                        gridflat.Visibility = Visibility.Visible;
+                }
+            }
+            //BackGround
+            {
+                var value = xmlelement.GetAttribute("Background");
+                if (!string.IsNullOrEmpty(value))
+                    gridflat.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+            }
+            //Row
+            {
+                var value = xmlelement.GetAttribute("Row");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetRow(gridflat, Convert.ToInt32(value));
+
+            }
+            //Column
+            {
+                var value = xmlelement.GetAttribute("Column");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetColumn(gridflat, Convert.ToInt32(value));
+            }
+            //RowDef
+            {
+                var value = xmlelement.GetAttribute("RowDef");
+                if(!string.IsNullOrEmpty(value))
+                {
+                    var l1 = value.Split(';');
+                    foreach(var item in l1)
+                    {
+                        var l2 = item.Split(':');
+                        var v = Convert.ToDouble(l2[0]);
+                        var config = l2[1];
+                        if (config == "value")
+                        {
+                            gridflat.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(v, GridUnitType.Pixel) });
+                        }
+                        else if (config == "rate")
+                        {
+                            gridflat.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(v, GridUnitType.Star) });
+                        }
+                        else if (config == "auto")
+                        {
+                            gridflat.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(v, GridUnitType.Auto) });
+                        }
+                    }
+                }
+            }
+            //ColumnDef
+            {
+                var value = xmlelement.GetAttribute("ColumnDef");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var l1 = value.Split(';');
+                    foreach (var item in l1)
+                    {
+                        var l2 = item.Split(':');
+                        var v = Convert.ToDouble(l2[0]);
+                        var config = l2[1];
+                        if (config == "value")
+                        {
+                            gridflat.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(v, GridUnitType.Pixel) });
+                        }
+                        else if (config == "rate")
+                        {
+                            gridflat.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(v, GridUnitType.Star) });
+                        }
+                        else if (config == "auto")
+                        {
+                            gridflat.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(v, GridUnitType.Auto) });
+                        }
+                    }
+                }
+            }
+            foreach(XmlNode i in xmlelement.ChildNodes)
+            {
+                if(i is XmlElement)
+                {
+                    gridflat.Children.Add(GTWPF.Control.GetControlFromXmlElement(basepage, i as XmlElement).IGetCSValue() as UIElement);
+                }
+            }
+            return gridflat;
+
+        }
 
     }
 }

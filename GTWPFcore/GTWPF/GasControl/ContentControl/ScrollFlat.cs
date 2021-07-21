@@ -10,6 +10,8 @@ using GI;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using static GI.Function;
+using GTWPF.GasControl.Page;
+using System.Xml;
 
 namespace GTWPF.GasControl.ContentControl
 {
@@ -184,9 +186,106 @@ namespace GTWPF.GasControl.ContentControl
 
         }
 
+        internal static IOBJ GetScrollFlatFromXml(GasPage basepage, XmlElement xmlelement)
+        {
+            var scrollflat = new ScrollFlat();
+            //Name
+            scrollflat.Name = xmlelement.GetAttribute("Name");
+            //Width
+            {
+                var value = xmlelement.GetAttribute("Width");
+                if (!string.IsNullOrEmpty(value))
+                    scrollflat.Width = Convert.ToDouble(value);
+            }
+            //Height
+            {
+                var value = xmlelement.GetAttribute("Height");
+                if (!string.IsNullOrEmpty(value))
+                    scrollflat.Height = Convert.ToDouble(value);
+            }
+            //Horizontal
+            {
+                var value = xmlelement.GetAttribute("Horizontal");
+                if (!string.IsNullOrEmpty(value))
+                {
 
+                    if (value.ToString() == "center")
+                        scrollflat.HorizontalAlignment = HorizontalAlignment.Center;
+                    else if (value.ToString() == "left")
+                        scrollflat.HorizontalAlignment = HorizontalAlignment.Left;
+                    else if (value.ToString() == "right")
+                        scrollflat.HorizontalAlignment = HorizontalAlignment.Right;
+                    else if (value.ToString() == "stretch")
+                        scrollflat.HorizontalAlignment = HorizontalAlignment.Stretch;
+                }
 
-        
+            }
+            //Vertical
+
+            {
+
+                var value = xmlelement.GetAttribute("Vertical");
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "center")
+                        scrollflat.VerticalAlignment = VerticalAlignment.Center;
+                    else if (value.ToString() == "bottom")
+                        scrollflat.VerticalAlignment = VerticalAlignment.Bottom;
+                    else if (value.ToString() == "stretch")
+                        scrollflat.VerticalAlignment = VerticalAlignment.Stretch;
+                    else if (value.ToString() == "top")
+                        scrollflat.VerticalAlignment = VerticalAlignment.Top;
+                }
+            }
+            //Margin
+            {
+                var value = xmlelement.GetAttribute("Margin");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var list = value.Split(',');
+                    scrollflat.Margin = new Thickness(
+                         Convert.ToDouble(list[0]), Convert.ToDouble(list[1]), Convert.ToDouble(list[2]), Convert.ToDouble(list[3])
+                           );
+                }
+            }
+            //Visibility
+            {
+                var value = xmlelement.GetAttribute("Visibility");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "gone")
+                        scrollflat.Visibility = Visibility.Collapsed;
+                    else if (value.ToString() == "hidden")
+                        scrollflat.Visibility = Visibility.Hidden;
+                    else if (value.ToString() == "visible")
+                        scrollflat.Visibility = Visibility.Visible;
+                }
+            }
+            //Padding
+            {
+                var value = xmlelement.GetAttribute("Padding");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var list = value.Split(',');
+                    scrollflat.Padding = new Thickness(
+                         Convert.ToDouble(list[0]), Convert.ToDouble(list[1]), Convert.ToDouble(list[2]), Convert.ToDouble(list[3])
+                           );
+                }
+            }
+            //BackGround
+            {
+                var value = xmlelement.GetAttribute("Background");
+                if (!string.IsNullOrEmpty(value))
+                    scrollflat.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+            }
+            if(xmlelement.HasChildNodes)
+            {
+                scrollflat.Content = GTWPF.Control.GetControlFromXmlElement(basepage, xmlelement.FirstChild as XmlElement);
+            }
+            return scrollflat;
+        }
+
         public object IGetCSValue()
         {
             return this;

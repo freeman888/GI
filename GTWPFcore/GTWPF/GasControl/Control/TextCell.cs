@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Xml;
 
 namespace GTWPF.GasControl.Control
 {
@@ -131,5 +132,41 @@ namespace GTWPF.GasControl.Control
         }
 
         #endregion
+
+        public static IOBJ GetTextCellFromXml(XmlElement xmlelement)
+        {
+            var textcell = new TextCell();
+            textcell.Name = xmlelement.GetAttribute("Name");
+            //Text
+            {
+                var value = xmlelement.GetAttribute("Text");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    textcell.text.Content = value;
+                }
+            }
+            //Foreground
+            {
+                var value = xmlelement.GetAttribute("Foreground");
+                if (!string.IsNullOrEmpty(value))
+                    textcell.text.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+            }
+            //Detail
+            {
+                var value = xmlelement.GetAttribute("Detail");
+                if (!string.IsNullOrEmpty(value))
+                    textcell.detail.Content = value;
+                    
+            }
+            //DetailColor
+            {
+                var value = xmlelement.GetAttribute("DetailColor");
+                if (!string.IsNullOrEmpty(value))
+                    textcell.detail.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+
+            }
+            return textcell;
+
+        }
     }
 }

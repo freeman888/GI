@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Xml;
 using static GI.Function;
 
 namespace GTWPF.GasControl.Control
@@ -176,5 +178,97 @@ namespace GTWPF.GasControl.Control
         }
 
         #endregion
+
+        public static IOBJ GetWebViewFromXml(XmlElement xmlelement)
+
+        {
+            var webview = new WebView();
+            webview.webBrowser.Name = xmlelement.GetAttribute("Name");
+            //Width
+            {
+                var value = xmlelement.GetAttribute("Width");
+                if (!string.IsNullOrEmpty(value))
+                    webview.webBrowser.Width = Convert.ToDouble(value);
+            }
+            //Height
+            {
+                var value = xmlelement.GetAttribute("Height");
+                if (!string.IsNullOrEmpty(value))
+                    webview.webBrowser.Height = Convert.ToDouble(value);
+            }
+            //Horizontal
+            {
+                var value = xmlelement.GetAttribute("Horizontal");
+                if (!string.IsNullOrEmpty(value))
+                {
+
+                    if (value.ToString() == "center")
+                        webview.webBrowser.HorizontalAlignment = HorizontalAlignment.Center;
+                    else if (value.ToString() == "left")
+                        webview.webBrowser.HorizontalAlignment = HorizontalAlignment.Left;
+                    else if (value.ToString() == "right")
+                        webview.webBrowser.HorizontalAlignment = HorizontalAlignment.Right;
+                    else if (value.ToString() == "stretch")
+                        webview.webBrowser.HorizontalAlignment = HorizontalAlignment.Stretch;
+                }
+
+            }
+            //Vertical
+
+            {
+
+                var value = xmlelement.GetAttribute("Vertical");
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "center")
+                        webview.webBrowser.VerticalAlignment = VerticalAlignment.Center;
+                    else if (value.ToString() == "bottom")
+                        webview.webBrowser.VerticalAlignment = VerticalAlignment.Bottom;
+                    else if (value.ToString() == "stretch")
+                        webview.webBrowser.VerticalAlignment = VerticalAlignment.Stretch;
+                    else if (value.ToString() == "top")
+                        webview.webBrowser.VerticalAlignment = VerticalAlignment.Top;
+                }
+            }
+            //Margin
+            {
+                var value = xmlelement.GetAttribute("Margin");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var list = value.Split(',');
+                    webview.webBrowser.Margin = new Thickness(
+                         Convert.ToDouble(list[0]), Convert.ToDouble(list[1]), Convert.ToDouble(list[2]), Convert.ToDouble(list[3])
+                           );
+                }
+            }
+            //Visibility
+            {
+                var value = xmlelement.GetAttribute("Visibility");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "gone")
+                        webview.webBrowser.Visibility = Visibility.Collapsed;
+                    else if (value.ToString() == "hidden")
+                        webview.webBrowser.Visibility = Visibility.Hidden;
+                    else if (value.ToString() == "visible")
+                        webview.webBrowser.Visibility = Visibility.Visible;
+                }
+            }
+            //Row
+            {
+                var value = xmlelement.GetAttribute("Row");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetRow(webview.webBrowser, Convert.ToInt32(value));
+
+            }
+            //Column
+            {
+                var value = xmlelement.GetAttribute("Column");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetColumn(webview.webBrowser, Convert.ToInt32(value));
+            }
+            return webview;
+        }
     }
 }

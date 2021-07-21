@@ -6,6 +6,8 @@ using System.Windows;
 using GI;
 using System.Windows.Media;
 using System.Collections;
+using GTWPF.GasControl.Page;
+using System.Xml;
 
 namespace GTWPF.GasControl.ContentControl
 {
@@ -101,8 +103,7 @@ namespace GTWPF.GasControl.ContentControl
                         return 0;
                     }
                 } },
-                {
-                    "Orientation",new FVariable
+                {"Orientation",new FVariable
                     {
                         ongetvalue = ()=>new Gstring(Orientation == Orientation.Horizontal?"horizontal":"veritical"),
                         onsetvalue = (value)=>
@@ -117,6 +118,106 @@ namespace GTWPF.GasControl.ContentControl
 
             parent = new GTWPF.Control(this);
         }
+
+        internal static IOBJ GetStackFlatFromXml(GasPage basepage, XmlElement xmlelement)
+        {
+            var stackflat = new StackFlat();
+            //Name
+            stackflat.Name = xmlelement.GetAttribute("Name");
+            //Width
+            {
+                var value = xmlelement.GetAttribute("Width");
+                if (!string.IsNullOrEmpty(value))
+                    stackflat.Width = Convert.ToDouble(value);
+            }
+            //Height
+            {
+                var value = xmlelement.GetAttribute("Height");
+                if (!string.IsNullOrEmpty(value))
+                    stackflat.Height = Convert.ToDouble(value);
+            }
+            //Horizontal
+            {
+                var value = xmlelement.GetAttribute("Horizontal");
+                if (!string.IsNullOrEmpty(value))
+                {
+
+                    if (value.ToString() == "center")
+                        stackflat.HorizontalAlignment = HorizontalAlignment.Center;
+                    else if (value.ToString() == "left")
+                        stackflat.HorizontalAlignment = HorizontalAlignment.Left;
+                    else if (value.ToString() == "right")
+                        stackflat.HorizontalAlignment = HorizontalAlignment.Right;
+                    else if (value.ToString() == "stretch")
+                        stackflat.HorizontalAlignment = HorizontalAlignment.Stretch;
+                }
+
+            }
+            //Vertical
+
+            {
+
+                var value = xmlelement.GetAttribute("Vertical");
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "center")
+                        stackflat.VerticalAlignment = VerticalAlignment.Center;
+                    else if (value.ToString() == "bottom")
+                        stackflat.VerticalAlignment = VerticalAlignment.Bottom;
+                    else if (value.ToString() == "stretch")
+                        stackflat.VerticalAlignment = VerticalAlignment.Stretch;
+                    else if (value.ToString() == "top")
+                        stackflat.VerticalAlignment = VerticalAlignment.Top;
+                }
+            }
+            //Margin
+            {
+                var value = xmlelement.GetAttribute("Margin");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var list = value.Split(',');
+                    stackflat.Margin = new Thickness(
+                         Convert.ToDouble(list[0]), Convert.ToDouble(list[1]), Convert.ToDouble(list[2]), Convert.ToDouble(list[3])
+                           );
+                }
+            }
+            //Visibility
+            {
+                var value = xmlelement.GetAttribute("Visibility");
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (value.ToString() == "gone")
+                        stackflat.Visibility = Visibility.Collapsed;
+                    else if (value.ToString() == "hidden")
+                        stackflat.Visibility = Visibility.Hidden;
+                    else if (value.ToString() == "visible")
+                        stackflat.Visibility = Visibility.Visible;
+                }
+            }
+            //BackGround
+            {
+                var value = xmlelement.GetAttribute("Background");
+                if (!string.IsNullOrEmpty(value))
+                    stackflat.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+            }
+            //Orientation
+            {
+                var value = xmlelement.GetAttribute("Orientation");
+                if(!string.IsNullOrEmpty(value))
+                    stackflat. Orientation = value.ToString() == "horizontal" ? Orientation.Horizontal : Orientation.Vertical;
+                
+            }
+            foreach (XmlNode i in xmlelement.ChildNodes)
+            {
+                if (i is XmlElement)
+                {
+                    stackflat.Children.Add(GTWPF.Control.GetControlFromXmlElement(basepage, i as XmlElement).IGetCSValue() as UIElement);
+                }
+            }
+            return stackflat;
+        }
+
         static IFunction add = new StackFlat_Function_Add();
         public class StackFlat_Function_Add:Function
         {

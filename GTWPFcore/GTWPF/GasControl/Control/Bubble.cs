@@ -343,6 +343,19 @@ namespace GTWPF.GasControl.Control
                 if (!string.IsNullOrEmpty(value))
                     bubble.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
             }
+            //Row
+            {
+                var value = xmlelement.GetAttribute("Row");
+                if(!string.IsNullOrEmpty(value))
+                    Grid.SetRow(bubble, Convert.ToInt32(value));
+                
+            }
+            //Column
+            {
+                var value = xmlelement.GetAttribute("Column");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetColumn(bubble, Convert.ToInt32(value));
+            }
             return bubble;
         }
     }
