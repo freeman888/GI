@@ -86,7 +86,7 @@ namespace GTWPF.GasControl.Control
                 string[] sss = function.Istr_xcname.Split(',');
                 if (sss.Length == 2)
                 {
-                    await Function.NewAsyncFuncStarter(function, new Variable(p), new Variable(new Glist { new Variable(gclass), new Variable(e) }));
+                    await Function.NewAsyncFuncStarter(function, new Variable(p), new Variable(new Glist { new Variable(GetGasObject()), new Variable(e) }));
                 }
 
             }
@@ -169,10 +169,15 @@ namespace GTWPF.GasControl.Control
 
         }
 
-        GClass gclass;
+        GClass gclass = null;
         public void SetGasObject(GClass gClass)
         {
             this.gclass = gClass;
+        }
+        public IOBJ GetGasObject()
+        {
+            if (gclass == null) return this;
+            else return gclass;
         }
     }
 }
