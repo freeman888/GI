@@ -52,7 +52,8 @@ namespace GI
 
                     var delib = libs[s_delib];
                     foreach (var i in delib.myThing)
-                        lib.Value.otherThing.Add(i.Key, i.Value);
+                        if(!lib.Value.otherThing.ContainsKey(i.Key))
+                            lib.Value.otherThing.Add(i.Key, i.Value);
                 }
                 lib.Value.otherThing.Add("true", new Variable(true));
                 lib.Value.otherThing.Add("false", new Variable(false));

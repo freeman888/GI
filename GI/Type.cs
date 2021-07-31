@@ -42,6 +42,7 @@ namespace GI
         /// </summary>
         /// <returns>Gasoline类返回null，请先用IGetParent获取类型</returns>
         object IGetCSValue();
+
         Variable IGetMember(string name);
 
         /// <summary>
@@ -56,6 +57,8 @@ namespace GI
 
     public class GClass : IOBJ
     {
+
+
         public object IGetCSValue()
         {
             return null;
@@ -90,6 +93,7 @@ namespace GI
         internal IFunction ctor;
         internal IOBJ parent = null;
 
+        internal IGasObjectContainer gasObjectContainer = null;
 
         public GClass(string type, string parent,Hashtable xc)
         {
@@ -98,7 +102,21 @@ namespace GI
             {
                 var ct_parent = xc.GetCSVariable<GClassTemplate>(parent);
                 this.parent = ct_parent.CreatFromClassTemplate(xc);
+                if (this.parent is IGasObjectContainer)
+                {
+                    gasObjectContainer = this.parent as IGasObjectContainer;
+                }
+                else if (this.parent is GClass)
+                {
+                    if (((GClass)this.parent).gasObjectContainer != null)
+                        gasObjectContainer = ((GClass)this.parent).gasObjectContainer;
+                }
             }
+        }
+
+        public override string ToString()
+        {
+            return IGetType();
         }
 
     }
@@ -177,17 +195,25 @@ namespace GI
         /// <returns></returns>
         public object IRun(Hashtable xc)
         {
-            return new Variable(CreatFromClassTemplate(xc));
+            IOBJ obj = CreatFromClassTemplate(xc);
+            if (obj is GClass @class)
+            {
+                if (@class.gasObjectContainer != null)
+                {
+                    @class.gasObjectContainer.SetGasObject(obj as GClass);
+                }
+            }
+            return new Variable(obj);
         }
 
-        
+
 
         /// <summary>
         /// 注意，这个xc是已经处理过的xc,应该有构造函数的参数,不含对象本身
         /// </summary>
         /// <param name="xc"></param>
         /// <returns></returns>
-        public  IOBJ CreatFromClassTemplate(Hashtable xc)
+        public IOBJ CreatFromClassTemplate(Hashtable xc)
         {
             if (csctor == null)
             {

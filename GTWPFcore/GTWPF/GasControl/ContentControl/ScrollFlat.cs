@@ -279,7 +279,20 @@ namespace GTWPF.GasControl.ContentControl
                 if (!string.IsNullOrEmpty(value))
                     scrollflat.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
             }
-            if(xmlelement.HasChildNodes)
+            //Row
+            {
+                var value = xmlelement.GetAttribute("Row");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetRow(scrollflat, Convert.ToInt32(value));
+
+            }
+            //Column
+            {
+                var value = xmlelement.GetAttribute("Column");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetColumn(scrollflat, Convert.ToInt32(value));
+            }
+            if (xmlelement.HasChildNodes)
             {
                 scrollflat.Content = GTWPF.Control.GetControlFromXmlElement(basepage, xmlelement.FirstChild as XmlElement);
             }

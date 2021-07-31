@@ -15,7 +15,7 @@ namespace GTWPF.GasControl.Control
     /// <summary>
     /// Gasoline 按钮
     /// </summary>
-    public class Bubble : Button, IOBJ
+    public class Bubble : Button, IOBJ,IGasObjectContainer
     {
 
 
@@ -174,13 +174,12 @@ namespace GTWPF.GasControl.Control
                 string[] sss = function.Istr_xcname.Split(',');
                 if (sss.Length == 2)
                 {
-                    await Function.NewAsyncFuncStarter(function, new Variable(p), new Variable(new Glist { new Variable(this), new Variable(e) }));
+                    await Function.NewAsyncFuncStarter(function, new Variable(p), new Variable(new Glist { new Variable(gclass), new Variable(e) }));
                 }
 
             }
         }
         #region 实现IFunction
-        public bool Iisasync { get { return false; } set { } }
 
         public Task<object> IAsyncRun(Hashtable xc)
         {
@@ -357,6 +356,12 @@ namespace GTWPF.GasControl.Control
                     Grid.SetColumn(bubble, Convert.ToInt32(value));
             }
             return bubble;
+        }
+
+        GClass gclass;
+        public void SetGasObject(GClass gClass)
+        {
+            this.gclass = gClass;
         }
     }
 

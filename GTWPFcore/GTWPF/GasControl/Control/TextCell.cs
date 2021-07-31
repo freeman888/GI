@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace GTWPF.GasControl.Control
 {
-    public class TextCell:StackPanel,IOBJ
+    public class TextCell:StackPanel,IOBJ,IGasObjectContainer
     {
         public object event_click;
         Label text, detail;
@@ -86,7 +86,7 @@ namespace GTWPF.GasControl.Control
                 string[] sss = function.Istr_xcname.Split(',');
                 if (sss.Length == 2)
                 {
-                    await Function.NewAsyncFuncStarter(function, new Variable(p), new Variable(new Glist { new Variable(this), new Variable(e) }));
+                    await Function.NewAsyncFuncStarter(function, new Variable(p), new Variable(new Glist { new Variable(gclass), new Variable(e) }));
                 }
 
             }
@@ -167,6 +167,12 @@ namespace GTWPF.GasControl.Control
             }
             return textcell;
 
+        }
+
+        GClass gclass;
+        public void SetGasObject(GClass gClass)
+        {
+            this.gclass = gClass;
         }
     }
 }

@@ -159,8 +159,17 @@ when three
                 {
                     for (int i = 0; i < list.Count; i++)
                     {
+                        if (list[i].value.IGetCSValue() == null)
+                        {
+                            if (list[i].value.Equals(obj.value))
+                                return new Variable(i);
+                        }
+                        else
+                        {
+
                         if (list[i].value.IGetCSValue().Equals(obj.value.IGetCSValue()))
                             return new Variable(i);
+                        }
                     }
                     return new Variable(-1);
                 }
@@ -169,8 +178,17 @@ when three
                     int start = Convert.ToInt32(param[1].value);
                     for (int i = start; i < list.Count; i++)
                     {
-                        if (list[i].value.IGetCSValue().Equals(obj.value.IGetCSValue()))
-                            return new Variable(i);
+                        if (list[i].value.IGetCSValue() == null)
+                        {
+                            if (list[i].value.Equals(obj.value))
+                                return new Variable(i);
+                        }
+                        else
+                        {
+
+                            if (list[i].value.IGetCSValue().Equals(obj.value.IGetCSValue()))
+                                return new Variable(i);
+                        }
                     }
                     return new Variable(-1);
                 }
@@ -190,10 +208,20 @@ when three
                 var list = xc.GetCSVariableFromSpeType<Glist>("this", "list");
                 var tor = xc["obj"] as Variable;
                 int tori = -1;
-                for (int i = 1; i < list.Count; i++)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    if (list[i].value.IGetCSValue().Equals(tor.value.IGetCSValue()))
-                        tori = i;
+                    if (list[i].value.IGetCSValue() == null)
+                    {
+                        if (list[i].value.Equals(tor.value))
+                            tori = i;
+                    }
+                    else
+                    {
+                        if(list[i].value.IGetCSValue().Equals(tor.value.IGetCSValue()))
+                        {
+                            tori = i;
+                        }
+                    }
                 }
                 if (tori != -1)
                 {

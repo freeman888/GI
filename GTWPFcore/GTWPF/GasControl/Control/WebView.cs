@@ -268,6 +268,12 @@ namespace GTWPF.GasControl.Control
                 if (!string.IsNullOrEmpty(value))
                     Grid.SetColumn(webview.webBrowser, Convert.ToInt32(value));
             }
+            //Url
+            {
+                var value = xmlelement.GetAttribute("Url");
+                if(!string.IsNullOrEmpty(value))
+                    webview. webBrowser.Source = new Uri(value.ToString());
+            }
             return webview;
         }
     }

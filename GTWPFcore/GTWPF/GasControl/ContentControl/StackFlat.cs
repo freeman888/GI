@@ -208,6 +208,19 @@ namespace GTWPF.GasControl.ContentControl
                     stackflat. Orientation = value.ToString() == "horizontal" ? Orientation.Horizontal : Orientation.Vertical;
                 
             }
+            //Row
+            {
+                var value = xmlelement.GetAttribute("Row");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetRow(stackflat, Convert.ToInt32(value));
+
+            }
+            //Column
+            {
+                var value = xmlelement.GetAttribute("Column");
+                if (!string.IsNullOrEmpty(value))
+                    Grid.SetColumn(stackflat, Convert.ToInt32(value));
+            }
             foreach (XmlNode i in xmlelement.ChildNodes)
             {
                 if (i is XmlElement)
