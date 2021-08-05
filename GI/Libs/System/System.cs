@@ -110,6 +110,23 @@ time",
                 myThing.Add("Shell", new Variable(new System_Function_Shell()));
                 myThing.Add("GetAppPath", new Variable(new System_Function_GetAppPath()));
                 myThing.Add("GetResourcesPath", new Variable(new System_Function_GetResourcesPath()));
+                myThing.Add("ObjEqual", new Variable(new DFunction
+                {
+                    IInformation = "compare the object",
+                    str_xcname = "o1,o2",
+                    dRun = (xc) =>
+{
+    IOBJ o1 = xc.GetVariable<IOBJ>("o1"),o2 = xc.GetVariable<IOBJ>("o2");
+    if(o1.IGetCSValue() == null)
+    {
+        return new Variable(o1.Equals(o2));
+    }
+    else
+    {
+        return new Variable(o1.IGetCSValue().Equals(o2.IGetCSValue()));
+    }
+}
+                }));
             }
 
 

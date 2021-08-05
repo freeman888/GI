@@ -9,10 +9,29 @@ namespace GI
         /// <summary>
         /// flag to return a methord quickly
         /// </summary>
-        public class ReturnException:Exception
+        public class ReturnException:Exception,ISysException
         {
             public object toreturn;
         }
+        /// <summary>
+        /// flag to break the foreach or while
+        /// </summary>
+        public class BreakException:Exception,ISysException
+        {
+
+        }
+        /// <summary>
+        /// flag to continue the foreach or while
+        /// </summary>
+        public class ContinueException:Exception,ISysException
+        {
+
+        }
+        /// <summary>
+        /// flag to recognize the exception used by system sentences
+        /// </summary>
+        public interface ISysException
+        { }
         public enum EXID
         {
             未知 = 100010,

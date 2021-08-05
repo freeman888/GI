@@ -121,6 +121,34 @@ namespace GI
 
     }
 
+    public class GClassWithCVF : GClass, IFunction
+    {
+        public GClassWithCVF(string type,string parent,Hashtable xc,Function.New_User_Function new_User_Function):base(type,parent,xc)
+        {
+            New_User_Function = new_User_Function;
+        }
+
+        Function.New_User_Function New_User_Function;
+
+        public string Istr_xcname { get => ((IFunction)New_User_Function).Istr_xcname; set => ((IFunction)New_User_Function).Istr_xcname = value; }
+        public bool Iisreffunction { get => ((IFunction)New_User_Function).Iisreffunction; set => ((IFunction)New_User_Function).Iisreffunction = value; }
+        public string IInformation { get => ((IFunction)New_User_Function).IInformation; set => ((IFunction)New_User_Function).IInformation = value; }
+        public bool Iisasync { get => ((IFunction)New_User_Function).Iisasync; set => ((IFunction)New_User_Function).Iisasync = value; }
+        public string poslib { get => ((IFunction)New_User_Function).poslib; set => ((IFunction)New_User_Function).poslib = value; }
+
+        public object IRun(Hashtable xc)
+        {
+            xc.Add("this", new Variable(this));
+            return ((IFunction)New_User_Function).IRun(xc);
+        }
+
+        public Task<object> IAsyncRun(Hashtable xc)
+        {
+            xc.Add("this", new Variable(this));
+            return ((IFunction)New_User_Function).IAsyncRun(xc);
+        }
+    }
+
     /// <summary>
     /// C#原生类也应该创建，只需要手动设置成员
     /// </summary>
@@ -131,6 +159,8 @@ namespace GI
             GType.Sign("class");
         }
         internal string classname, parentclassname;
+        internal bool iscvf;
+        internal Function.New_User_Function New_User_Function;
         public string poslib { get; set; }
         private string targetposlib = "";
         internal List<string> membernames = new List<string>();
@@ -173,9 +203,14 @@ namespace GI
                 else if (i.Name == "memfun" && i.GetAttribute("funname") == "init")
                 {
 
-                    Function.New_Creat_Function new_User_Function = new Function.New_Creat_Function(i,targetposlib);
+                    Function.New_Creat_Function new_User_Function = new Function.New_Creat_Function(i, targetposlib);
                     ctor = new_User_Function;
                     this.Istr_xcname = new_User_Function.str_xcname;
+                }
+                else if(i.Name == "memfun" && iscvf && i.GetAttribute("funname") == "cvf")
+                {
+                    New_User_Function = new Function.New_User_Function(i, targetposlib);
+
                 }
                 else if (i.Name == "memfun")
                 {
@@ -217,7 +252,7 @@ namespace GI
         {
             if (csctor == null)
             {
-                GClass gClass = new GClass(classname, parentclassname, xc);
+                GClass gClass = iscvf ? new GClassWithCVF(classname, parentclassname, xc, New_User_Function) : new GClass(classname, parentclassname, xc);
                 gClass.ctor = this.ctor;
                 foreach (var i in membernames) gClass.members.Add(i, new Variable(0));
                 foreach (var i in memberfuncs) gClass.members.Add(i.Key, new Variable(new Function.MFunction(i.Value, gClass)));

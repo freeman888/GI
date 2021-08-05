@@ -132,6 +132,9 @@ namespace GI
                             var x_cls = libcontent;
                             GClassTemplate gClassTemplate = new GClassTemplate(x_cls.GetAttribute("name"), libname);
                             var parent = x_cls.GetAttribute("parent");
+                            var iscvf = x_cls.GetAttribute("cvf");
+
+                            gClassTemplate.iscvf = Convert.ToBoolean( iscvf);
                             gClassTemplate.LoadContent(x_cls.ChildNodes);
                             gClassTemplate.parentclassname = parent;
                             libs[libname].myThing.Add(libcontent.GetAttribute("name"), new Variable(gClassTemplate));

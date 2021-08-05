@@ -11,6 +11,8 @@ namespace GI
     {
         public static string GetAttribute(this XmlNode xmlNode, string name)
         {
+            if (xmlNode.Attributes[name] == null)
+                return "";
             return xmlNode.Attributes[name].InnerText;
         }
         public static T GetVariable<T>(this Hashtable hashtable,string varname)
