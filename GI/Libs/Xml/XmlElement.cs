@@ -35,7 +35,7 @@ namespace GI.Libs.Xml
 
             public override object Run(Hashtable xc)
             {
-                var xmlElement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "xmlelement");
+                var xmlElement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "XmlElement");
                 var name = xc.GetCSVariable<object>("name").ToString();
                 var _value = xc.GetCSVariable<object>("value").ToString();
                 xmlElement.SetAttribute(name, _value);
@@ -52,7 +52,7 @@ namespace GI.Libs.Xml
             }
             public override object Run(Hashtable xc)
             {
-                var xmlelement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "xmlelement");
+                var xmlelement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "XmlElement");
                 var name = xc.GetCSVariable<object>("name").ToString();
                 return new Variable(xmlelement.GetAttribute(name));
             }
@@ -67,7 +67,7 @@ namespace GI.Libs.Xml
             }
             public override object Run(Hashtable xc)
             {
-                var xmlelement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "xmlelement");
+                var xmlelement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "XmlElement");
                 var name = Convert.ToInt32(xc.GetCSVariable<object>("index"));
                 var res = xmlelement.ChildNodes[name];
                 if (res.GetType() == typeof(System.Xml.XmlElement))
@@ -86,7 +86,7 @@ namespace GI.Libs.Xml
             }
             public override object Run(Hashtable xc)
             {
-                var xmlelement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "xmlelement");
+                var xmlelement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "XmlElement");
                 var node = xc.GetCSVariable<System.Xml.XmlNode>("child");
                 xmlelement.AppendChild(node);
                 return new Variable(0);
@@ -102,7 +102,7 @@ namespace GI.Libs.Xml
             }
             public override object Run(Hashtable xc)
             {
-                var xmlelement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "xmlelement");
+                var xmlelement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "XmlElement");
                 var node = xc.GetCSVariable<System.Xml.XmlNode>("child");
                 xmlelement.RemoveChild(node);
                 return new Variable(0);
@@ -124,7 +124,7 @@ namespace GI.Libs.Xml
         }
         #endregion   
         #region
-        public const string type = "xmlelement";
+        public const string type = "XmlElement";
         static XmlElement()
         {
             GType.Sign(type);

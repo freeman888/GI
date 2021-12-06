@@ -6,7 +6,7 @@ namespace GI
 {
     class Gunknown : IOBJ
     {
-        public const string type = "unknown";
+        public const string type = "Unknown";
 
         public object value;
         public Gunknown(object o)

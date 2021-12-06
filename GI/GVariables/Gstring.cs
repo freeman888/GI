@@ -8,7 +8,7 @@ namespace GI
 {
     public class Gstring : IOBJ,IConvertible
     {
-        public const string type = "string";
+        public const string type = "String";
         string value;
         static Gstring()
         {

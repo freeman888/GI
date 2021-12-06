@@ -135,7 +135,7 @@ namespace GTXAM.GasControl.Control
        
 
         #region 实现IType
-        const string type = "switcher";
+        const string type = "Switcher";
         public string IGetType()
         {
             return type;
@@ -152,7 +152,7 @@ namespace GTXAM.GasControl.Control
 
         static Switcher()
         {
-            GType.Sign("switcher");
+            GType.Sign(type);
         }
         #endregion
 

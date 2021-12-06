@@ -122,7 +122,7 @@ namespace GTXAM.GasControl.Control
 
 
         #region 实现IType
-        const string type = "image";
+        const string type = "Image";
         public string IGetType()
         {
             return type;
@@ -139,7 +139,7 @@ namespace GTXAM.GasControl.Control
 
         static Image()
         {
-            GType.Sign("image");
+            GType.Sign(type);
         }
         #endregion
 

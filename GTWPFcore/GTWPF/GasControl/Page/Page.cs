@@ -100,7 +100,7 @@ namespace GTWPF.GasControl.Page
         }
 
         #region 实现Itype
-        const string type = "page";
+        const string type = "Page";
         public string IGetType()
         {
             return type;
@@ -116,7 +116,7 @@ namespace GTWPF.GasControl.Page
         }
         static GasPage()
         {
-            GType.Sign("page");
+            GType.Sign("Page");
         }
         #endregion
         #region
@@ -147,8 +147,8 @@ namespace GTWPF.GasControl.Page
             }
             public override object Run(Hashtable xc)
             {
-                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "page");
-                UIElement control = xc.GetCSVariableFromSpeType<UIElement>("control", "control");
+                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "Page");
+                UIElement control = xc.GetCSVariableFromSpeType<UIElement>("control", "Control");
                 page.SetContent(control);
                 return new Variable(0);
             }
@@ -163,7 +163,7 @@ namespace GTWPF.GasControl.Page
             }
             public override object Run(Hashtable xc)
             {
-                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "page");
+                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "Page");
                 string title = Variable.GetTrueVariable<object>(xc, "title").ToString();
                 if (MainWindow.MainApp.PageBase.Children.Contains(page))
                 {
@@ -184,7 +184,7 @@ namespace GTWPF.GasControl.Page
 
             public override object Run(Hashtable xc)
             {
-                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this","page");
+                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this","Page");
                 var text = xc.GetCSVariable<object>("text").ToString();
                 var click = xc.GetCSVariable<object>("clickevent");
                 page.AddTool(text, click);
@@ -203,8 +203,8 @@ namespace GTWPF.GasControl.Page
 
             public override object Run(Hashtable xc)
             {
-                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "page");
-                var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("xmlstream", "stream");
+                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "Page");
+                var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("xmlstream", "Stream");
                 XmlDocument xmlDocument = new XmlDocument();
                 xmlDocument.Load(stream);
 
@@ -241,7 +241,7 @@ namespace GTWPF.GasControl.Page
 
             public override object Run(Hashtable xc)
             {
-                return new Variable(xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "page").controls[xc.GetCSVariable<object>("name").ToString()]);
+                return new Variable(xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "Page").controls[xc.GetCSVariable<object>("name").ToString()]);
             }
         }
     }

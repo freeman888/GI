@@ -35,7 +35,7 @@ namespace GTXAM
 
             public string IGetType()
             {
-                return "control";
+                return "Control";
             }
 
 

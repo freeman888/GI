@@ -18,7 +18,7 @@ namespace GI
             {
                 
 
-                public XmlDocumentClassTemplate() : base("xmldocument", "Xml")
+                public XmlDocumentClassTemplate() : base("XmlDocument", "Xml")
                 {
                     Istr_xcname = "";
                     csctor = (xc) =>

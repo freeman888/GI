@@ -6,7 +6,7 @@ namespace GI
 {
     public class Gnumber : IOBJ,IConvertible
     {
-        public const string type = "number";
+        public const string type = "Number";
         double value;
         static Gnumber()
         {

@@ -38,14 +38,14 @@ namespace GTWPF.Lib.IO
             }
             public override object Run(Hashtable xc)
             {
-                var picker = xc.GetCSVariableFromSpeType<FilePicker>("this", "filepicker");
+                var picker = xc.GetCSVariableFromSpeType<FilePicker>("this", "FilePicker");
                 picker.picked = picker.openFileDialog.ShowDialog() == true?true:false;
                 return new Variable(0);
             }
         }
 
         #region 实现Itype
-        const string type = "filepicker";
+        const string type = "FilePicker";
         public string IGetType()
         {
             return type;
@@ -61,7 +61,7 @@ namespace GTWPF.Lib.IO
         }
         static FilePicker()
         {
-            GType.Sign("filepicker");
+            GType.Sign("FilePicker");
         }
         #endregion
         #region

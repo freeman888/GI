@@ -45,7 +45,7 @@ namespace GTXAM
             {
                 try
                 {
-                    var picker = xc.GetCSVariableFromSpeType<FilePicker>("this", "filepicker");
+                    var picker = xc.GetCSVariableFromSpeType<FilePicker>("this", "FilePicker");
                     var fileres = await Xamarin.Essentials.FilePicker.PickAsync( PickOptions.Default);
                     if (fileres == null)
                         picker.picked = false;
@@ -69,7 +69,7 @@ namespace GTXAM
 
 
         #region 实现Itype
-        const string type = "filepicker";
+        const string type = "FilePicker";
         public string IGetType()
         {
             return type;
@@ -85,7 +85,7 @@ namespace GTXAM
         }
         static FilePicker()
         {
-            GType.Sign("filepicker");
+            GType.Sign(type);
         }
         #endregion
         #region

@@ -33,12 +33,11 @@ namespace GI
             }
             public override object Run(Hashtable xc)
             {
-                var stream = xc.GetCSVariableFromSpeType<Stream>("this", "stream");
+                var stream = xc.GetCSVariableFromSpeType<Stream>("this", "Stream");
                 stream.Close();
                 return new Variable(0);
             }
         }
-
         static IFunction readtext = new Stream_Function_ReadText();
         public class Stream_Function_ReadText :Function
         {
@@ -49,7 +48,7 @@ namespace GI
             }
             public override object Run(Hashtable xc)
             {
-                var stream = xc.GetCSVariableFromSpeType<Stream>("this", "stream");
+                var stream = xc.GetCSVariableFromSpeType<Stream>("this", "Stream");
                 StreamReader streamReader = new StreamReader(stream);
                 return new Variable(streamReader.ReadToEnd());
             }
@@ -64,7 +63,7 @@ namespace GI
             }
             public override object Run(Hashtable xc)
             {
-                var stream = xc.GetCSVariableFromSpeType<Stream>("this", "stream");
+                var stream = xc.GetCSVariableFromSpeType<Stream>("this", "Stream");
                 var text = xc.GetCSVariable<object>("text").ToString();
                 var streamwriter = new StreamWriter(stream); 
                 streamwriter.Write(text);
@@ -75,7 +74,7 @@ namespace GI
         }
         
         #region
-        public const string type = "stream";
+        public const string type = "Stream";
         System.IO.Stream value;
         static GStream()
         {

@@ -336,7 +336,7 @@ namespace GTWPF.GasControl.Control
 
         #endregion 
         #region 实现Itype
-        const string type = "tip";
+        const string type = "Tip";
         public string IGetType()
         {
             return type;
@@ -352,7 +352,7 @@ namespace GTWPF.GasControl.Control
         }
         static Tip()
         {
-            GType.Sign("tip");
+            GType.Sign("Tip");
         }
         #endregion
         #region

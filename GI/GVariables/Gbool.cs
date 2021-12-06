@@ -6,7 +6,7 @@ namespace GI
 {
     public class Gbool:IOBJ,IConvertible
     {
-        public const string type = "bool";
+        public const string type = "Bool";
         bool value;
         static Gbool()
         {

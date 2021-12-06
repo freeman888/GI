@@ -126,7 +126,7 @@ namespace GTXAM.GasControl.ContentControl
         {
             return this;
         }
-        const string type = "listflat";
+        const string type = "ListFlat";
         public string IGetType()
         {
             return type;
@@ -137,7 +137,7 @@ namespace GTXAM.GasControl.ContentControl
         }
         static ListFlat()
         {
-            GType.Sign("listflat");
+            GType.Sign(type);
         }
         Dictionary<string, Variable> members = new Dictionary<string, Variable>();
         public Variable IGetMember(string name)
@@ -169,8 +169,8 @@ namespace GTXAM.GasControl.ContentControl
 
             public override object Run(Hashtable xc)
             {
-                var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "listflat");
-                var con = xc.GetCSVariableFromSpeType<Xamarin.Forms.Cell>("con", "cell");
+                var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "ListFlat");
+                var con = xc.GetCSVariableFromSpeType<Xamarin.Forms.Cell>("con", "Cell");
 
                 listflat.cells.Add(con);
                 
@@ -188,7 +188,7 @@ namespace GTXAM.GasControl.ContentControl
             }
             public override object Run(Hashtable xc)
             {
-                var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "listflat");
+                var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "ListFlat");
                 listflat.cells.Clear();
                 return new Variable(0);
             }

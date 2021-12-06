@@ -151,7 +151,7 @@ when tap 'cancel' or close the inputwindow , return a empty string";
             }
             public class FilePicker_ClassTemplate : GClassTemplate
             {
-                public FilePicker_ClassTemplate() : base("filepicker", "IO")
+                public FilePicker_ClassTemplate() : base("FilePicker", "IO")
                 {
                     Istr_xcname = "";
                     csctor = (xc) =>

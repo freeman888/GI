@@ -136,7 +136,7 @@ namespace GTWPF.GasControl.ContentControl
 
 
         #region 实现IType
-        const string type = "gridflat";
+        const string type = "GridFlat";
         public string IGetType()
         {
             return type;
@@ -147,7 +147,7 @@ namespace GTWPF.GasControl.ContentControl
         }
         static GridFlat()
         {
-            GType.Sign("gridflat");
+            GType.Sign("GridFlat");
         }
         #endregion
 
@@ -178,8 +178,8 @@ namespace GTWPF.GasControl.ContentControl
 
             public override object Run(Hashtable xc)
             {
-                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "gridflat");
-                var con = xc.GetCSVariableFromSpeType<UIElement>("con", "control");
+                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "GridFlat");
+                var con = xc.GetCSVariableFromSpeType<UIElement>("con", "Control");
                 var row = Convert.ToInt32( xc.GetCSVariable<object>("row"));
                 var column =Convert.ToInt32( xc.GetCSVariable<object>("column"));
                 SetRow(con, row);
@@ -201,7 +201,7 @@ namespace GTWPF.GasControl.ContentControl
             public override object Run(Hashtable xc)
 
             {
-                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "gridflat");
+                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "GridFlat");
                 var value = Convert.ToDouble(xc.GetCSVariable<object>("value"));
                 var config = xc.GetCSVariable<object>("config").ToString();
                 if (config == "value")
@@ -234,7 +234,7 @@ namespace GTWPF.GasControl.ContentControl
             }
             public override object Run(Hashtable xc)
             {
-                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "gridflat");
+                var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "GridFlat");
                 double value = Convert.ToDouble(Variable.GetTrueVariable<object>(xc, "value"));
                 string config = Variable.GetTrueVariable<object>(xc, "config").ToString();
 

@@ -192,7 +192,7 @@ namespace GTWPF.GasControl.Control
 
 
         #region 实现Itype
-        const string type = "switcher";
+        const string type = "Switcher";
         public string IGetType()
         {
             return type;
@@ -203,7 +203,7 @@ namespace GTWPF.GasControl.Control
         }
         static Switcher()
         {
-            GType.Sign("switcher");
+            GType.Sign("Switcher");
         }
         #endregion
 

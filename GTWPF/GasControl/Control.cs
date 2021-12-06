@@ -35,7 +35,7 @@ namespace GTWPF
 
         public string IGetType()
         {
-            return "control";
+            return "Control";
         }
 
 

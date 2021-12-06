@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<code minversion="1902">
+  <get value="IO" />
+  <get value="Math" />
+  <deffun funname="Main" params="args" isref="False">
+    <var_s varname="res" str="var res = IO.Input();" />
+    <getres_s str="var res = IO.Input();">
+      <arg value="res" con="var" />
+      <arg con="fun">
+        <fun>
+          <arg value="IO.Input" con="var" />
+        </fun>
+        <params />
+      </arg>
+    </getres_s>
+    <usefun_s str="IO.Write(res);">
+      <arg con="fun">
+        <fun>
+          <arg value="IO.Write" con="var" />
+        </fun>
+        <params>
+          <arg value="res" con="var" />
+        </params>
+      </arg>
+    </usefun_s>
+    <usefun_s str="Main(1);">
+      <arg con="fun">
+        <fun>
+          <arg value="Main" con="var" />
+        </fun>
+        <params>
+          <arg value="1" con="num" />
+        </params>
+      </arg>
+    </usefun_s>
+  </deffun>
+</code>

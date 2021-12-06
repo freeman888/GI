@@ -31,7 +31,7 @@ namespace GTWPF
 
         public string IGetType()
         {
-            return "control";
+            return "Control";
         }
 
         public static IOBJ GetControlFromXmlElement(GTWPF.GasControl.Page.GasPage basepage, XmlElement xmlelement)

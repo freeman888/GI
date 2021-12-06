@@ -73,7 +73,7 @@ namespace GI
                 }
                 public override object Run(Hashtable xc)
                 {
-                    var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "stream");
+                    var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "Stream");
                     using (System.IO.StreamReader streamReader = new System.IO.StreamReader(stream))
                     {
                         return new Variable(streamReader.ReadToEnd());

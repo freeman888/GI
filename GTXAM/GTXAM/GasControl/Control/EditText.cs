@@ -145,7 +145,7 @@ namespace GTXAM.GasControl.Control
 
 
         #region 实现IType
-        const string type = "edittext";
+        const string type = "EditText";
         public string IGetType()
         {
             return type;
@@ -162,7 +162,7 @@ namespace GTXAM.GasControl.Control
 
         static EditText()
         {
-            GType.Sign("edittext");
+            GType.Sign(type);
         }
         #endregion
 

@@ -94,7 +94,7 @@ namespace GTWPF.GasControl.Control
 
 
         #region 实现IType
-        const string type = "textcell";
+        const string type = "TextCell";
         public string IGetType()
         {
             return type;
@@ -111,7 +111,7 @@ namespace GTWPF.GasControl.Control
 
         static TextCell()
         {
-            GType.Sign("textcell");
+            GType.Sign("TextCell");
         }
         #endregion
 

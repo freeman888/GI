@@ -139,7 +139,7 @@ namespace GTXAM.GasControl.Control
                 }
 
 
-                var webview = xc.GetCSVariableFromSpeType<WebView>("this", "webview");
+                var webview = xc.GetCSVariableFromSpeType<WebView>("this", "WebView");
                 var res =  webview.funinvokejs?.Invoke($"{jsfun} ({string.Join(",", objs)})");
                 return new Variable(res);
             }
@@ -153,7 +153,7 @@ namespace GTXAM.GasControl.Control
 
 
         #region 实现IType
-        const string type = "webview";
+        const string type = "WebView";
         public string IGetType()
         {
             return type;
@@ -170,7 +170,7 @@ namespace GTXAM.GasControl.Control
 
         static WebView()
         {
-            GType.Sign("webview");
+            GType.Sign(type);
         }
         #endregion
 

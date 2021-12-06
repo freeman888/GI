@@ -375,7 +375,7 @@ namespace GTWPF.GasControl.Control
         #endregion
 
         #region 实现Itype
-        const string type = "bubble";
+        const string type = "Bubble";
         public string IGetType()
         {
             return type;
@@ -393,7 +393,7 @@ namespace GTWPF.GasControl.Control
 
         static Bubble()
         {
-            GType.Sign("bubble");
+            GType.Sign("Bubble");
         }
         #endregion
 

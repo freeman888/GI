@@ -57,7 +57,7 @@ namespace GI.Libs.Xml
             }
             public override object Run(Hashtable xc)
             {
-                var xmldocument = xc.GetCSVariableFromSpeType<XmlDocument>("this", "xmldocument");
+                var xmldocument = xc.GetCSVariableFromSpeType<XmlDocument>("this", "XmlDocument");
                 var name = xc.GetCSVariable<object>("name").ToString();
                 XmlElement xmlElement = new XmlElement(xmldocument.CreateElement(name));
                 return new Variable(xmlElement);
@@ -73,7 +73,7 @@ namespace GI.Libs.Xml
             }
             public override object Run(Hashtable xc)
             {
-                var xmldocument = xc.GetCSVariableFromSpeType<XmlDocument>("this", "xmldocument");
+                var xmldocument = xc.GetCSVariableFromSpeType<XmlDocument>("this", "XmlDocument");
                 var comment = xc.GetCSVariable<object>("comment").ToString();
                 XmlComment xmlComment = new XmlComment(xmldocument.CreateComment(comment));
                 
@@ -90,8 +90,8 @@ namespace GI.Libs.Xml
             }
             public override object Run(Hashtable xc)
             {
-                var xmld = xc.GetCSVariableFromSpeType<XmlDocument>("this", "xmldocument");
-                var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "stream");
+                var xmld = xc.GetCSVariableFromSpeType<XmlDocument>("this", "XmlDocument");
+                var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "Stream");
                 xmld.Save(stream);
                 return new Variable(0);
             }
@@ -108,8 +108,8 @@ namespace GI.Libs.Xml
 
             public override object Run(Hashtable xc)
             {
-                var xmld = xc.GetCSVariableFromSpeType<XmlDocument>("this", "xmldocument");
-                var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "stream");
+                var xmld = xc.GetCSVariableFromSpeType<XmlDocument>("this", "XmlDocument");
+                var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "Stream");
                 xmld.Load(stream);
                 return new Variable(0);
             }
@@ -127,7 +127,7 @@ namespace GI.Libs.Xml
 
             public override object Run(Hashtable xc)
             {
-                var xmld = xc.GetCSVariableFromSpeType<XmlDocument>("this", "xmldocument");
+                var xmld = xc.GetCSVariableFromSpeType<XmlDocument>("this", "XmlDocument");
                 var stream = xc.GetCSVariable<object>("text").ToString();
                 xmld.LoadXml(stream);
                 return new Variable(0);
@@ -149,7 +149,7 @@ namespace GI.Libs.Xml
         }
         #endregion   
         #region
-        public const string type = "xmldocument";
+        public const string type = "XmlDocument";
         static XmlDocument()
         {
             GType.Sign(type);

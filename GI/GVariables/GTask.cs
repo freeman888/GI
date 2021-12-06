@@ -7,7 +7,7 @@ namespace GI
 {
     class GTask :  IOBJ
     {
-        public const string type = "task";
+        public const string type = "Task";
 
         public Task<Variable> value;
         public GTask(Task<Variable> o)
@@ -27,7 +27,7 @@ namespace GI
 
         public override string ToString()
         {
-            return "task";
+            return "Task";
         }
         Dictionary<string, Variable> members = new Dictionary<string, Variable>();
         public Variable IGetMember(string name)

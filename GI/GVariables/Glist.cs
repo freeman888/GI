@@ -22,7 +22,7 @@ namespace GI
             };
 
         }
-        const string type = "list";
+        const string type = "List";
         #region
         public string Istr_xcname
         {
@@ -68,7 +68,7 @@ namespace GI
         #region 实现Itype
         static Glist()
         {
-            GType.Sign("list");
+            GType.Sign("List");
         }
         public string IGetType()
         {
@@ -153,7 +153,7 @@ when three
             {
                 var param = xc.GetCSVariable<Glist>("params");
 
-                var list = xc.GetCSVariableFromSpeType<Glist>("this", "list");
+                var list = xc.GetCSVariableFromSpeType<Glist>("this", "List");
                 Variable obj = param[0];
                 if (param.Count == 1)
                 {
@@ -205,7 +205,7 @@ when three
             }
             public override object Run(Hashtable xc)
             {
-                var list = xc.GetCSVariableFromSpeType<Glist>("this", "list");
+                var list = xc.GetCSVariableFromSpeType<Glist>("this", "List");
                 var tor = xc["obj"] as Variable;
                 int tori = -1;
                 for (int i = 0; i < list.Count; i++)
@@ -240,7 +240,7 @@ when three
             }
             public override object Run(Hashtable xc)
             {
-                var res = xc.GetCSVariableFromSpeType<Glist>("list", "list");
+                var res = xc.GetCSVariableFromSpeType<Glist>("list", "List");
                 int i = Convert.ToInt32(xc.GetVariable<object>("index"));
                 res.RemoveAt(i);
                 return new Variable(0);
@@ -255,7 +255,7 @@ when three
 [return(number)]:length",
             dRun = (_xc) =>
             {
-                return new Variable(_xc.GetCSVariableFromSpeType<Glist>("this", "list").Count);
+                return new Variable(_xc.GetCSVariableFromSpeType<Glist>("this", "List").Count);
             }
         };
 

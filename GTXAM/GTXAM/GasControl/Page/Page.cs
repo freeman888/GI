@@ -76,7 +76,7 @@ namespace GTXAM.GasControl.Page
         #endregion
 
         #region 实现IType
-        const string type = "page";
+        const string type = "Page";
         public string IGetType()
         {
             return type;
@@ -95,7 +95,7 @@ namespace GTXAM.GasControl.Page
 
         static Page()
         {
-            GType.Sign("page");
+            GType.Sign(type);
         }
         #endregion
 
@@ -127,7 +127,7 @@ namespace GTXAM.GasControl.Page
             public override object Run(Hashtable xc)
             {
                 var page1 = Variable.GetTrueVariable<GasControl.Page.Page>(xc, "this");
-                page1.Content = xc.GetCSVariableFromSpeType<View>("control", "control");
+                page1.Content = xc.GetCSVariableFromSpeType<View>("control", "Control");
                 return new Variable(0);
             }
 
@@ -142,7 +142,7 @@ namespace GTXAM.GasControl.Page
             }
             public override object Run(Hashtable xc)
             {
-                GasControl.Page.Page page = xc.GetCSVariableFromSpeType<GTXAM.GasControl.Page.Page>("this", "page");
+                GasControl.Page.Page page = xc.GetCSVariableFromSpeType<GTXAM.GasControl.Page.Page>("this", "Page");
                 string title = Variable.GetTrueVariable<object>(xc, "title").ToString();
                 page.Title = title;
                 return new Variable(0);

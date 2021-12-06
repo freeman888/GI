@@ -117,7 +117,7 @@ namespace GTWPF.GasControl.Control
 
 
         #region 实现Itype
-        const string type = "image";
+        const string type = "Image";
         public string IGetType()
         {
             return type;
@@ -135,7 +135,7 @@ namespace GTWPF.GasControl.Control
 
         static Image()
         {
-            GType.Sign("image");
+            GType.Sign("Image");
         }
         #endregion
         #region

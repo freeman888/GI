@@ -102,7 +102,7 @@ namespace GI
                 public override object Run(Hashtable xc)
                 {
                     string url = xc.GetCSVariable<object>("url").ToString();
-                    Stream stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "stream");
+                    Stream stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "Stream");
                     HttpDownloadFile(url, stream);
                     return new Variable(0);
                 }

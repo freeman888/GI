@@ -34,7 +34,7 @@ namespace GTXAM.GasControl.Cell
 
         public string IGetType()
         {
-            return "cell";
+            return "Cell";
         }
 
 

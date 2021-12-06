@@ -119,7 +119,7 @@ namespace GTWPF.GasControl.ContentControl
         {
             return this;
         }
-        const string type = "listflat";
+        const string type = "ListFlat";
         public string IGetType()
         {
             return type;
@@ -130,7 +130,7 @@ namespace GTWPF.GasControl.ContentControl
         }
         static ListFlat()
         {
-            GType.Sign("listflat");
+            GType.Sign("ListFlat");
         }
         Dictionary<string, Variable> members = new Dictionary<string, Variable>();
         public Variable IGetMember(string name)
@@ -158,8 +158,8 @@ namespace GTWPF.GasControl.ContentControl
 
             public override object Run(Hashtable xc)
             {
-                var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "listflat");
-                var con = xc.GetCSVariableFromSpeType<UIElement>("con", "cell");
+                var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "ListFlat");
+                var con = xc.GetCSVariableFromSpeType<UIElement>("con", "Cell");
 
                 listflat.Items.Add(con);
 
@@ -178,7 +178,7 @@ namespace GTWPF.GasControl.ContentControl
             }
             public override object Run(Hashtable xc)
             {
-                var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "listflat");
+                var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "ListLlat");
                 listflat.Items.Clear();
                 return new Variable(0);
             }

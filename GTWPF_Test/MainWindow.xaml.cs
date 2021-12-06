@@ -33,11 +33,11 @@ namespace GTWPF_Test
 
             Hide();
 
-            Stream stream = new FileStream("D:\\projects\\Libs\\HashTable\\debug\\HashTable.gaa", FileMode.Open);
+            Stream stream = new FileStream("E:\\projects\\freestudio\\App1\\debug\\App1.gaa", FileMode.Open);
             ZipArchive zipArchive = new ZipArchive(stream);
 
             GI.GStream.gaas.Add("App1", zipArchive);
-            var entry = zipArchive.GetEntry("HashTable" + "/information.xml");
+            var entry = zipArchive.GetEntry("App1" + "/information.xml");
 
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(entry.Open());
@@ -45,7 +45,7 @@ namespace GTWPF_Test
             if (type == "gas")
             {
                 XmlDocument code = new XmlDocument();
-                code.Load(zipArchive.GetEntry("HashTable" + "/source/code.xml").Open());
+                code.Load(zipArchive.GetEntry("App1" + "/source/code.xml").Open());
                 GI.Gasoline.Loadgasxml(code);
             }
 

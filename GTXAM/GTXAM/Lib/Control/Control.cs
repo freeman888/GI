@@ -29,7 +29,7 @@ namespace GTXAM
 
             public class BubbleClassTemplate : GClassTemplate
             {
-                public BubbleClassTemplate() : base("bubble", "Control")
+                public BubbleClassTemplate() : base("Bubble", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -43,7 +43,7 @@ namespace GTXAM
 
             public class TipClassTemplate : GClassTemplate
             {
-                public TipClassTemplate() : base("tip", "Control")
+                public TipClassTemplate() : base("Tip", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -56,7 +56,7 @@ namespace GTXAM
 
             public class EditTextTemplate : GClassTemplate
             {
-                public EditTextTemplate() : base("edittext", "Control")
+                public EditTextTemplate() : base("EditText", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -69,7 +69,7 @@ namespace GTXAM
 
             public class GridClassTemplate : GClassTemplate
             {
-                public GridClassTemplate() : base("gridflat", "Control")
+                public GridClassTemplate() : base("GridFlat", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -82,7 +82,7 @@ namespace GTXAM
 
             public class SwitcherClassTemplate : GClassTemplate
             {
-                public SwitcherClassTemplate() : base("switcher", "Control")
+                public SwitcherClassTemplate() : base("Switcher", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -95,7 +95,7 @@ namespace GTXAM
 
             public class ScrollFlatTemplate : GClassTemplate
             {
-                public ScrollFlatTemplate() : base("scrollflat", "Control")
+                public ScrollFlatTemplate() : base("ScrollFlat", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -108,7 +108,7 @@ namespace GTXAM
 
             public class ImageClassTemplate : GClassTemplate
             {
-                public ImageClassTemplate() : base("image", "Control")
+                public ImageClassTemplate() : base("Image", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -121,7 +121,7 @@ namespace GTXAM
 
             public class TextCellClassTemplate : GClassTemplate
             {
-                public TextCellClassTemplate() : base("textcell", "Control")
+                public TextCellClassTemplate() : base("TextCell", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -134,7 +134,7 @@ namespace GTXAM
 
             public class ListFlatClassTemplate : GClassTemplate
             {
-                public ListFlatClassTemplate() : base("textcell", "Control")
+                public ListFlatClassTemplate() : base("TextCell", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -146,7 +146,7 @@ namespace GTXAM
             }
             public class WebViewClassTemplate : GClassTemplate
             {
-                public WebViewClassTemplate() : base("webview", "Control")
+                public WebViewClassTemplate() : base("WebView", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -158,7 +158,7 @@ namespace GTXAM
             }
             public class StackFlatClassTemplate : GClassTemplate
             {
-                public StackFlatClassTemplate() : base("stackflat", "Control")
+                public StackFlatClassTemplate() : base("StackFlat", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>

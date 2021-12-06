@@ -22,7 +22,7 @@ namespace GTWPF
             }
             public class PageClassTemplate:GClassTemplate
             {
-                public PageClassTemplate():base("page","Page")
+                public PageClassTemplate():base("Page","Page")
                 {
                     Istr_xcname = "title";
                     csctor = (xc) =>
@@ -55,7 +55,7 @@ namespace GTWPF
                     }
                     lock (mainWindow)
                     {
-                        GasControl.Page.GasPage page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("page", "page");
+                        GasControl.Page.GasPage page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("page", "Page");
                         mainWindow.GotoPage(page);
                     }
                     return new Variable(0);
@@ -76,7 +76,7 @@ namespace GTWPF
                     {
                         throw new Exceptions.RunException(Exceptions.EXID.逻辑错误, "请勿多次调用本方法");
                     }
-                    GasControl.Page.GasPage page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("page", "page");
+                    GasControl.Page.GasPage page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("page", "Page");
                     mainWindow.GotoPage(page);
 
                     return new Variable(0);

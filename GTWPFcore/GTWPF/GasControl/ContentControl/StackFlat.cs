@@ -242,15 +242,15 @@ namespace GTWPF.GasControl.ContentControl
             }
             public override object Run(Hashtable xc)
             {
-                var stackflat = xc.GetCSVariableFromSpeType<StackFlat>("this", "stackflat");
-                var control = xc.GetCSVariableFromSpeType<UIElement>("control", "control");
+                var stackflat = xc.GetCSVariableFromSpeType<StackFlat>("this", "StackFlat");
+                var control = xc.GetCSVariableFromSpeType<UIElement>("control", "Control");
                 stackflat.Children.Add(control);
                 return new Variable(0);
             }
         }
 
         #region 实现IType
-        const string type = "stackflat";
+        const string type = "StackFlat";
         public string IGetType()
         {
             return type;
@@ -268,7 +268,7 @@ namespace GTWPF.GasControl.ContentControl
 
         static StackFlat()
         {
-            GType.Sign("stackflat");
+            GType.Sign("StackFlat");
         }
         #endregion
 

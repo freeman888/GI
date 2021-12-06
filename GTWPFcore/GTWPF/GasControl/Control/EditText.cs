@@ -157,7 +157,7 @@ namespace GTWPF.GasControl.Control
 
 
         #region 实现Itype
-        const string type = "edittext";
+        const string type = "Edittext";
         public string IGetType()
         {
             return type;
@@ -168,7 +168,7 @@ namespace GTWPF.GasControl.Control
         }
         static EditText()
         {
-            GType.Sign("edittext");
+            GType.Sign("Edittext");
         }
         #endregion
         #region

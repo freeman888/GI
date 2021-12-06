@@ -97,7 +97,7 @@ namespace GTXAM.GasControl.Control
         public string Name { get; set; }
         #endregion
         #region 实现IType
-        const string type = "textcell";
+        const string type = "TextCell";
         public string IGetType()
         {
             return type;
@@ -114,7 +114,7 @@ namespace GTXAM.GasControl.Control
 
         static _TextCell()
         { 
-            GType.Sign("textcell");
+            GType.Sign(type);
         }
         #endregion
 

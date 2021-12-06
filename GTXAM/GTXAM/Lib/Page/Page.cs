@@ -27,7 +27,7 @@ namespace GTXAM
 
             public class PageClassTemplate : GClassTemplate
             {
-                public PageClassTemplate() : base("page", "Page")
+                public PageClassTemplate() : base("Page", "Page")
                 {
                     Istr_xcname = "title";
                     csctor = (xc) =>
@@ -51,7 +51,7 @@ namespace GTXAM
                 }
                 public override object Run(Hashtable xc)
                 {
-                    GasControl.Page.Page page = xc.GetCSVariableFromSpeType<GasControl.Page.Page>("page", "page");
+                    GasControl.Page.Page page = xc.GetCSVariableFromSpeType<GasControl.Page.Page>("page", "Page");
                     System.Diagnostics.Debug.WriteLine(page.Title);
 
                     Task.Run(() =>
@@ -92,7 +92,7 @@ namespace GTXAM
                 }
                 public override object Run(Hashtable xc)
                 {
-                    GasControl.Page.Page page = xc.GetCSVariableFromSpeType<GasControl.Page.Page>("page", "page");
+                    GasControl.Page.Page page = xc.GetCSVariableFromSpeType<GasControl.Page.Page>("page", "Page");
                     if ((App.MainApp.MainPage as NavigationPage).CurrentPage.GetType() != typeof(ConsolePage))
                     {
                         throw new Exceptions.RunException(Exceptions.EXID.逻辑错误, "请勿多次调用本方法");

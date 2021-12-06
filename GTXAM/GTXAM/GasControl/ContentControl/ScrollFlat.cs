@@ -133,7 +133,7 @@ namespace GTXAM.GasControl.ContentControl
                     },
                     onsetvalue = (value)=>
                     {
-                        if(value.IGetType() == "list")
+                        if(value.IGetType() == "List")
                         {
                             var list = value.IGetCSValue() as Glist;
                             var ho =Convert.ToDouble( list[0].value);
@@ -189,7 +189,7 @@ namespace GTXAM.GasControl.ContentControl
 
 
         #region 实现IType
-        const string type = "scrollflat";
+        const string type = "ScrollFlat";
         public string IGetType()
         {
             return type;
@@ -206,7 +206,7 @@ namespace GTXAM.GasControl.ContentControl
 
         static ScrollFlat()
         {
-            GType.Sign("scrollflat");
+            GType.Sign(type);
         }
         #endregion
 
@@ -240,8 +240,8 @@ namespace GTXAM.GasControl.ContentControl
 
             public override object Run(Hashtable xc)
             {
-                var sf = xc.GetCSVariableFromSpeType<ScrollFlat>("this", "scrollflat");
-                var content = xc.GetCSVariableFromSpeType<View>("control", "control");
+                var sf = xc.GetCSVariableFromSpeType<ScrollFlat>("this", "ScrollFlat");
+                var content = xc.GetCSVariableFromSpeType<View>("control", "Control");
 
                 sf.Content = content;
                 return new Variable(0);

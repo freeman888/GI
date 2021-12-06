@@ -36,7 +36,7 @@ creat a new list contains numbers(sure it can contains more than number)",
 
             public class ListClassTemplate:GClassTemplate
             {
-                public ListClassTemplate():base("list","System")
+                public ListClassTemplate():base("List","System")
                 {
                     Istr_xcname = "params";
                     csctor = (xc) =>

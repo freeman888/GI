@@ -135,7 +135,7 @@ namespace GTWPF.GasControl.Control
 
 
                 //string jsfun = xc.GetCSVariable<object>("jsfun").ToString();
-                var webview = xc.GetCSVariableFromSpeType<System.Windows.Controls.WebBrowser>("this", "webview");
+                var webview = xc.GetCSVariableFromSpeType<System.Windows.Controls.WebBrowser>("this", "WebView");
                 var res =  webview.InvokeScript(jsfun,objs.ToArray());
                 return new Variable(res);
             }
@@ -143,7 +143,7 @@ namespace GTWPF.GasControl.Control
 
 
         #region 实现Itype
-        const string type = "webview";
+        const string type = "WebView";
         public string IGetType()
         {
             return type;
@@ -159,7 +159,7 @@ namespace GTWPF.GasControl.Control
         }
         static WebView()
         {
-            GType.Sign("webview");
+            GType.Sign("WebView");
         }
         #endregion
         #region

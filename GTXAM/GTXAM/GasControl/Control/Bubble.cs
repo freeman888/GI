@@ -190,7 +190,7 @@ namespace GTXAM.GasControl.Control
        
 
         #region 实现IType
-        const string type = "bubble";
+        const string type = "Bubble";
         public string IGetType()
         {
             return type;
@@ -207,7 +207,7 @@ namespace GTXAM.GasControl.Control
 
         static Bubble()
         {
-            GType.Sign("bubble");
+            GType.Sign(type);
         }
         #endregion
 

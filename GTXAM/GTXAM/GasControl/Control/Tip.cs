@@ -159,7 +159,7 @@ namespace GTXAM.GasControl.Control
         #endregion
 
         #region 实现IType
-        const string type = "tip";
+        const string type = "Tip";
         public string IGetType()
         {
             return type;
@@ -179,7 +179,7 @@ namespace GTXAM.GasControl.Control
 
         static Tip()
         {
-            GType.Sign("tip");
+            GType.Sign(type);
         }
         #endregion
 

@@ -20,17 +20,7 @@ namespace GI
             return true;
         }
 
-        public static IOBJ GetSpecialParentFromType(IOBJ source, string type)
-        {
-
-            IOBJ i = source;
-            while (i.IGetType() != type && i.IGetParent() != null)
-                i = i.IGetParent();
-            if (i.IGetType() != type)
-                return null;
-            else
-                return i;
-        }
+        
     }
     public interface IOBJ
     {
@@ -156,7 +146,7 @@ namespace GI
     {
         static GClassTemplate()
         {
-            GType.Sign("class");
+            GType.Sign("Class");
         }
         internal string classname, parentclassname;
         internal bool iscvf;
@@ -174,13 +164,11 @@ namespace GI
         /// </summary>
         /// <param name="_type">类型名称</param>
         /// <param name="poslib">所在类库</param>
-        /// <param name="_parent">父类名称。如果父类不外显，即不存在ClassTemplate，则自行注册父类，且此项不填</param>
-        public GClassTemplate(string _type,string poslib,string _parent = "")  
+        public GClassTemplate(string _type,string poslib)  
         {
             this.poslib = poslib;
             Iisasync = false;
             classname = _type;
-            parentclassname = _parent;
             targetposlib = poslib;
             if (csstr_xc != "")
                 Istr_xcname = csstr_xc;
@@ -306,7 +294,7 @@ namespace GI
 
         public string IGetType()
         {
-            return "class";
+            return "Class";
         }
 
         public override string ToString()

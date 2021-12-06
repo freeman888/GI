@@ -44,7 +44,7 @@ namespace GI.Libs.Xml
         }
         #endregion   
         #region
-        public const string type = "xmlcomment";
+        public const string type = "XmlComment";
         static XmlComment()
         {
             GType.Sign(type);

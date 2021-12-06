@@ -136,8 +136,8 @@ namespace GTXAM.GasControl.ContentControl
             }
             public override object Run(Hashtable xc)
             {
-                var stackflat = xc.GetCSVariableFromSpeType<StackFlat>("this", "stackflat");
-                var control = xc.GetCSVariableFromSpeType<View>("control", "control");
+                var stackflat = xc.GetCSVariableFromSpeType<StackFlat>("this", "StackFlat");
+                var control = xc.GetCSVariableFromSpeType<View>("control", "Control");
                 stackflat.Children.Add(control);
                 return new Variable(0);
             }
@@ -149,7 +149,7 @@ namespace GTXAM.GasControl.ContentControl
 
 
         #region 实现IType
-        const string type = "stackflat";
+        const string type = "StackFlat";
         public string IGetType()
         {
             return type;
@@ -166,7 +166,7 @@ namespace GTXAM.GasControl.ContentControl
 
         static StackFlat()
         {
-            GType.Sign("stackflat");
+            GType.Sign(type);
         }
         #endregion
 
