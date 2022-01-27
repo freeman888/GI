@@ -1,7 +1,6 @@
 ﻿using GI;
 using System;
 using System.Collections;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,9 +19,9 @@ namespace GTWPF
     public partial class MainWindow : Window
     {
         public static MainWindow MainApp;
-        
-    
-        
+
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +37,7 @@ namespace GTWPF
             {
                 PageBase.Children.RemoveAt(PageBase.Children.Count - 1);
                 toolshowing = false;
-             };
+            };
         }
         internal void Addtext(string text)
         {
@@ -59,12 +58,12 @@ namespace GTWPF
         {
 
             //获取GIInfo
-            system_outputbox.Text += "Gasoline for GTWPF version " + GIInfo.GIVersion.ToString()+Environment.NewLine;
-            
-            
+            system_outputbox.Text += "Gasoline for GTWPF version " + GIInfo.GIVersion.ToString() + Environment.NewLine;
+
+
 
             WPFLib._function_Thread_override_.Load();
-            Gasoline.StartGas(new System.Collections.Generic.Dictionary<string,GI.Lib.ILib> {
+            Gasoline.StartGas(new System.Collections.Generic.Dictionary<string, GI.Lib.ILib> {
                 {"IO",new WPFLib.IO_Lib() },
                 {"Page",new WPFLib.Page_Lib() },
                 {"Control",new WPFLib.Control_Lib() }
@@ -79,10 +78,10 @@ namespace GTWPF
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
-            
+
         }
 
-        
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -126,9 +125,9 @@ namespace GTWPF
             switch (msg)
             {
                 case 0x0024:
-                WmGetMinMaxInfo(hwnd, lParam);
-                handled = true;
-                break;
+                    WmGetMinMaxInfo(hwnd, lParam);
+                    handled = true;
+                    break;
             }
 
             return (IntPtr)0;
@@ -280,8 +279,8 @@ namespace GTWPF
 
         public void GotoPage(GasControl.Page.GasPage page)
         {
-            
-            Dispatcher.Invoke(new Action(()=>
+
+            Dispatcher.Invoke(new Action(() =>
             {
                 ThicknessAnimation thicknessAnimation = new ThicknessAnimation();
                 thicknessAnimation.From = new Thickness(0, 200, 0, 0);
@@ -320,7 +319,7 @@ namespace GTWPF
             {
                 return null;
             }
-            
+
         }
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
@@ -342,7 +341,7 @@ namespace GTWPF
             HorizontalAlignment = HorizontalAlignment.Stretch,
             VerticalAlignment = VerticalAlignment.Stretch,
             Background = Brushes.Transparent,
-            
+
         };
         private void ToolButtonClick(object sender, RoutedEventArgs e)
         {

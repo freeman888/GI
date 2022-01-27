@@ -1,11 +1,9 @@
-﻿using System;
+﻿using GI;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using GI;
 using static GI.Function;
 
 namespace GTWPF.GasControl.Page
@@ -64,7 +62,7 @@ namespace GTWPF.GasControl.Page
                          string[] sss = function.Istr_xcname.Split(',');
                          if (sss.Length == 2)
                          {
-                              await Function.NewAsyncFuncStarter(function,new Variable(this),new Variable(e));
+                             await Function.NewAsyncFuncStarter(function, new Variable(this), new Variable(e));
                          }
                      }
                      else
@@ -73,7 +71,7 @@ namespace GTWPF.GasControl.Page
                          string[] sss = function.Istr_xcname.Split(',');
                          if (sss.Length == 2)
                          {
-                             await Function.NewAsyncFuncStarter(function,new Variable(this),new Variable(e));
+                             await Function.NewAsyncFuncStarter(function, new Variable(this), new Variable(e));
                          }
                      }
                  };
@@ -180,7 +178,7 @@ namespace GTWPF.GasControl.Page
 
             public override object Run(Hashtable xc)
             {
-                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this","Page");
+                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "Page");
                 var text = xc.GetCSVariable<object>("text").ToString();
                 var click = xc.GetCSVariable<object>("clickevent");
                 page.AddTool(text, click);

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GI
 {
@@ -9,21 +7,21 @@ namespace GI
         /// <summary>
         /// flag to return a methord quickly
         /// </summary>
-        public class ReturnException:Exception,ISysException
+        public class ReturnException : Exception, ISysException
         {
             public object toreturn;
         }
         /// <summary>
         /// flag to break the foreach or while
         /// </summary>
-        public class BreakException:Exception,ISysException
+        public class BreakException : Exception, ISysException
         {
 
         }
         /// <summary>
         /// flag to continue the foreach or while
         /// </summary>
-        public class ContinueException:Exception,ISysException
+        public class ContinueException : Exception, ISysException
         {
 
         }
@@ -42,14 +40,16 @@ namespace GI
             类型冲突 = 100060,
             无对应属性 = 100070,
             异步异常 = 100080,
-            非异步函数调用异步方法 = 100081 ,
+            非异步函数调用异步方法 = 100081,
+            类库引用异常 = 100090,
+            继承对象异常= 100100
         }
         /// <summary>
         /// 所有错误
         /// </summary>
-        public class RunException:Exception
+        public class RunException : Exception
         {
-            public RunException(EXID eXID,string inf = "")
+            public RunException(EXID eXID, string inf = "")
             {
                 Exid = eXID;
                 this.inf = inf;
@@ -57,7 +57,7 @@ namespace GI
             public EXID Exid;
             public string inf;
 
-            public override string Message => "[RunException] id:"+Convert.ToInt32(Exid)+" information:"+Exid+"\n"+inf;
+            public override string Message => "[RunException] id:" + Convert.ToInt32(Exid) + " information:" + Exid + "\n" + inf;
         }
     }
 }

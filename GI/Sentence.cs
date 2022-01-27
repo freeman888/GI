@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -9,7 +8,7 @@ namespace GI
 {
     public class Sentence
     {
-        
+
 
 
         /// <summary>
@@ -67,8 +66,8 @@ namespace GI
             return list;
         }
 
-        public  virtual  Task Run(Hashtable h) { return null; }
-        
+        public virtual Task Run(Hashtable h) { return null; }
+
         public string mycode = "";
 
 
@@ -89,17 +88,18 @@ namespace GI
                     htxc.Add(refname, new Variable(0));
                 }
                 catch (Exception ex)
-                {if (ex is Exceptions.ISysException)
+                {
+                    if (ex is Exceptions.ISysException)
                     {
                         throw ex;
                     }
-                    throw new Exception(ex.Message+Environment.NewLine+"位置:"+mycode);
+                    throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
                 }
-                return ;
+                return;
             }
         }
         public class New_Sentence_BreakPoint : Sentence
-        { 
+        {
             public New_Sentence_BreakPoint(XmlNode me)
             {
 
@@ -114,7 +114,8 @@ namespace GI
 
                 }
                 catch (Exception ex)
-                {if (ex is Exceptions.ISysException)
+                {
+                    if (ex is Exceptions.ISysException)
                     {
                         throw ex;
                     }
@@ -186,7 +187,7 @@ namespace GI
                 }
                 catch (Exception ex)
                 {
-                    if(ex.GetType() == typeof(Exceptions.ContinueException))
+                    if (ex.GetType() == typeof(Exceptions.ContinueException))
                     {
                         throw ex;
                     }
@@ -234,14 +235,14 @@ namespace GI
                 }
             }
 
-            
-            
+
+
             public async override Task Run(Hashtable h)
             {
                 try
                 {
                     Hashtable hashtable = Variable.GetOwnVariables(h);
-                    realif = Convert.ToBoolean(( await resulter.Run(h)).value);
+                    realif = Convert.ToBoolean((await resulter.Run(h)).value);
                     if (realif)
                     {
                         foreach (Sentence then in thensentences)
@@ -268,7 +269,7 @@ namespace GI
                     }
 
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     if (ex is Exceptions.ISysException)
                     {
@@ -281,7 +282,7 @@ namespace GI
         }
         public class New_Sentence_GiveResult : Sentence
         {
-            Variable.Resulter resulter,togive;
+            Variable.Resulter resulter, togive;
 
             public New_Sentence_GiveResult(XmlNode me)
             {
@@ -297,16 +298,17 @@ namespace GI
 
                     Variable togivee = await togive.Run(h);
                     togivee.value = result.value;
-                 }   
-                catch(Exception ex)
-                {if (ex is Exceptions.ISysException)
+                }
+                catch (Exception ex)
+                {
+                    if (ex is Exceptions.ISysException)
                     {
                         throw ex;
                     }
                     throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
                 }
             }
-            
+
         }
         public class New_Sentence_Usefunction : Sentence
         {
@@ -323,8 +325,9 @@ namespace GI
                 {
                     Variable result = await resulter.Run(h);
                 }
-                catch(Exception ex)
-                {if (ex is Exceptions.ISysException)
+                catch (Exception ex)
+                {
+                    if (ex is Exceptions.ISysException)
                     {
                         throw ex;
                     }
@@ -349,33 +352,33 @@ namespace GI
                 {
                     Hashtable hashtable = h;
                     bool realif = Convert.ToBoolean((await resulter.Run(hashtable)).value);
-                    while(realif)
+                    while (realif)
                     {
                         Hashtable hh = Variable.GetOwnVariables(hashtable);
-                        foreach(Sentence s in childsentences)
+                        foreach (Sentence s in childsentences)
                         {
                             try
                             {
                                 await s.Run(hh);
                             }
-                            catch(Exceptions.BreakException)
+                            catch (Exceptions.BreakException)
                             {
                                 break;
                             }
-                            catch(Exceptions.ContinueException)
+                            catch (Exceptions.ContinueException)
                             {
                                 continue;
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 throw ex;
                             }
                         }
                         realif = Convert.ToBoolean((await resulter.Run(hashtable)).value);
                     }
-                    
+
                 }
-                
+
                 catch (Exception ex)
                 {
                     if (ex is Exceptions.ISysException)
@@ -409,14 +412,14 @@ namespace GI
                     Hashtable hashtable = Variable.GetOwnVariables(h);
                     try
                     {
-                        foreach(var s in trysentences)
+                        foreach (var s in trysentences)
                         {
                             await s.Run(hashtable);
                         }
                     }
                     catch (Exception ex)
                     {
-                        if(ex is Exceptions.ISysException)
+                        if (ex is Exceptions.ISysException)
                         {
                             throw ex;
                         }
@@ -471,15 +474,15 @@ namespace GI
                             foreach (Sentence s in childsentences)
                                 await s.Run(nhashtable);
                         }
-                        catch(Exceptions.BreakException)
+                        catch (Exceptions.BreakException)
                         {
                             break;
                         }
-                        catch(Exceptions.ContinueException)
+                        catch (Exceptions.ContinueException)
                         {
                             continue;
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             throw ex;
                         }
@@ -487,7 +490,7 @@ namespace GI
                 }
                 catch (Exception ex)
                 {
-                    if(ex is Exceptions.ISysException)
+                    if (ex is Exceptions.ISysException)
                     {
                         throw ex;
                     }

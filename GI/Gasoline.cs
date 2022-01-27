@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Xml;
 using System.Collections.Generic;
-using static GI.Lib;
 using System.Threading.Tasks;
+using System.Xml;
+using static GI.Lib;
 
 namespace GI
 {
@@ -17,18 +17,18 @@ namespace GI
         public static Dictionary<string, ILib> libs = new Dictionary<string, ILib>();
 
 
-        
 
 
 
-        
+
+
 
         /// <summary>
         /// 拉起main请单另拉起,加载用户代码请单另加载
         /// </summary>
         /// <param name="heads"></param>
         /// <param name="codes"></param>
-        public  static void StartGas(Dictionary<string,ILib> heads)
+        public static void StartGas(Dictionary<string, ILib> heads)
         {
             //1加载所有通用Lib
             libs.Add("System", new System_Lib());
@@ -43,16 +43,23 @@ namespace GI
             foreach (var i in heads)
                 libs.Add(i.Key, i.Value);
 
-            
+
             //3加载库依赖
             foreach (var lib in libs)
             {
                 foreach (string s_delib in lib.Value.waittoadd)
                 {
-
-                    var delib = libs[s_delib];
+                    ILib delib = null;
+                    try
+                    {
+                         delib = libs[s_delib];
+                    }
+                    catch
+                    {
+                        throw new Exceptions.RunException(Exceptions.EXID.类库引用异常);
+                    }
                     foreach (var i in delib.myThing)
-                        if(!lib.Value.otherThing.ContainsKey(i.Key))
+                        if (!lib.Value.otherThing.ContainsKey(i.Key))
                             lib.Value.otherThing.Add(i.Key, i.Value);
                 }
                 lib.Value.otherThing.Add("true", new Variable(true));
@@ -102,14 +109,14 @@ namespace GI
         {
             if (!codes.HasChildNodes) Gdebug.WriteLine("bugging");
             XmlNode root = null;
-            foreach(XmlNode i in codes.ChildNodes)
+            foreach (XmlNode i in codes.ChildNodes)
             {
                 if (i.Name == "code")
                     root = i;
             }
             int minversion = Convert.ToInt32(root.Attributes["minversion"].InnerText);
             if (minversion > GIInfo.GIVersion) Gdebug.ThrowWrong("version not support");
-            foreach(XmlNode i in root.ChildNodes)
+            foreach (XmlNode i in root.ChildNodes)
             {
                 var code = i;
                 string name = code.Name;
@@ -118,7 +125,7 @@ namespace GI
                     string libname = code.GetAttribute("name");
                     if (!libs.ContainsKey(libname))
                         libs.Add(libname, new UserLib());
-                    foreach(XmlNode libcontent in code.ChildNodes)
+                    foreach (XmlNode libcontent in code.ChildNodes)
                     {
                         if (libcontent.Name == "get")
                         {
@@ -134,7 +141,7 @@ namespace GI
                             var parent = x_cls.GetAttribute("parent");
                             var iscvf = x_cls.GetAttribute("cvf");
 
-                            gClassTemplate.iscvf = Convert.ToBoolean( iscvf);
+                            gClassTemplate.iscvf = Convert.ToBoolean(iscvf);
                             gClassTemplate.LoadContent(x_cls.ChildNodes);
                             gClassTemplate.parentclassname = parent;
                             libs[libname].myThing.Add(libcontent.GetAttribute("name"), new Variable(gClassTemplate));

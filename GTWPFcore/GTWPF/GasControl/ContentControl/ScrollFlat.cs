@@ -1,17 +1,13 @@
-﻿using GTWPF.GasControl.Control;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
-using System.Windows;
-using System.Windows.Media;
-using System.Collections;
-using GI;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using static GI.Function;
+﻿using GI;
 using GTWPF.GasControl.Page;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Xml;
+using static GI.Function;
 
 namespace GTWPF.GasControl.ContentControl
 {
@@ -24,7 +20,7 @@ namespace GTWPF.GasControl.ContentControl
     {
         public ScrollFlat()
         {
-            
+
             HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
 
@@ -104,8 +100,8 @@ namespace GTWPF.GasControl.ContentControl
                         return 0;
                     }
                 } },
-                
-               
+
+
                 {"Padding" ,new FVariable{
                     ongetvalue =() => new Glist{new Variable(Padding.Left) ,new Variable(Padding.Top),new Variable(Padding.Right),new Variable(Padding.Bottom)},
                 onsetvalue = (value)=>
@@ -124,7 +120,7 @@ namespace GTWPF.GasControl.ContentControl
                         return 0;
                     }
                 } },
-               
+
 
                 {"ScrollPosition" ,new FVariable
                 {
@@ -177,7 +173,7 @@ namespace GTWPF.GasControl.ContentControl
                     }
                 } },
                 {"SetContent",new Variable(new MFunction(setcontent,this)) }
-                
+
 
 
             };
@@ -303,8 +299,8 @@ namespace GTWPF.GasControl.ContentControl
         {
             return this;
         }
-       
-       
+
+
         #region 实现IType
         const string type = "ScrollFlat";
         public string IGetType()
@@ -342,7 +338,7 @@ namespace GTWPF.GasControl.ContentControl
 
         //memfunction
         static IFunction setcontent = new Function_SetContent();
-        public class Function_SetContent:Function
+        public class Function_SetContent : Function
         {
             public Function_SetContent()
             {

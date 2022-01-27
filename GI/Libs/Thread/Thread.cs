@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static GI.Function;
 
 namespace GI
 {
-   partial class Lib
+    partial class Lib
     {
-        public class Thread_Lib:ILib
+        public class Thread_Lib : ILib
         {
             public Thread_Lib()
             {
-                myThing.Add("StartThread",new Variable( start));
+                myThing.Add("StartThread", new Variable(start));
                 myThing.Add("Sleep", new Variable(sleep));
                 myThing.Add("RunOnUI", new Variable(runonui));
-                myThing.Add("StartTask", new Variable(taskrun));            
+                myThing.Add("StartTask", new Variable(taskrun));
             }
             IFunction start = new Thread_Function_Start();
             public class Thread_Function_Start : Function
@@ -103,7 +102,7 @@ namespace GI
                         else
                             throw new Exceptions.RunException(Exceptions.EXID.未知, "此版本不支持字符串拉起函数");
                     });
-                 }   
+                }
             }
             #region
             public Dictionary<string, Variable> myThing { get; set; } = new Dictionary<string, Variable>();

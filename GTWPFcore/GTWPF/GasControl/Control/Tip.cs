@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using GI;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Xml;
-using GI;
 
 namespace GTWPF.GasControl.Control
 {
@@ -34,7 +31,7 @@ namespace GTWPF.GasControl.Control
                     onsetvalue = (value)=>{Height = Convert.ToDouble(value);return 0; }
                 }},
                 {"Horizontal",new FVariable
-                
+
                 {
                     ongetvalue = ()=> new Gstring( HorizontalAlignment.ToString()),
                     onsetvalue = (value) =>{

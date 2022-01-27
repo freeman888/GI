@@ -1,9 +1,5 @@
 ﻿using GI;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTWPF
 {
@@ -14,7 +10,7 @@ namespace GTWPF
 
             public Control_Lib()
             {
-                myThing.Add("Bubble",new Variable( new BubbleClassTemplate()));
+                myThing.Add("Bubble", new Variable(new BubbleClassTemplate()));
                 myThing.Add("Tip", new Variable(new TipClassTemplate()));
                 myThing.Add("EditText", new Variable(new EditTextTemplate()));
                 myThing.Add("GridFlat", new Variable(new GridClassTemplate()));
@@ -23,8 +19,9 @@ namespace GTWPF
             }
 
 
-            public class BubbleClassTemplate :GClassTemplate{
-                public BubbleClassTemplate():base("Bubble","Control")
+            public class BubbleClassTemplate : GClassTemplate
+            {
+                public BubbleClassTemplate() : base("Bubble", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -38,7 +35,7 @@ namespace GTWPF
 
             public class TipClassTemplate : GClassTemplate
             {
-                public TipClassTemplate():base("Tip","Control")
+                public TipClassTemplate() : base("Tip", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -46,12 +43,12 @@ namespace GTWPF
                         string text = Variable.GetTrueVariable<object>(xc, "name").ToString();
                         return new GasControl.Control.Tip() { Name = text };
                     };
-                } 
+                }
             }
 
             public class EditTextTemplate : GClassTemplate
             {
-                public EditTextTemplate():base("EditText","Control")
+                public EditTextTemplate() : base("EditText", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -64,7 +61,7 @@ namespace GTWPF
 
             public class GridClassTemplate : GClassTemplate
             {
-                public GridClassTemplate():base("GridFlat","Control")
+                public GridClassTemplate() : base("GridFlat", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -77,7 +74,7 @@ namespace GTWPF
 
             public class SwitcherClassTemplate : GClassTemplate
             {
-                public SwitcherClassTemplate():base("Switcher","Control")
+                public SwitcherClassTemplate() : base("Switcher", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -90,7 +87,7 @@ namespace GTWPF
 
             public class ScrollFlatTemplate : GClassTemplate
             {
-                public ScrollFlatTemplate():base("ScrollFlat","Control")
+                public ScrollFlatTemplate() : base("ScrollFlat", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>

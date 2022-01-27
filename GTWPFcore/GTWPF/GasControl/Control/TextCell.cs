@@ -1,7 +1,5 @@
 ﻿using GI;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -9,14 +7,14 @@ using System.Xml;
 
 namespace GTWPF.GasControl.Control
 {
-    public class TextCell:StackPanel,IOBJ,IGasObjectContainer
+    public class TextCell : StackPanel, IOBJ, IGasObjectContainer
     {
         public object event_click;
         Label text, detail;
         public TextCell()
         {
-            text = new Label { Padding = new Thickness(3) , FontSize = 16, HorizontalAlignment = HorizontalAlignment.Stretch};
-            detail = new Label { Padding = new Thickness(3),HorizontalAlignment = HorizontalAlignment.Stretch};
+            text = new Label { Padding = new Thickness(3), FontSize = 16, HorizontalAlignment = HorizontalAlignment.Stretch };
+            detail = new Label { Padding = new Thickness(3), HorizontalAlignment = HorizontalAlignment.Stretch };
             this.Children.Add(text);
             this.Children.Add(detail);
 
@@ -156,7 +154,7 @@ namespace GTWPF.GasControl.Control
                 var value = xmlelement.GetAttribute("Detail");
                 if (!string.IsNullOrEmpty(value))
                     textcell.detail.Content = value;
-                    
+
             }
             //DetailColor
             {

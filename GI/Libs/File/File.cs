@@ -1,32 +1,30 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 
 namespace GI
 {
-   
+
     partial class Lib
     {
-        public class File_Lib :ILib
+        public class File_Lib : ILib
         {
             public File_Lib()
             {
-                myThing.Add("ReadGaa", new Variable( new File_Function_ReadGaa()));
+                myThing.Add("ReadGaa", new Variable(new File_Function_ReadGaa()));
                 myThing.Add("FileOpen", new Variable(new File_Function_FileOpen()));
                 myThing.Add("CreatDirectory", new Variable(new File_Function_CreatDirectory()));
                 myThing.Add("FileDelete", new Variable(new File_Function_FileDelete()));
                 myThing.Add("FileCopy", new Variable(new File_Function_FileMove()));
                 myThing.Add("CombinePath", new Variable(new File_Function_CombinePath()));
-                   
+
             }
 
-            public class File_Function_ReadGaa:Function
+            public class File_Function_ReadGaa : Function
             {
                 public File_Function_ReadGaa()
                 {
-                    
+
                     poslib = "File";
                     str_xcname = "gaaname,filepath";
                     IInformation = "[gaaname] the gaa(lib) where file exists.\n[filepath] the file path in the gaa";
@@ -69,11 +67,11 @@ namespace GI
                         default:
                             throw new Exceptions.RunException(Exceptions.EXID.参数错误, "无对应参数");
                     }
-                    if(GIInfo.Platform == "Mac_Xamarin")
+                    if (GIInfo.Platform == "Mac_Xamarin")
                     {
-                       filepath =  filepath.Replace("\\", "/");
+                        filepath = filepath.Replace("\\", "/");
                     }
-                    GI.GStream stream = new GStream(new FileStream(filepath,fmode));
+                    GI.GStream stream = new GStream(new FileStream(filepath, fmode));
                     return new Variable(stream);
 
                 }
@@ -99,7 +97,7 @@ namespace GI
                 }
             }
 
-            public class File_Function_FileDelete:Function
+            public class File_Function_FileDelete : Function
             {
                 public File_Function_FileDelete()
                 {
@@ -119,7 +117,7 @@ namespace GI
                 }
             }
 
-            public class File_Function_FileMove:Function
+            public class File_Function_FileMove : Function
             {
                 public File_Function_FileMove()
                 {
@@ -135,14 +133,14 @@ namespace GI
                     if (GIInfo.Platform == "Mac_Xamarin")
                     {
                         oldpath = oldpath.Replace("\\", "/");
-                        newpath = newpath.Replace("\\","/");
+                        newpath = newpath.Replace("\\", "/");
                     }
-                    File.Copy(oldpath,newpath,true);
+                    File.Copy(oldpath, newpath, true);
                     return new Variable(0);
                 }
             }
 
-            public class File_Function_CombinePath:Function
+            public class File_Function_CombinePath : Function
             {
                 public File_Function_CombinePath()
                 {

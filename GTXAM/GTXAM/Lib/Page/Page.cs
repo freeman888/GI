@@ -1,18 +1,16 @@
 ﻿using GI;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using static GI.Lib;
 
 namespace GTXAM
 {
-  
+
     partial class Lib
     {
-        public class Page_Lib:ILib
+        public class Page_Lib : ILib
         {
 
             public Page_Lib()
@@ -67,7 +65,7 @@ namespace GTXAM
                 }
             }
 
-            public class Page_Function_Return : Function. AFunction
+            public class Page_Function_Return : Function.AFunction
             {
                 public Page_Function_Return()
                 {
@@ -102,7 +100,7 @@ namespace GTXAM
                     {
                         Device.BeginInvokeOnMainThread(async () =>
                         {
-                            if(Device.RuntimePlatform == Device.macOS)
+                            if (Device.RuntimePlatform == Device.macOS)
                             {
                                 await App.MainApp.MainPage.Navigation.PushAsync(page);
                                 App.MainApp.MainPage.Navigation.RemovePage(App.MainApp.MainPage.Navigation.NavigationStack[0]);

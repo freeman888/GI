@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GI
 {
-    public class Gbool:IOBJ,IConvertible
+    public class Gbool : IOBJ, IConvertible
     {
         public const string type = "Bool";
         bool value;
@@ -89,7 +88,7 @@ namespace GI
             return ((IConvertible)value).ToSingle(provider);
         }
 
-        
+
 
         public string ToString(IFormatProvider provider)
         {

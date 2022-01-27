@@ -1,7 +1,4 @@
 ﻿using GI;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using XF = Xamarin.Forms;
 
 namespace GTXAM.GasControl.Cell

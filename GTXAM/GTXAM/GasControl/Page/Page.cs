@@ -1,12 +1,9 @@
-﻿using System;
+﻿using GI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using GI;
 using Xamarin.Forms;
 using static GI.Function;
-using ddbug = System.Diagnostics.Debug;
 
 namespace GTXAM.GasControl.Page
 {
@@ -17,7 +14,7 @@ namespace GTXAM.GasControl.Page
         {
             Title = title;
 
-            Content = new Control.Tip { Text = "Welcome to use Gasoline.Page" } ;
+            Content = new Control.Tip { Text = "Welcome to use Gasoline.Page" };
 
             members = new Dictionary<string, Variable>
             {
@@ -46,7 +43,7 @@ namespace GTXAM.GasControl.Page
                         string[] sss = function.Istr_xcname.Split(',');
                         if (sss.Length == 2)
                         {
-                            await Function.NewAsyncFuncStarter(function, new Variable(this),new Variable(e));
+                            await Function.NewAsyncFuncStarter(function, new Variable(this), new Variable(e));
                         }
                     }
                     else
@@ -55,7 +52,7 @@ namespace GTXAM.GasControl.Page
                         string[] sss = function.Istr_xcname.Split(',');
                         if (sss.Length == 2)
                         {
-                            await Function.NewAsyncFuncStarter(function,new Variable(this),new Variable(e));
+                            await Function.NewAsyncFuncStarter(function, new Variable(this), new Variable(e));
                         }
                     }
                 }
@@ -69,10 +66,10 @@ namespace GTXAM.GasControl.Page
         }
 
         #region
-        
+
         public string poslib { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        
+
         #endregion
 
         #region 实现IType
@@ -91,7 +88,7 @@ namespace GTXAM.GasControl.Page
             return this;
         }
 
-        
+
 
         static Page()
         {
@@ -117,7 +114,7 @@ namespace GTXAM.GasControl.Page
 
         //member function
 
-        static IFunction setcontent = new  Page_Function_SetContent();
+        static IFunction setcontent = new Page_Function_SetContent();
         public class Page_Function_SetContent : Function
         {
             public Page_Function_SetContent()

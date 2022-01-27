@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using static GI.Function;
 
 namespace GI.Libs.Xml
 {
-    public class XmlElement:IOBJ
+    public class XmlElement : IOBJ
     {
         System.Xml.XmlElement value;
         public XmlElement(System.Xml.XmlElement value)
         {
             this.value = value;
-            
+
             members = new Dictionary<string, Variable>
             {
                 {"SetAttribute",new Variable( new  MFunction(setattribute,this)) },//如果不存在，则自动创建
@@ -25,7 +24,7 @@ namespace GI.Libs.Xml
             };
         }
         static IFunction setattribute = new XmlElement_Function_SetAttribute();
-        public class XmlElement_Function_SetAttribute:Function
+        public class XmlElement_Function_SetAttribute : Function
         {
             public XmlElement_Function_SetAttribute()
             {
@@ -43,7 +42,7 @@ namespace GI.Libs.Xml
             }
         }
         static IFunction getattribute = new XmlElement_Function_GetAttribute();
-        public class XmlElement_Function_GetAttribute:Function
+        public class XmlElement_Function_GetAttribute : Function
         {
             public XmlElement_Function_GetAttribute()
             {
@@ -58,7 +57,7 @@ namespace GI.Libs.Xml
             }
         }
         static IFunction getchild = new XmlElement_Function_GetChild();
-        public class XmlElement_Function_GetChild:Function
+        public class XmlElement_Function_GetChild : Function
         {
             public XmlElement_Function_GetChild()
             {

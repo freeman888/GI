@@ -1,7 +1,6 @@
 ﻿using GI;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -9,7 +8,7 @@ using System.Xml;
 
 namespace GTWPF.GasControl.Control
 {
-   public class Image:System.Windows.Controls.Image,IOBJ
+    public class Image : System.Windows.Controls.Image, IOBJ
     {
 
         public Image()
@@ -108,7 +107,7 @@ namespace GTWPF.GasControl.Control
                     }
                 } },
 
-                
+
             };
             parent = new GTWPF.Control(this);
             #endregion
@@ -244,7 +243,7 @@ namespace GTWPF.GasControl.Control
                     Grid.SetColumn(image, Convert.ToInt32(value));
             }
             return image;
-            
+
         }
     }
 }

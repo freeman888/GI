@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections;
+﻿using GI;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using GI;
 using Xamarin.Forms;
 
 namespace GTXAM.GasControl.Control
 {
-    public class _TextCell:TextCell,IName,IOBJ
+    public class _TextCell : TextCell, IName, IOBJ
     {
         public object event_click;
 
         public _TextCell()
         {
 
-            
+
             Tapped += Bubble_Clicked;
 
             #region
@@ -113,7 +111,7 @@ namespace GTXAM.GasControl.Control
         }
 
         static _TextCell()
-        { 
+        {
             GType.Sign(type);
         }
         #endregion

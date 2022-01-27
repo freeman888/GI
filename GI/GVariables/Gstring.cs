@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using static GI.Function;
 
 namespace GI
 {
-    public class Gstring : IOBJ,IConvertible
+    public class Gstring : IOBJ, IConvertible
     {
         public const string type = "String";
         string value;
@@ -143,7 +142,7 @@ namespace GI
         {
             return ((IConvertible)value).ToUInt64(provider);
         }
-        
+
         public Variable IGetMember(string name)
         {
             if (members.ContainsKey(name))
@@ -191,7 +190,7 @@ namespace GI
             }
         }
 
-        public class String_Function_FindLast:Function
+        public class String_Function_FindLast : Function
         {
             public String_Function_FindLast()
             {

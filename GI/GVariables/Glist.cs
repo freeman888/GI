@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using static GI.Function;
 
@@ -167,8 +166,8 @@ when three
                         else
                         {
 
-                        if (list[i].value.IGetCSValue().Equals(obj.value.IGetCSValue()))
-                            return new Variable(i);
+                            if (list[i].value.IGetCSValue().Equals(obj.value.IGetCSValue()))
+                                return new Variable(i);
                         }
                     }
                     return new Variable(-1);
@@ -217,7 +216,7 @@ when three
                     }
                     else
                     {
-                        if(list[i].value.IGetCSValue().Equals(tor.value.IGetCSValue()))
+                        if (list[i].value.IGetCSValue().Equals(tor.value.IGetCSValue()))
                         {
                             tori = i;
                         }

@@ -1,26 +1,22 @@
-﻿using System;
-using System.IO.Compression;
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using System.IO;
-using System.Xml;
-using System.Collections.Generic;
 using GI;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Xml;
 
 namespace GTXAM.Droid
 {
-    [Activity(Label = "GTXAM", Icon = "@mipmap/icon",MainLauncher =true, Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "GTXAM", Icon = "@mipmap/icon", MainLauncher = true, Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
             var input = Assets.Open("main");
             string text = "";
-            using(var streamreader = new StreamReader(input))
+            using (var streamreader = new StreamReader(input))
             {
                 text = streamreader.ReadToEnd();
             }

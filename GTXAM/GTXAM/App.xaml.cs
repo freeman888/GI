@@ -1,12 +1,5 @@
-using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Diagnostics;
-using System.Threading;
-using System.Collections;
-using GI;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace GTXAM

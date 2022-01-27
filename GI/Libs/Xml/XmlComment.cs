@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace GI.Libs.Xml
 {
-    public class XmlComment:IOBJ
+    public class XmlComment : IOBJ
     {
         System.Xml.XmlComment value;
 

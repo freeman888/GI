@@ -17,7 +17,7 @@ namespace HelloWPF.WPF
             GTXAMInfo.Codes.Add(xmlDocument);
             GTXAMInfo.SetPlatform("WPF_Xamarin");
 
-            
+
             Xamarin.Forms.Forms.Init();
             LoadApplication(new GTXAM.App());
 

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Foundation;
 using System.Xml;
-using Foundation;
 using UIKit;
 
 namespace GTXAM.iOS

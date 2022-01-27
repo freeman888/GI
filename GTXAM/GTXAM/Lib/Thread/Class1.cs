@@ -1,7 +1,5 @@
 ﻿using GI;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GTXAM
 {

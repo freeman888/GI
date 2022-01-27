@@ -1,14 +1,12 @@
 ﻿using GI;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Win32;
 using System.Collections;
+using System.Collections.Generic;
 using static GI.Function;
 
 namespace GTWPF.Lib.IO
 {
-    public class FilePicker :IOBJ
+    public class FilePicker : IOBJ
     {
         internal OpenFileDialog openFileDialog = new OpenFileDialog();
         internal bool picked = false;
@@ -29,7 +27,7 @@ namespace GTWPF.Lib.IO
             };
         }
         public static IFunction show = new FilePicker_Function_Show();
-        public class FilePicker_Function_Show:Function
+        public class FilePicker_Function_Show : Function
         {
             public FilePicker_Function_Show()
             {
@@ -39,7 +37,7 @@ namespace GTWPF.Lib.IO
             public override object Run(Hashtable xc)
             {
                 var picker = xc.GetCSVariableFromSpeType<FilePicker>("this", "FilePicker");
-                picker.picked = picker.openFileDialog.ShowDialog() == true?true:false;
+                picker.picked = picker.openFileDialog.ShowDialog() == true ? true : false;
                 return new Variable(0);
             }
         }

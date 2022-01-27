@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 
 namespace GTXAM
@@ -14,7 +13,7 @@ namespace GTXAM
             GI.GIInfo.Platform = platform;
         }
 
-        public static Func<string, string,string,string> InputFunction;
+        public static Func<string, string, string, string> InputFunction;
         public static string InputResult = "";
         public static bool Inputdone = false;
     }

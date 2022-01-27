@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using static GI.Function;
 
 namespace GI
-{ 
+{
     partial class Lib
     {
-        public class List_Lib:ILib
+        public class List_Lib : ILib
         {
             public List_Lib()
             {
                 myThing.Add("List", new Variable(new ListClassTemplate()));
-                myThing.Add("Range",new Variable( new DFunction
+                myThing.Add("Range", new Variable(new DFunction
                 {
 
                     str_xcname = "s,e",
@@ -34,9 +33,9 @@ creat a new list contains numbers(sure it can contains more than number)",
                 }));
             }
 
-            public class ListClassTemplate:GClassTemplate
+            public class ListClassTemplate : GClassTemplate
             {
-                public ListClassTemplate():base("List","System")
+                public ListClassTemplate() : base("List", "System")
                 {
                     Istr_xcname = "params";
                     csctor = (xc) =>
@@ -46,7 +45,7 @@ creat a new list contains numbers(sure it can contains more than number)",
                 }
             }
 
-            
+
 
             #region
             public Dictionary<string, Variable> myThing { get; set; } = new Dictionary<string, Variable>();

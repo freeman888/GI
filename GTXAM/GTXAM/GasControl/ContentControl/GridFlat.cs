@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
-using GTXAM.GasControl.Control;
+﻿using GI;
+using System;
 using System.Collections;
-using GI;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using Xamarin.Forms;
 using static GI.Function;
 
 namespace GTXAM.GasControl.ContentControl
@@ -16,7 +13,7 @@ namespace GTXAM.GasControl.ContentControl
     {
         public GridFlat()
         {
-            
+
             HorizontalOptions = LayoutOptions.FillAndExpand;
             VerticalOptions = LayoutOptions.FillAndExpand;
 

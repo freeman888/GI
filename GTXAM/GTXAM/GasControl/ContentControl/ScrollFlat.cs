@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
-using GTXAM.GasControl.Control;
+﻿using GI;
+using System;
 using System.Collections;
-using GI;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using Xamarin.Forms;
 using static GI.Function;
 
 namespace GTXAM.GasControl.ContentControl
@@ -100,8 +97,8 @@ namespace GTXAM.GasControl.ContentControl
                         return 0;
                     }
                 } },
-                
-                
+
+
                 {"Padding" ,new FVariable{
                     ongetvalue =() => new Glist{new Variable(Padding.Left) ,new Variable(Padding.Top),new Variable(Padding.Right),new Variable(Padding.Bottom)},
                 onsetvalue = (value)=>
@@ -143,7 +140,7 @@ namespace GTXAM.GasControl.ContentControl
                         else
                         {
                             string s_info = value.ToString();
-            switch (s_info) 
+            switch (s_info)
             {
                 case "bottom":
                     ScrollToAsync(Content,ScrollToPosition.End,true);

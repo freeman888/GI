@@ -1,19 +1,17 @@
-﻿using GTWPF.GasControl.Control;
+﻿using GI;
+using GTWPF.GasControl.Control;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
-using System.Windows;
-using System.Windows.Media;
 using System.Collections;
-using GI;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using static GI.Function;
 
 namespace GTWPF.GasControl.ContentControl
 {
 
-   
+
 
     /// <summary>
     /// Gasoline 网格布局
@@ -99,9 +97,9 @@ namespace GTWPF.GasControl.ContentControl
                         return 0;
                     }
                 } },
-                
-                
-               
+
+
+
                 {"Background",new FVariable{
                     ongetvalue = ()=>new Gstring(Background.ToString()),
                     onsetvalue = (value)=>
@@ -119,7 +117,7 @@ namespace GTWPF.GasControl.ContentControl
 
 
             };
-            
+
             parent = new GTWPF.Control(this);
             #endregion
         }
@@ -220,12 +218,12 @@ namespace GTWPF.GasControl.ContentControl
 
 
 
-       
+
         public object IGetCSValue()
         {
             return this;
         }
-       
+
 
 
         #region 实现ISettet
@@ -362,7 +360,7 @@ namespace GTWPF.GasControl.ContentControl
         //memfunction
 
         static IFunction add = new Function_Add();
-        public class Function_Add:Function
+        public class Function_Add : Function
         {
             public Function_Add()
             {
@@ -374,8 +372,8 @@ namespace GTWPF.GasControl.ContentControl
             {
                 var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "GridFlat");
                 var con = xc.GetCSVariableFromSpeType<UIElement>("con", "Control");
-                var row = Convert.ToInt32( xc.GetCSVariable<object>("row"));
-                var column =Convert.ToInt32( xc.GetCSVariable<object>("column"));
+                var row = Convert.ToInt32(xc.GetCSVariable<object>("row"));
+                var column = Convert.ToInt32(xc.GetCSVariable<object>("column"));
                 SetRow(con, row);
                 SetColumn(con, column);
                 grid.Children.Add(con);
@@ -384,7 +382,7 @@ namespace GTWPF.GasControl.ContentControl
         }
 
         static IFunction addrow = new Function_AddRow();
-        public class Function_AddRow:Function
+        public class Function_AddRow : Function
         {
             public Function_AddRow()
             {

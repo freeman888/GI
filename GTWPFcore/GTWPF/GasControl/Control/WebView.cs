@@ -2,8 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml;
@@ -11,7 +9,7 @@ using static GI.Function;
 
 namespace GTWPF.GasControl.Control
 {
-    public class WebView: IOBJ
+    public class WebView : IOBJ
     {
         public System.Windows.Controls.WebBrowser webBrowser = new System.Windows.Controls.WebBrowser();
 
@@ -108,13 +106,13 @@ namespace GTWPF.GasControl.Control
                 {
                     "InvokeJS",new Variable(new MFunction(invokejs,this))
                 }
-                
+
             };
             parent = new GTWPF.Control(webBrowser);
             #endregion
         }
         static IFunction invokejs = new WebView_Function_InvokeJS();
-        public class WebView_Function_InvokeJS:Function
+        public class WebView_Function_InvokeJS : Function
         {
             public WebView_Function_InvokeJS()
             {
@@ -128,7 +126,7 @@ namespace GTWPF.GasControl.Control
                 string jsfun = list[0].value.IGetCSValue().ToString();
                 list.RemoveAt(0);
                 List<object> objs = new List<object>();
-                foreach(var i in list)
+                foreach (var i in list)
                 {
                     objs.Add(i.value.IGetCSValue());
                 }
@@ -136,7 +134,7 @@ namespace GTWPF.GasControl.Control
 
                 //string jsfun = xc.GetCSVariable<object>("jsfun").ToString();
                 var webview = xc.GetCSVariableFromSpeType<System.Windows.Controls.WebBrowser>("this", "WebView");
-                var res =  webview.InvokeScript(jsfun,objs.ToArray());
+                var res = webview.InvokeScript(jsfun, objs.ToArray());
                 return new Variable(res);
             }
         }
@@ -271,8 +269,8 @@ namespace GTWPF.GasControl.Control
             //Url
             {
                 var value = xmlelement.GetAttribute("Url");
-                if(!string.IsNullOrEmpty(value))
-                    webview. webBrowser.Source = new Uri(value.ToString());
+                if (!string.IsNullOrEmpty(value))
+                    webview.webBrowser.Source = new Uri(value.ToString());
             }
             return webview;
         }

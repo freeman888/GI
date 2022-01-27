@@ -1,18 +1,15 @@
-﻿using System;
+﻿using GI;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
 using System.Windows;
-using System.Collections;
-using GI;
-using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Xml;
 
 namespace GTWPF.GasControl.Control
 {
-    public class Switcher : StackPanel, IOBJ,IGasObjectContainer
+    public class Switcher : StackPanel, IOBJ, IGasObjectContainer
     {
         private bool istoggled = false;
 
@@ -62,7 +59,7 @@ namespace GTWPF.GasControl.Control
                 string[] sss = event_click.Istr_xcname.Split(',');
                 if (sss.Length == 2)
                 {
-                    await Function.NewAsyncFuncStarter(event_click,new Variable(p), new Variable(new Glist { new Variable(GetGasObject()), new Variable(e) }));
+                    await Function.NewAsyncFuncStarter(event_click, new Variable(p), new Variable(new Glist { new Variable(GetGasObject()), new Variable(e) }));
                 }
             };
 
@@ -301,8 +298,8 @@ namespace GTWPF.GasControl.Control
                         switcher.Visibility = Visibility.Visible;
                 }
             }
-            
-            
+
+
             //BackGround
             {
                 var value = xmlelement.GetAttribute("Background");
@@ -312,7 +309,7 @@ namespace GTWPF.GasControl.Control
             //Togged
             {
                 var value = xmlelement.GetAttribute("Togged");
-                if(!string.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value))
                 {
                     switcher.IsToggled = Convert.ToBoolean(value);
                 }

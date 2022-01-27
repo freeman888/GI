@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
-using GTXAM.GasControl.Control;
+﻿using GI;
+using System;
 using System.Collections;
-using GI;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using Xamarin.Forms;
 using static GI.Function;
 
 namespace GTXAM.GasControl.ContentControl
 {
-    public class StackFlat:StackLayout,IOBJ,IName
+    public class StackFlat : StackLayout, IOBJ, IName
     {
 
         public StackFlat()

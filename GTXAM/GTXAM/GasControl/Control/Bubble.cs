@@ -1,11 +1,8 @@
 ﻿
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
 using GI;
-using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using Xamarin.Forms;
 
 namespace GTXAM.GasControl.Control
 {
@@ -187,7 +184,7 @@ namespace GTXAM.GasControl.Control
         #endregion
 
 
-       
+
 
         #region 实现IType
         const string type = "Bubble";

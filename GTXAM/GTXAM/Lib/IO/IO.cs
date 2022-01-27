@@ -2,23 +2,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Essentials;
 using static GI.Function;
 using static GI.Lib;
-using System.Diagnostics;
 
 namespace GTXAM
 {
     partial class Lib
     {
-        public class IO_Lib:ILib
+        public class IO_Lib : ILib
         {
             public IO_Lib()
             {
-                
+
 
                 myThing.Add("Write", new Variable(new IO_Function_Write()));
                 myThing.Add("WriteLine", new Variable(new IO_Function_WriteLine()));
@@ -46,10 +43,10 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                     Variable ret = new Variable(0);
                     await Device.InvokeOnMainThreadAsync(async () =>
                     {
-                        if(Device.RuntimePlatform == Device.macOS)
+                        if (Device.RuntimePlatform == Device.macOS)
                         {
                             if (list.Count == 0)
-                                GTXAMInfo.InputFunction?.Invoke("Input","","");
+                                GTXAMInfo.InputFunction?.Invoke("Input", "", "");
                             else if (list.Count == 1)
                                 GTXAMInfo.InputFunction?.Invoke(list[0].value.IGetCSValue().ToString(), "", "");
                             else if (list.Count == 2)
@@ -135,7 +132,7 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                     return new Variable(0);
                 }
             }
-            public class IO_Function_PickFile:AFunction
+            public class IO_Function_PickFile : AFunction
             {
                 public IO_Function_PickFile()
                 {
@@ -145,7 +142,7 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                 public async override Task<object> Run(Hashtable xc)
                 {
 
-                    var res =  await Xamarin.Essentials. FilePicker.PickAsync();
+                    var res = await Xamarin.Essentials.FilePicker.PickAsync();
                     return new Variable(new GStream(await res.OpenReadAsync()));
                 }
             }
@@ -169,5 +166,5 @@ when tap 'cancel' or close the inputwindow , return a empty string";
             #endregion
         }
     }
-    
+
 }

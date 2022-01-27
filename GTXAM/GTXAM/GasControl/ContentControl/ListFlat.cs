@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
-using GI;
-using static GI.Function;
+﻿using GI;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using Xamarin.Forms;
+using static GI.Function;
 
 namespace GTXAM.GasControl.ContentControl
 {
-    public class ListFlat : TableView, IOBJ,IName
+    public class ListFlat : TableView, IOBJ, IName
     {
         internal TableSection cells = new TableSection();
         public ListFlat()
@@ -17,7 +16,7 @@ namespace GTXAM.GasControl.ContentControl
             cells.Title = "List";
             Root.Title = "title";
             Root.Add(cells);
-            
+
             members = new Dictionary<string, Variable>
             {
                 {"Width" ,new FVariable{
@@ -116,7 +115,7 @@ namespace GTXAM.GasControl.ContentControl
 
 
             };
-            
+
             parent = new GTXAM.Control(this);
         }
 
@@ -173,13 +172,13 @@ namespace GTXAM.GasControl.ContentControl
                 var con = xc.GetCSVariableFromSpeType<Xamarin.Forms.Cell>("con", "Cell");
 
                 listflat.cells.Add(con);
-                
+
 
                 return new Variable(0);
             }
         }
         static IFunction clear = new Function_ListFlat_Clear();
-        public class Function_ListFlat_Clear:Function
+        public class Function_ListFlat_Clear : Function
         {
             public Function_ListFlat_Clear()
             {

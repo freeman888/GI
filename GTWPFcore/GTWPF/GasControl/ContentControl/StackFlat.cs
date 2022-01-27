@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
-using System.Windows;
-using GI;
-using System.Windows.Media;
-using System.Collections;
+﻿using GI;
 using GTWPF.GasControl.Page;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Xml;
 
 namespace GTWPF.GasControl.ContentControl
 {
-    public class StackFlat:StackPanel,IOBJ
+    public class StackFlat : StackPanel, IOBJ
     {
 
 
@@ -113,7 +112,7 @@ namespace GTWPF.GasControl.ContentControl
                         }
                     }
                 },
-                {"Add",new Variable(new GI.Function.MFunction(add,this)) }, 
+                {"Add",new Variable(new GI.Function.MFunction(add,this)) },
             };
 
             parent = new GTWPF.Control(this);
@@ -204,9 +203,9 @@ namespace GTWPF.GasControl.ContentControl
             //Orientation
             {
                 var value = xmlelement.GetAttribute("Orientation");
-                if(!string.IsNullOrEmpty(value))
-                    stackflat. Orientation = value.ToString() == "horizontal" ? Orientation.Horizontal : Orientation.Vertical;
-                
+                if (!string.IsNullOrEmpty(value))
+                    stackflat.Orientation = value.ToString() == "horizontal" ? Orientation.Horizontal : Orientation.Vertical;
+
             }
             //Row
             {
@@ -232,11 +231,11 @@ namespace GTWPF.GasControl.ContentControl
         }
 
         static IFunction add = new StackFlat_Function_Add();
-        public class StackFlat_Function_Add:Function
+        public class StackFlat_Function_Add : Function
         {
             public StackFlat_Function_Add()
             {
-                
+
                 IInformation = "add a control to this stackflat";
                 str_xcname = "control";
             }

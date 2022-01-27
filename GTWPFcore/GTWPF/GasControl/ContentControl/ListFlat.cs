@@ -1,17 +1,16 @@
-﻿using GTWPF.GasControl.Control;
+﻿using GI;
 using System;
-using System.Collections.Generic;
-using System.Windows.Controls;
-using System.Windows;
-using System.Windows.Media;
 using System.Collections;
-using GI;
-using static GI.Function;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Xml;
+using static GI.Function;
 
 namespace GTWPF.GasControl.ContentControl
 {
-    public class ListFlat:ListView,IOBJ
+    public class ListFlat : ListView, IOBJ
     {
         public ListFlat()
         {
@@ -167,7 +166,7 @@ namespace GTWPF.GasControl.ContentControl
             }
         }
         static IFunction clear = new Function_Clear();
-        public class Function_Clear:Function
+        public class Function_Clear : Function
         {
             public Function_Clear()
             {
@@ -186,7 +185,7 @@ namespace GTWPF.GasControl.ContentControl
 
         public static IOBJ GetListFlatFromXml(GTWPF.GasControl.Page.GasPage basepage, XmlElement xmlelement)
         {
-            var listflat =new  ListFlat();
+            var listflat = new ListFlat();
             listflat.Name = xmlelement.GetAttribute("Name");
             //Width
             {

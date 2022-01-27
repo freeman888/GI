@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -9,7 +8,7 @@ namespace GI
 {
 
     [Attribute.GasType("function")]
-    public interface IFunction:IOBJ
+    public interface IFunction : IOBJ
     {
         object IRun(Hashtable xc);
         Task<object> IAsyncRun(Hashtable xc);
@@ -21,16 +20,16 @@ namespace GI
         string poslib { get; set; }
     }
 
-    
-    public partial class Function:IFunction
+
+    public partial class Function : IFunction
     {
         //实现IFunction
-        public string poslib { get ; set ; }
+        public string poslib { get; set; }
         public object IRun(Hashtable xc)
         {
             return Run(xc);
         }
-        string IFunction. Istr_xcname
+        string IFunction.Istr_xcname
         {
             get
             {
@@ -45,7 +44,7 @@ namespace GI
         {
             return this;
         }
-        bool IFunction. Iisreffunction
+        bool IFunction.Iisreffunction
         {
             get
             {
@@ -57,9 +56,9 @@ namespace GI
             }
         }
         public string IInformation
-        { get ; set; }
+        { get; set; }
 
-        public bool Iisasync { get { return false; } set { }}
+        public bool Iisasync { get { return false; } set { } }
 
         public Task<object> IAsyncRun(Hashtable xc)
         {
@@ -71,7 +70,7 @@ namespace GI
         /// </summary>
         public class Head
         {
-            public virtual void AddFunctions(Dictionary<string,IFunction> h) { }
+            public virtual void AddFunctions(Dictionary<string, IFunction> h) { }
         }
 
         public virtual object Run(Hashtable xc)//父方法
@@ -89,15 +88,15 @@ namespace GI
             /// </summary>
             public Sentence[] sentences;
             public string name;
-            
 
-            public New_User_Function(XmlNode code,string poslib)
+
+            public New_User_Function(XmlNode code, string poslib)
             {
                 this.poslib = poslib;
                 name = code.GetAttribute("funname");
                 Istr_xcname = code.GetAttribute("params");
                 Iisreffunction = Convert.ToBoolean(code.GetAttribute("isref"));
-                List<Sentence> list =Sentence. GetSentencesFormXml(code.ChildNodes);
+                List<Sentence> list = Sentence.GetSentencesFormXml(code.ChildNodes);
 
                 sentences = list.ToArray();
 
@@ -106,7 +105,7 @@ namespace GI
 
             }
 
-            public async override Task< object> Run(Hashtable htxc)
+            public async override Task<object> Run(Hashtable htxc)
             {
                 try
                 {
@@ -127,24 +126,28 @@ namespace GI
             }
         }
 
-
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public class New_Creat_Function : Function
         {
-            /// <summary>
-            /// 自己所在的lib
-            /// </summary>
             public Sentence[] sentences;
-            public string name;
-
+            public Variable.BaseResulter baseresulter = null;
 
             public New_Creat_Function(XmlNode code, string poslib)
             {
+
                 this.poslib = poslib;
-                name = code.GetAttribute("funname");
                 str_xcname = code.GetAttribute("params");
                 isreffunction = Convert.ToBoolean(code.GetAttribute("isref"));
                 Iisasync = false;
-                List<Sentence> list = Sentence.GetSentencesFormXml(code.ChildNodes);
+
+                if (code.FirstChild.HasChildNodes)
+                {
+                    baseresulter = new Variable.BaseResulter(code.FirstChild.FirstChild);
+                }
+
+                List<Sentence> list = Sentence.GetSentencesFormXml(code.ChildNodes[1].ChildNodes);
 
                 sentences = list.ToArray();
 
@@ -153,13 +156,13 @@ namespace GI
 
             }
 
-            public  override object Run(Hashtable htxc)
+            public override object Run(Hashtable htxc)
             {
                 try
                 {
                     foreach (Sentence s in sentences)
                     {
-                         s.Run(htxc).Wait();
+                        s.Run(htxc).Wait();
                     }
                 }
                 catch (Exceptions.ReturnException ex)
@@ -179,7 +182,7 @@ namespace GI
         {
             try
             {
-                Hashtable variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables),function.poslib);
+                Hashtable variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
                 ret = (Variable)function.IRun(variable);
             }
             catch
@@ -194,11 +197,11 @@ namespace GI
             {
                 Hashtable variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
                 return await function.IAsyncRun(variable);
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new Exceptions.RunException(Exceptions.EXID.参数错误,ex.ToString());
+                throw new Exceptions.RunException(Exceptions.EXID.参数错误, ex.ToString());
             }
         }
 

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using GI;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
-using GI;
 
 namespace GTWPF.GasControl.Control
 {

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using GI;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Xml;
-using GI;
-using static GI.Function;
 
 namespace GTWPF.GasControl.Control
 {
@@ -118,7 +114,7 @@ namespace GTWPF.GasControl.Control
                         return 0;
                     }
                 } },
-               
+
                 {"Background",new FVariable{
                     ongetvalue = ()=>new Gstring(Background.ToString()),
                     onsetvalue = (value)=>
@@ -133,7 +129,7 @@ namespace GTWPF.GasControl.Control
                     Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
                     return 0;
                 } } },
-               
+
 
 
 
@@ -146,14 +142,14 @@ namespace GTWPF.GasControl.Control
         }
 
 
-        
+
         public object IGetCSValue()
         {
             return this;
         }
 
-     
-        
+
+
 
 
         #region 实现Itype
@@ -281,7 +277,7 @@ namespace GTWPF.GasControl.Control
                     edittext.FontSize = Convert.ToDouble(value);
                 }
             }
-            
+
             //BackGround
             {
                 var value = xmlelement.GetAttribute("Background");

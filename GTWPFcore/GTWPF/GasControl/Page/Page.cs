@@ -1,12 +1,10 @@
-﻿using System;
+﻿using GI;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml;
 using System.Windows.Media;
-using GI;
+using System.Xml;
 using static GI.Function;
 
 namespace GTWPF.GasControl.Page
@@ -68,7 +66,7 @@ namespace GTWPF.GasControl.Page
                          string[] sss = function.Istr_xcname.Split(',');
                          if (sss.Length == 2)
                          {
-                              await Function.NewAsyncFuncStarter(function,new Variable(this),new Variable(e));
+                             await Function.NewAsyncFuncStarter(function, new Variable(this), new Variable(e));
                          }
                      }
                      else
@@ -77,7 +75,7 @@ namespace GTWPF.GasControl.Page
                          string[] sss = function.Istr_xcname.Split(',');
                          if (sss.Length == 2)
                          {
-                             await Function.NewAsyncFuncStarter(function,new Variable(this),new Variable(e));
+                             await Function.NewAsyncFuncStarter(function, new Variable(this), new Variable(e));
                          }
                      }
                  };
@@ -184,7 +182,7 @@ namespace GTWPF.GasControl.Page
 
             public override object Run(Hashtable xc)
             {
-                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this","Page");
+                var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "Page");
                 var text = xc.GetCSVariable<object>("text").ToString();
                 var click = xc.GetCSVariable<object>("clickevent");
                 page.AddTool(text, click);
@@ -193,7 +191,7 @@ namespace GTWPF.GasControl.Page
         }
 
         static IFunction loadfromxml = new Page_LoadFromXml();
-        public class Page_LoadFromXml: Function
+        public class Page_LoadFromXml : Function
         {
             public Page_LoadFromXml()
             {
@@ -222,7 +220,7 @@ namespace GTWPF.GasControl.Page
                 catch { }
                 //加载页面内容
                 XmlElement xe_content = xmlElement.FirstChild as XmlElement;
-                var content = GTWPF.Control.GetControlFromXmlElement(page,xe_content);
+                var content = GTWPF.Control.GetControlFromXmlElement(page, xe_content);
 
                 page.SetContent(content.IGetCSValue() as UIElement);
 
@@ -231,7 +229,7 @@ namespace GTWPF.GasControl.Page
         }
 
         static IFunction getcontrolbyname = new Page_GetControlByName();
-        public class Page_GetControlByName:Function
+        public class Page_GetControlByName : Function
         {
             public Page_GetControlByName()
             {

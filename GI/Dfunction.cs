@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GI
@@ -25,7 +24,7 @@ namespace GI
                 return (dRun(xc));
             }
 
-            public string IInformation { get ; set ; }
+            public string IInformation { get; set; }
             public string IGetType()
             {
                 return type;

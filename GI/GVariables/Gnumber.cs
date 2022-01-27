@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GI
 {
-    public class Gnumber : IOBJ,IConvertible
+    public class Gnumber : IOBJ, IConvertible
     {
         public const string type = "Number";
         double value;

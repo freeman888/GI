@@ -2,16 +2,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.Win32;
 using static GI.Function;
 
 namespace GTWPF
 {
-    partial class  WPFLib
+    partial class WPFLib
     {
         public class IO_Lib : GI.Lib.ILib
         {
@@ -84,7 +81,7 @@ when tap 'cancel' or close the inputwindow , return a empty string";
 
                     var list = xc.GetCSVariable<Glist>("params");
                     Variable ret = new Variable(0);
-                    
+
                     GwpfLib.IO.Input input = null;
                     try
                     {
@@ -107,8 +104,8 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                             input.Show();
                         });
 
-                        
-                        
+
+
 
                         await Task.Run(() =>
                         {
@@ -143,9 +140,9 @@ when tap 'cancel' or close the inputwindow , return a empty string";
 
             }
 
-            public class FilePicker_ClassTemplate:GClassTemplate
+            public class FilePicker_ClassTemplate : GClassTemplate
             {
-                public FilePicker_ClassTemplate():base("FilePicker","IO")
+                public FilePicker_ClassTemplate() : base("FilePicker", "IO")
                 {
                     Istr_xcname = "";
                     csctor = (xc) =>

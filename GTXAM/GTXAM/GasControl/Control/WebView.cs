@@ -1,16 +1,13 @@
-﻿using System;
+﻿using GI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
-using GI;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using static GI.Function;
 
 namespace GTXAM.GasControl.Control
 {
-     public class WebView:Xamarin.Forms.WebView,IOBJ,IName
+    public class WebView : Xamarin.Forms.WebView, IOBJ, IName
     {
 
 
@@ -18,7 +15,7 @@ namespace GTXAM.GasControl.Control
         {
             HorizontalOptions = LayoutOptions.Fill;
             VerticalOptions = LayoutOptions.Fill;
-            
+
             #region
             members = new Dictionary<string, Variable>
             {
@@ -127,7 +124,7 @@ namespace GTXAM.GasControl.Control
                 str_xcname = "params";
             }
 
-            public  override object Run(Hashtable xc)
+            public override object Run(Hashtable xc)
             {
                 var list = xc.GetCSVariable<Glist>("params");
                 string jsfun = list[0].value.IGetCSValue().ToString();
@@ -135,12 +132,12 @@ namespace GTXAM.GasControl.Control
                 List<string> objs = new List<string>();
                 foreach (var i in list)
                 {
-                    objs.Add("'"+i.value.IGetCSValue().ToString()+"'");
+                    objs.Add("'" + i.value.IGetCSValue().ToString() + "'");
                 }
 
 
                 var webview = xc.GetCSVariableFromSpeType<WebView>("this", "WebView");
-                var res =  webview.funinvokejs?.Invoke($"{jsfun} ({string.Join(",", objs)})");
+                var res = webview.funinvokejs?.Invoke($"{jsfun} ({string.Join(",", objs)})");
                 return new Variable(res);
             }
         }

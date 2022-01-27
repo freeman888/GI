@@ -1,10 +1,7 @@
-﻿using System;
+﻿using GI;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
-using System.Collections;
-using GI;
-using System.Threading.Tasks;
 
 namespace GTXAM.GasControl.Control
 {
@@ -150,12 +147,12 @@ namespace GTXAM.GasControl.Control
         #endregion
 
         #region 实现IFunction
-     
-     
-   
-        public string poslib { get => "Control"; set  { } }
 
-        
+
+
+        public string poslib { get => "Control"; set { } }
+
+
         #endregion
 
         #region 实现IType
@@ -174,8 +171,8 @@ namespace GTXAM.GasControl.Control
             return this;
         }
 
-      
-       
+
+
 
         static Tip()
         {

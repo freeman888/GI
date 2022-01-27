@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GI
 {
-   partial class Function
+    partial class Function
     {
-        public class MFunction:IOBJ,IFunction
+        public class MFunction : IOBJ, IFunction
         {
             IFunction function;
             IOBJ self;
-            public MFunction(IFunction function,IOBJ self)
+            public MFunction(IFunction function, IOBJ self)
             {
                 this.function = function;
                 this.self = self;
@@ -36,7 +34,7 @@ namespace GI
                 return null;
             }
 
-            public string poslib { get ; set ; }
+            public string poslib { get; set; }
             public string IGetType()
             {
                 return function.IGetType();

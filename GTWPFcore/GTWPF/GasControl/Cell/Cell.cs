@@ -1,8 +1,4 @@
 ﻿using GI;
-using System.Windows.Controls;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 
 namespace GTWPF.GasControl.Cell
@@ -41,4 +37,4 @@ namespace GTWPF.GasControl.Cell
 
     }
 }
-    
+

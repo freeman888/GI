@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GI
@@ -20,11 +18,11 @@ namespace GI
                 Istr_xcname = "";
                 IInformation = "Async Function\n";
             }
-            public string poslib { get ; set; } 
-            public string Istr_xcname { get ; set ; }
-            public bool Iisreffunction { get ; set ; }
-            public string IInformation { get ; set; }
-            public bool Iisasync { get { return true;    }   set { }    }
+            public string poslib { get; set; }
+            public string Istr_xcname { get; set; }
+            public bool Iisreffunction { get; set; }
+            public string IInformation { get; set; }
+            public bool Iisasync { get { return true; } set { } }
 
             public Task<object> IAsyncRun(Hashtable xc)
             {

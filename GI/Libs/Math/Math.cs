@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GI
 {
@@ -11,7 +10,7 @@ namespace GI
         {
             public Math_Lib()
             {
-                myThing.Add("Sum", new Variable( new Math_Function_add()));
+                myThing.Add("Sum", new Variable(new Math_Function_add()));
                 myThing.Add("Subtract", new Variable(new Math_Function_subtrack()));
                 myThing.Add("Multiply", new Variable(new Math_Function_multiply()));
                 myThing.Add("Divide", new Variable(new Math_Function_divide()));
@@ -28,16 +27,16 @@ namespace GI
                 #endregion
                 #region 取余
                 myThing.Add("Mod", new Variable(new Math_Function_Mod()));
-               
+
                 #endregion
                 #region 相等
                 myThing.Add("Equal", new Variable(new Math_Function_Equal()));
-                
+
                 #endregion
 
                 #region 不相等
                 myThing.Add("UnEqual", new Variable(new Math_Function_UnEqual()));
-                
+
                 #endregion
 
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -13,10 +12,10 @@ namespace GI
         {
             public Socket_Lib()
             {
-                myThing.Add("HttpGet",new Variable( new Socket_Function_HttpGet()));
-                myThing.Add("HttpPost",new Variable( new Socket_Function_HttpPost()));
+                myThing.Add("HttpGet", new Variable(new Socket_Function_HttpGet()));
+                myThing.Add("HttpPost", new Variable(new Socket_Function_HttpPost()));
                 myThing.Add("HttpDownload", new Variable(new Socket_Function_HttpDownload()));
-                
+
             }
 
 
@@ -92,7 +91,7 @@ namespace GI
                 }
             }
 
-            public class Socket_Function_HttpDownload:Function
+            public class Socket_Function_HttpDownload : Function
             {
                 public Socket_Function_HttpDownload()
                 {
@@ -128,7 +127,7 @@ namespace GI
                     Stream responseStream = response.GetResponseStream();
                     //创建本地文件写入流
 
-                    
+
                     byte[] bArr = new byte[1024];
 
                     int size = responseStream.Read(bArr, 0, (int)bArr.Length);

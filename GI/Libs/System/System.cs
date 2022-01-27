@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using static GI.Function;
 
@@ -22,13 +20,13 @@ namespace GI
                 myThing.Add("GetType", new Variable(new System_Function_Gettype()));
                 myThing.Add("Exit", new Variable(new System_Function_Exit()));
                 myThing.Add("Const", new Variable(new System_Function_Const()));
-                myThing.Add("const", new Variable( new System_Function_Const() ));
+                myThing.Add("const", new Variable(new System_Function_Const()));
                 myThing.Add("GetInterpreterVersion", new Variable(new DFunction { IInformation = "get the version of interpreter", dRun = (xc) => new Variable(GIInfo.GIVersion) }));
-                myThing.Add("GetInterpreter", new Variable( new DFunction { IInformation = "get the name of interpreter", dRun = (xc) => new Variable("GI") }));
-                myThing.Add("GetPlatform", new Variable( new DFunction { IInformation = "get the paltform", dRun = (xc) => new Variable(GIInfo.Platform) }));
+                myThing.Add("GetInterpreter", new Variable(new DFunction { IInformation = "get the name of interpreter", dRun = (xc) => new Variable("GI") }));
+                myThing.Add("GetPlatform", new Variable(new DFunction { IInformation = "get the paltform", dRun = (xc) => new Variable(GIInfo.Platform) }));
                 myThing.Add("GetFolderPath", new Variable(new System_Function_GetFolderPath()));
                 #region 获取时间
-         myThing.Add("GetTime", new Variable( new DFunction
+                myThing.Add("GetTime", new Variable(new DFunction
                 {
                     IInformation = @"get the time.
 [val(string)]:
@@ -88,8 +86,8 @@ time",
                     }
                 }));
                 #endregion
-                myThing.Add("Debug",new Variable( new DFunction { IInformation = "output when debugging", str_xcname = "str", dRun = (xc) => { Gdebug.WriteLine(xc.GetVariable<object>("str").ToString()); return new Variable(0); } }));
-                myThing.Add("Help", new Variable( new DFunction
+                myThing.Add("Debug", new Variable(new DFunction { IInformation = "output when debugging", str_xcname = "str", dRun = (xc) => { Gdebug.WriteLine(xc.GetVariable<object>("str").ToString()); return new Variable(0); } }));
+                myThing.Add("Help", new Variable(new DFunction
                 {
                     IInformation = "return the help of \'in\'",
                     str_xcname = "in",
@@ -104,9 +102,9 @@ time",
                         return new Variable(0);
                     }
                 }));
-                myThing.Add("async",new Variable( new Asyncfunc()));
-                myThing.Add("await", new Variable( new System_Function_Await()));
-                myThing.Add("wait",new Variable( new System_Function_Wait()));
+                myThing.Add("async", new Variable(new Asyncfunc()));
+                myThing.Add("await", new Variable(new System_Function_Await()));
+                myThing.Add("wait", new Variable(new System_Function_Wait()));
                 myThing.Add("Shell", new Variable(new System_Function_Shell()));
                 myThing.Add("GetAppPath", new Variable(new System_Function_GetAppPath()));
                 myThing.Add("GetResourcesPath", new Variable(new System_Function_GetResourcesPath()));
@@ -116,8 +114,8 @@ time",
                     str_xcname = "o1,o2",
                     dRun = (xc) =>
 {
-    IOBJ o1 = xc.GetVariable<IOBJ>("o1"),o2 = xc.GetVariable<IOBJ>("o2");
-    if(o1.IGetCSValue() == null)
+    IOBJ o1 = xc.GetVariable<IOBJ>("o1"), o2 = xc.GetVariable<IOBJ>("o2");
+    if (o1.IGetCSValue() == null)
     {
         return new Variable(o1.Equals(o2));
     }
@@ -226,12 +224,12 @@ time",
                 }
                 public override object Run(Hashtable xc)
                 {
-                    if(GIInfo.Platform == "Mac_Xamarin")
+                    if (GIInfo.Platform == "Mac_Xamarin")
                     {
 
                         var res = AppDomain.CurrentDomain.BaseDirectory.Replace("/Contents/MonoBundle/", "");
-                        res = res.Substring(0, res.LastIndexOf('/')+1);
-                        
+                        res = res.Substring(0, res.LastIndexOf('/') + 1);
+
 
                         return new Variable(res);
                     }
@@ -261,7 +259,7 @@ time",
                         return new Variable(AppDomain.CurrentDomain.BaseDirectory);
                 }
             }
-            public class System_Function_GetFolderPath:Function
+            public class System_Function_GetFolderPath : Function
             {
                 public System_Function_GetFolderPath()
                 {
@@ -272,7 +270,7 @@ time",
                 {
                     var name = xc.GetCSVariable<object>("name").ToString();
                     Environment.SpecialFolder specialFolder;
-                    switch(name)
+                    switch (name)
                     {
                         case "desktop":
                             specialFolder = Environment.SpecialFolder.Desktop;
@@ -309,10 +307,10 @@ time",
                 {
                     var list = xc.GetCSVariable<Glist>("params");
                     string filename = list[0].value.ToString();
-                    if(list.Count >1)
+                    if (list.Count > 1)
                     {
                         var arguments = new string[list.Count - 1];
-                        for(int i = 1;i<list.Count;i++)
+                        for (int i = 1; i < list.Count; i++)
                         {
                             arguments[i - 1] = list[i].value.ToString();
                         }
@@ -323,8 +321,8 @@ time",
                         ProcessStartInfo processStartInfo = new ProcessStartInfo(filename);
                         processStartInfo.CreateNoWindow = false;
                         processStartInfo.Arguments = shell;
-                        
-                        System.Diagnostics.Process.Start(processStartInfo ).WaitForExit();
+
+                        System.Diagnostics.Process.Start(processStartInfo).WaitForExit();
                     });
                     }
                     else

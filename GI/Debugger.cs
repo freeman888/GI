@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace GI
 {
@@ -17,12 +12,12 @@ namespace GI
         public static void Chatwithclient(Hashtable htxc)
         {
             var localIpep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 2590);
-                SendMessage("[+]catch a breakpoint,use the command to control your app.send help to get the command help.");
-                UdpClient udpcRecv = new UdpClient(localIpep) ;
-            while(true)
+            SendMessage("[+]catch a breakpoint,use the command to control your app.send help to get the command help.");
+            UdpClient udpcRecv = new UdpClient(localIpep);
+            while (true)
             {
-                
-                
+
+
                 try
                 {
                     byte[] bytRecv = udpcRecv.Receive(ref localIpep);
@@ -35,19 +30,19 @@ namespace GI
                     }
                     else if (message == "continue")
                         return;
-                    else if(message == "sev")
+                    else if (message == "sev")
                     {
                         ArrayList alt = new ArrayList(htxc.Keys);
                         alt.Sort();
-                        foreach(string i in alt)
-                            SendMessage(string.Format("[+] {0} \t\t\t\t\t\t\t{1}",i, ((Variable)htxc[i]).value.ToString()));
-                        
+                        foreach (string i in alt)
+                            SendMessage(string.Format("[+] {0} \t\t\t\t\t\t\t{1}", i, ((Variable)htxc[i]).value.ToString()));
+
                         //foreach (DictionaryEntry i in htxc)
                         //    SendMessage("[+] " + i.Key + " : "+ ((Variable)i.Value ).value.ToString());
                     }
-                    else if(message == "sll")
+                    else if (message == "sll")
                     {
-                        foreach(var i in Gasoline.libs)
+                        foreach (var i in Gasoline.libs)
                         {
                             SendMessage("[+] " + i.Key);
                         }

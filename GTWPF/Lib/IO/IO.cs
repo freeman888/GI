@@ -2,15 +2,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using static GI.Function;
 
 namespace GTWPF
 {
-    partial class  WPFLib
+    partial class WPFLib
     {
         public class IO_Lib : GI.Lib.ILib
         {

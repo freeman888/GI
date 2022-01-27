@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
-using Xamarin.Essentials;
-using GI;
-using static GI.Function;
+﻿using GI;
+using System;
 using System.Collections;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
+using static GI.Function;
 
 namespace GTXAM
 {
-    public class FilePicker:IOBJ
+    public class FilePicker : IOBJ
     {
         internal bool picked = false;
         internal FileResult fileresult;
         internal Stream stream;
         public FilePicker()
         {
-            
+
             members = new Dictionary<string, Variable>
             {
                 {"Picked", new FVariable{ ongetvalue = ()=>new Gbool(picked),onsetvalue = (value)=>throw new Exceptions.RunException(Exceptions.EXID.未知)} },
@@ -46,7 +44,7 @@ namespace GTXAM
                 try
                 {
                     var picker = xc.GetCSVariableFromSpeType<FilePicker>("this", "FilePicker");
-                    var fileres = await Xamarin.Essentials.FilePicker.PickAsync( PickOptions.Default);
+                    var fileres = await Xamarin.Essentials.FilePicker.PickAsync(PickOptions.Default);
                     if (fileres == null)
                         picker.picked = false;
 
@@ -57,13 +55,13 @@ namespace GTXAM
                         picker.stream = await fileres.OpenReadAsync();
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
 
                     await App.MainApp.MainPage.DisplayAlert("", ex.StackTrace, "cancel");
                 }
                 return new Variable(0);
-                
+
             }
         }
 

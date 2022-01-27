@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GI
 {
-    class GTask :  IOBJ
+    class GTask : IOBJ
     {
         public const string type = "Task";
 

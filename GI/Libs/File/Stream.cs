@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO.Compression;
 using System.IO;
-using System.Text;
+using System.IO.Compression;
 using static GI.Function;
 
 namespace GI
@@ -24,7 +22,7 @@ namespace GI
 
 
         static IFunction close = new Stream_Function_Close();
-        public class Stream_Function_Close:Function
+        public class Stream_Function_Close : Function
         {
             public Stream_Function_Close()
             {
@@ -39,7 +37,7 @@ namespace GI
             }
         }
         static IFunction readtext = new Stream_Function_ReadText();
-        public class Stream_Function_ReadText :Function
+        public class Stream_Function_ReadText : Function
         {
             public Stream_Function_ReadText()
             {
@@ -54,7 +52,7 @@ namespace GI
             }
         }
         static IFunction writetext = new Stream_Function_WriteText();
-        public class Stream_Function_WriteText:Function
+        public class Stream_Function_WriteText : Function
         {
             public Stream_Function_WriteText()
             {
@@ -65,23 +63,23 @@ namespace GI
             {
                 var stream = xc.GetCSVariableFromSpeType<Stream>("this", "Stream");
                 var text = xc.GetCSVariable<object>("text").ToString();
-                var streamwriter = new StreamWriter(stream); 
+                var streamwriter = new StreamWriter(stream);
                 streamwriter.Write(text);
                 streamwriter.Close();
                 return new Variable(0);
 
             }
         }
-        
+
         #region
         public const string type = "Stream";
         System.IO.Stream value;
         static GStream()
         {
             GType.Sign(type);
-            
+
         }
-        
+
         public object IGetCSValue()
         {
             return value;
@@ -108,7 +106,7 @@ namespace GI
         public IOBJ IGetParent()
         {
             return null;
-                 
+
         }
         #endregion   
     }

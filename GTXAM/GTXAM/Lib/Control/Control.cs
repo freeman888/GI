@@ -1,8 +1,5 @@
 ﻿using GI;
-using GTXAM.GasControl.Control;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GTXAM
 {

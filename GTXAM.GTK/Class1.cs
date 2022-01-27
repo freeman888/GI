@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.GTK;
 
 namespace GTXAM.GTK
 {
-    class Program 
+    class Program
     {
         [STAThread]
         public static void Main(string[] args)
@@ -138,7 +134,7 @@ namespace GTXAM.GTK
     </usefun_s>
   </deffun>
 </code>");
-            GTXAMInfo.Codes.Add(  xmlDocument);
+            GTXAMInfo.Codes.Add(xmlDocument);
             GTXAMInfo.SetPlatform("WPF_Xamarin");
 
             Gtk.Application.Init();
@@ -148,7 +144,7 @@ namespace GTXAM.GTK
             var window = new FormsWindow();
             window.LoadApplication(app);
             window.SetApplicationTitle("Game of Life");
-            
+
             window.Show();
 
             Gtk.Application.Run();

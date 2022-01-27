@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,7 +16,7 @@ namespace GTXAM
                 Thread.Sleep(10);
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    foreach(var i in GTXAMInfo.Codes)
+                    foreach (var i in GTXAMInfo.Codes)
                         GI.Gasoline.Loadgasxml(i);
                     Lib._function_Thread_override_.Load();
 
@@ -30,7 +26,7 @@ namespace GTXAM
                      {"Control",new Lib.Control_Lib() }
 
                     });
-                    
+
 
                 });
             }).Wait();
@@ -48,11 +44,11 @@ namespace GTXAM
 
             OutputLabel.Text += "Gasoline for GTXAM Version " + GI.GIInfo.GIVersion.ToString() + Environment.NewLine;
         }
-        
 
 
 
-        public  void ConsoleWrite(string str)
+
+        public void ConsoleWrite(string str)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -61,6 +57,6 @@ namespace GTXAM
                 OutputScroll.ScrollToAsync(OutputLabel, ScrollToPosition.End, true);
             });
         }
-        
+
     }
 }

@@ -1,17 +1,13 @@
 ﻿using GI;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace GTWPF
 {
     partial class WPFLib
     {
-        public class Page_Lib:GI.Lib.ILib
+        public class Page_Lib : GI.Lib.ILib
         {
             public Page_Lib()
             {
@@ -20,9 +16,9 @@ namespace GTWPF
                 myThing.Add("PageReturn", new Variable(new Page_Function_Return()));
                 myThing.Add("PageLoad", new Variable(new Page_Function_Load()));
             }
-            public class PageClassTemplate:GClassTemplate
+            public class PageClassTemplate : GClassTemplate
             {
-                public PageClassTemplate():base("Page","Page")
+                public PageClassTemplate() : base("Page", "Page")
                 {
                     Istr_xcname = "title";
                     csctor = (xc) =>

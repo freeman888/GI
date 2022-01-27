@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace GI
 {
     partial class Lib
     {
-        public class Xml_Lib:ILib
+        public class Xml_Lib : ILib
         {
             public Xml_Lib()
             {
@@ -16,7 +14,7 @@ namespace GI
 
             public class XmlDocumentClassTemplate : GClassTemplate
             {
-                
+
 
                 public XmlDocumentClassTemplate() : base("XmlDocument", "Xml")
                 {

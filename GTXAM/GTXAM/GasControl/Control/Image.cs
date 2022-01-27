@@ -3,12 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using Xamarin.Forms;
 
 namespace GTXAM.GasControl.Control
 {
-   public class Image:Xamarin.Forms.Image,IOBJ,IName
+    public class Image : Xamarin.Forms.Image, IOBJ, IName
     {
 
         public Image()
@@ -96,12 +95,12 @@ namespace GTXAM.GasControl.Control
                     }
                 } },
                 {"Source" ,new FVariable{
-                    
+
                     onsetvalue = (value) =>
                     {
                         try
                         {
-                            
+
                             Source = ImageSource.FromStream(()=>value.IGetCSValue()as Stream);
                         }
                         catch(Exception e)

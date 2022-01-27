@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using static GI.Function;
 
 namespace GI
 {
@@ -22,7 +19,7 @@ namespace GI
                 myThing.Add("ReadStringFromStream", new Variable(new String_Function_ReadStream()));
             }
 
-           
+
 
 
 
@@ -63,7 +60,7 @@ namespace GI
                 }
             }
 
-            public class String_Function_ReadStream:Function
+            public class String_Function_ReadStream : Function
             {
                 public String_Function_ReadStream()
                 {
@@ -78,7 +75,7 @@ namespace GI
                     {
                         return new Variable(streamReader.ReadToEnd());
                     }
-                    
+
                 }
             }
         }

@@ -1,9 +1,5 @@
 ﻿using GI;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTWPF
 {
@@ -14,22 +10,23 @@ namespace GTWPF
 
             public Control_Lib()
             {
-                myThing.Add("Bubble",new Variable( new BubbleClassTemplate()));
+                myThing.Add("Bubble", new Variable(new BubbleClassTemplate()));
                 myThing.Add("Tip", new Variable(new TipClassTemplate()));
                 myThing.Add("EditText", new Variable(new EditTextTemplate()));
                 myThing.Add("GridFlat", new Variable(new GridClassTemplate()));
                 myThing.Add("Switcher", new Variable(new SwitcherClassTemplate()));
                 myThing.Add("ScrollFlat", new Variable(new ScrollFlatTemplate()));
                 myThing.Add("Image", new Variable(new ImageClassTemplate()));
-                myThing.Add("ListFlat",new Variable(new ListFlatClassTemplate()));
+                myThing.Add("ListFlat", new Variable(new ListFlatClassTemplate()));
                 myThing.Add("TextCell", new Variable(new TextCellClassTemplate()));
                 myThing.Add("WebView", new Variable(new WebViewClassTemplate()));
                 myThing.Add("StackFlat", new Variable(new StackFlatClassTemplate()));
             }
 
 
-            public class BubbleClassTemplate :GClassTemplate{
-                public BubbleClassTemplate():base("Bubble","Control")
+            public class BubbleClassTemplate : GClassTemplate
+            {
+                public BubbleClassTemplate() : base("Bubble", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -43,7 +40,7 @@ namespace GTWPF
 
             public class TipClassTemplate : GClassTemplate
             {
-                public TipClassTemplate():base("Tip","Control")
+                public TipClassTemplate() : base("Tip", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -51,12 +48,12 @@ namespace GTWPF
                         string text = Variable.GetTrueVariable<object>(xc, "name").ToString();
                         return new GasControl.Control.Tip() { Name = text };
                     };
-                } 
+                }
             }
 
             public class EditTextTemplate : GClassTemplate
             {
-                public EditTextTemplate():base("EditText","Control")
+                public EditTextTemplate() : base("EditText", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -69,7 +66,7 @@ namespace GTWPF
 
             public class GridClassTemplate : GClassTemplate
             {
-                public GridClassTemplate():base("GridFlat","Control")
+                public GridClassTemplate() : base("GridFlat", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -82,7 +79,7 @@ namespace GTWPF
 
             public class SwitcherClassTemplate : GClassTemplate
             {
-                public SwitcherClassTemplate():base("Switcher","Control")
+                public SwitcherClassTemplate() : base("Switcher", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -95,7 +92,7 @@ namespace GTWPF
 
             public class ScrollFlatTemplate : GClassTemplate
             {
-                public ScrollFlatTemplate():base("ScrollFlat","Control")
+                public ScrollFlatTemplate() : base("ScrollFlat", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -106,9 +103,9 @@ namespace GTWPF
                 }
             }
 
-            public class ImageClassTemplate:GClassTemplate
+            public class ImageClassTemplate : GClassTemplate
             {
-                public ImageClassTemplate():base("Image","Control")
+                public ImageClassTemplate() : base("Image", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -119,9 +116,9 @@ namespace GTWPF
                 }
             }
 
-            public class ListFlatClassTemplate:GClassTemplate
+            public class ListFlatClassTemplate : GClassTemplate
             {
-                public ListFlatClassTemplate():base("ListFlat","Control")
+                public ListFlatClassTemplate() : base("ListFlat", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -132,9 +129,9 @@ namespace GTWPF
                 }
             }
 
-            public class TextCellClassTemplate:GClassTemplate
+            public class TextCellClassTemplate : GClassTemplate
             {
-                public TextCellClassTemplate():base("TextCell","Control")
+                public TextCellClassTemplate() : base("TextCell", "Control")
                 {
                     Istr_xcname = "name";
                     csctor = (xc) =>
@@ -153,7 +150,7 @@ namespace GTWPF
                     csctor = (xc) =>
                     {
                         string name = xc.GetCSVariable<object>("name").ToString();
-                        var r = new GasControl.Control.WebView ();
+                        var r = new GasControl.Control.WebView();
                         r.webBrowser.Name = name;
                         return r;
                     };

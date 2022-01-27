@@ -14,7 +14,7 @@ namespace GTWPF
         public static void Main(string[] args)
         {
             var path = "e:\\code.xml";
-            var cd = Environment.CurrentDirectory+"\\program.xml";
+            var cd = Environment.CurrentDirectory + "\\program.xml";
             if (File.Exists(cd))
                 path = cd;
             using (StreamReader sr = new StreamReader(path))

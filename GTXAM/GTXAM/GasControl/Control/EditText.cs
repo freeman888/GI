@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using GI;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
-using GI;
-using System.Threading.Tasks;
 
 namespace GTXAM.GasControl.Control
 {
@@ -18,7 +15,7 @@ namespace GTXAM.GasControl.Control
         {
             HorizontalOptions = LayoutOptions.Center;
             VerticalOptions = LayoutOptions.Center;
-            
+
             #region
             members = new Dictionary<string, Variable>
             {
@@ -114,7 +111,7 @@ namespace GTXAM.GasControl.Control
                         return 0;
                     }
                 } },
-               
+
                 {"Background",new FVariable{
                     ongetvalue = ()=>new Gstring(BackgroundColor.ToString()),
                     onsetvalue = (value)=>
@@ -167,7 +164,7 @@ namespace GTXAM.GasControl.Control
         #endregion
 
         #region
-        
+
 
         Dictionary<string, Variable> members = new Dictionary<string, Variable>();
         public Variable IGetMember(string name)

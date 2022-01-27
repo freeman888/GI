@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,7 +14,7 @@ namespace GTWPF.GasControl.Control
     /// <summary>
     /// Gasoline 按钮
     /// </summary>
-    public class Bubble : Button, IOBJ,IGasObjectContainer
+    public class Bubble : Button, IOBJ, IGasObjectContainer
     {
 
 
@@ -152,7 +151,7 @@ namespace GTWPF.GasControl.Control
                         return 0;
                     }
                 } }
-                
+
 
 
 
@@ -246,10 +245,11 @@ namespace GTWPF.GasControl.Control
                     bubble.Height = Convert.ToDouble(value);
             }
             //Horizontal
-            {var value = xmlelement.GetAttribute("Horizontal");
+            {
+                var value = xmlelement.GetAttribute("Horizontal");
                 if (!string.IsNullOrEmpty(value))
                 {
-                    
+
                     if (value.ToString() == "center")
                         bubble.HorizontalAlignment = HorizontalAlignment.Center;
                     else if (value.ToString() == "left")
@@ -259,7 +259,7 @@ namespace GTWPF.GasControl.Control
                     else if (value.ToString() == "stretch")
                         bubble.HorizontalAlignment = HorizontalAlignment.Stretch;
                 }
-                
+
             }
             //Vertical
 
@@ -334,7 +334,7 @@ namespace GTWPF.GasControl.Control
             {
                 var value = xmlelement.GetAttribute("Background");
                 if (!string.IsNullOrEmpty(value))
-                    bubble. Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
+                    bubble.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(value.ToString()));
             }
             //Foreground
             {
@@ -345,9 +345,9 @@ namespace GTWPF.GasControl.Control
             //Row
             {
                 var value = xmlelement.GetAttribute("Row");
-                if(!string.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value))
                     Grid.SetRow(bubble, Convert.ToInt32(value));
-                
+
             }
             //Column
             {

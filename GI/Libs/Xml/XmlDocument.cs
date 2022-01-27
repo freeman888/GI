@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using static GI.Function;
 using SXml = System.Xml;
 
 namespace GI.Libs.Xml
 {
-    public class XmlDocument:SXml.XmlDocument,IOBJ
+    public class XmlDocument : SXml.XmlDocument, IOBJ
     {
 
         public XmlDocument()
         {
-            
+
             members = new Dictionary<string, Variable>
             {
                 {"Content" , new FVariable
@@ -48,7 +46,7 @@ namespace GI.Libs.Xml
         }
 
         static IFunction createlement = new XmlDocument_Function_CreatElement();
-        public class XmlDocument_Function_CreatElement:Function
+        public class XmlDocument_Function_CreatElement : Function
         {
             public XmlDocument_Function_CreatElement()
             {
@@ -64,7 +62,7 @@ namespace GI.Libs.Xml
             }
         }
         static IFunction creatcomment = new XmlDocument_Function_CreatComment();
-        public class XmlDocument_Function_CreatComment:Function
+        public class XmlDocument_Function_CreatComment : Function
         {
             public XmlDocument_Function_CreatComment()
             {
@@ -76,12 +74,12 @@ namespace GI.Libs.Xml
                 var xmldocument = xc.GetCSVariableFromSpeType<XmlDocument>("this", "XmlDocument");
                 var comment = xc.GetCSVariable<object>("comment").ToString();
                 XmlComment xmlComment = new XmlComment(xmldocument.CreateComment(comment));
-                
+
                 return new Variable(xmlComment);
             }
         }
         static IFunction save = new XmlDocument_Function_Save();
-        public class XmlDocument_Function_Save:Function
+        public class XmlDocument_Function_Save : Function
         {
             public XmlDocument_Function_Save()
             {
@@ -97,7 +95,7 @@ namespace GI.Libs.Xml
             }
         }
         static IFunction load = new XmlDocument_Function_Load();
-        public class XmlDocument_Function_Load:Function
+        public class XmlDocument_Function_Load : Function
         {
             public XmlDocument_Function_Load()
             {

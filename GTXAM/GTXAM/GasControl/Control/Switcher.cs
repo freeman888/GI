@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using GI;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
-using GI;
-using System.Threading.Tasks;
 
 namespace GTXAM.GasControl.Control
 {
@@ -121,7 +118,7 @@ namespace GTXAM.GasControl.Control
 
 
             };
-            
+
             parent = new GTXAM.Control(this);
             #endregion
         }
@@ -132,7 +129,7 @@ namespace GTXAM.GasControl.Control
 
 
 
-       
+
 
         #region 实现IType
         const string type = "Switcher";

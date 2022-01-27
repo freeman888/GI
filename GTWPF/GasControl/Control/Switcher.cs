@@ -1,13 +1,10 @@
-﻿using System;
+﻿using GI;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
 using System.Windows;
-using System.Collections;
-using GI;
-using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace GTWPF.GasControl.Control
 {
@@ -61,7 +58,7 @@ namespace GTWPF.GasControl.Control
                 string[] sss = function_Click.Istr_xcname.Split(',');
                 if (sss.Length == 2)
                 {
-                    await Function.NewAsyncFuncStarter(function_Click,new Variable(p),new Variable(e));
+                    await Function.NewAsyncFuncStarter(function_Click, new Variable(p), new Variable(e));
                 }
             };
 
@@ -167,7 +164,7 @@ namespace GTWPF.GasControl.Control
                     ongetvalue = ()=>new Gbool(IsToggled),
                     onsetvalue = (value)=>{IsToggled =Convert.ToBoolean( value.IGetCSValue());return 0; }
                 } }
-                
+
 
 
 
