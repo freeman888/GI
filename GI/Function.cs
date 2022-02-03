@@ -10,7 +10,7 @@ namespace GI
     [Attribute.GasType("function")]
     public interface IFunction : IOBJ
     {
-        object IRun(Hashtable xc);
+        object IRun(Hashtable  xc);
         Task<object> IAsyncRun(Hashtable xc);
         string Istr_xcname { get; set; }
         bool Iisreffunction { get; set; }
@@ -58,6 +58,7 @@ namespace GI
         public string IInformation
         { get; set; }
 
+        //继承自function的都是传统函数当然async是false，否则应该继承自afunction
         public bool Iisasync { get { return false; } set { } }
 
         public Task<object> IAsyncRun(Hashtable xc)
@@ -65,13 +66,7 @@ namespace GI
             throw new Exception();
         }
 
-        /// <summary>
-        /// 父类
-        /// </summary>
-        public class Head
-        {
-            public virtual void AddFunctions(Dictionary<string, IFunction> h) { }
-        }
+        
 
         public virtual object Run(Hashtable xc)//父方法
         {
@@ -99,10 +94,6 @@ namespace GI
                 List<Sentence> list = Sentence.GetSentencesFormXml(code.ChildNodes);
 
                 sentences = list.ToArray();
-
-
-
-
             }
 
             public async override Task<object> Run(Hashtable htxc)
@@ -182,7 +173,7 @@ namespace GI
         {
             try
             {
-                Hashtable variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
+                Hashtable variable = Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
                 ret = (Variable)function.IRun(variable);
             }
             catch
@@ -195,7 +186,7 @@ namespace GI
         {
             try
             {
-                Hashtable variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
+                Hashtable variable = Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
                 return await function.IAsyncRun(variable);
 
             }

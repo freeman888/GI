@@ -10,7 +10,7 @@ namespace GTWPF
 {
     partial class WPFLib
     {
-        public class IO_Lib : GI.Lib.ILib
+        public class IO_Lib : GI.ILib
         {
 
             public IO_Lib()

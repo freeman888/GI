@@ -13,7 +13,6 @@ namespace GI
         {
             public AFunction()
             {
-                Iisasync = true;
                 Iisreffunction = false;
                 Istr_xcname = "";
                 IInformation = "Async Function\n";

@@ -32,7 +32,7 @@ namespace GI
             if (members.ContainsKey(name))
                 return members[name];
             else return null;
-        }
+        }      
         public IOBJ IGetParent()
         {
             return null;

@@ -126,11 +126,11 @@ namespace GI
         }
         public class New_Sentence_Return : Sentence
         {
-            Variable.Resulter resulter;
+            Resulter resulter;
             public New_Sentence_Return(XmlNode me)
             {
                 mycode = me.GetAttribute("str");
-                resulter = new Variable.Resulter(me.FirstChild as XmlNode);
+                resulter = new Resulter(me.FirstChild as XmlNode);
 
             }
             public async override Task Run(Hashtable htcs)
@@ -198,7 +198,7 @@ namespace GI
         public class New_Sentence_if : Sentence
         {
             public string boolname;
-            public Variable.Resulter resulter;
+            public Resulter resulter;
             public Sentence[] thensentences, elsesentences;
             public ArrayList elseifsentences = new ArrayList();
             public bool realif;
@@ -207,7 +207,7 @@ namespace GI
             {
                 if (me.Name == "elif")
                 {
-                    resulter = new Variable.Resulter(me.FirstChild.FirstChild as XmlNode);
+                    resulter = new Resulter(me.FirstChild.FirstChild as XmlNode);
                     thensentences = GetSentencesFormXml(me.ChildNodes[1].ChildNodes).ToArray();
                 }
 
@@ -219,7 +219,7 @@ namespace GI
                         XmlNode code = i as XmlNode;
                         if (code.Name == "then")
                         {
-                            resulter = new Variable.Resulter(code.FirstChild.FirstChild as XmlNode);
+                            resulter = new Resulter(code.FirstChild.FirstChild as XmlNode);
                             thensentences = GetSentencesFormXml(code.ChildNodes[1].ChildNodes).ToArray();
                         }
                         else if (code.Name == "else")
@@ -282,13 +282,13 @@ namespace GI
         }
         public class New_Sentence_GiveResult : Sentence
         {
-            Variable.Resulter resulter, togive;
+            Resulter resulter, togive;
 
             public New_Sentence_GiveResult(XmlNode me)
             {
                 mycode = me.GetAttribute("str");
-                resulter = new Variable.Resulter(me.ChildNodes[1] as XmlNode);
-                togive = new Variable.Resulter(me.ChildNodes[0] as XmlNode);
+                resulter = new Resulter(me.ChildNodes[1] as XmlNode);
+                togive = new Resulter(me.ChildNodes[0] as XmlNode);
             }
             public async override Task Run(Hashtable h)
             {
@@ -312,12 +312,12 @@ namespace GI
         }
         public class New_Sentence_Usefunction : Sentence
         {
-            Variable.Resulter resulter;
+            Resulter resulter;
 
             public New_Sentence_Usefunction(XmlNode me)
             {
                 mycode = me.GetAttribute("str");
-                resulter = new Variable.Resulter(me.FirstChild);
+                resulter = new Resulter(me.FirstChild);
             }
             public async override Task Run(Hashtable h)
             {
@@ -337,13 +337,13 @@ namespace GI
         }
         public class New_Sentence_while : Sentence
         {
-            public Variable.Resulter resulter;
+            public Resulter resulter;
             public Sentence[] childsentences;
 
             public New_Sentence_while(XmlNode me)
             {
                 mycode = me.GetAttribute("str");
-                resulter = new Variable.Resulter(me.FirstChild.FirstChild as XmlNode);
+                resulter = new Resulter(me.FirstChild.FirstChild as XmlNode);
                 childsentences = Sentence.GetSentencesFormXml(me.ChildNodes[1].ChildNodes).ToArray();
             }
             public async override Task Run(Hashtable h)
@@ -443,7 +443,7 @@ namespace GI
         }
         public class New_Sentence_foreach : Sentence
         {
-            Variable.Resulter resulter;
+            Resulter resulter;
             string fzvar;//待赋值变量
             public Sentence[] childsentences;
             bool var_new = false;
@@ -453,7 +453,7 @@ namespace GI
                 fzvar = me.GetAttribute("var_togive");
                 mycode = me.GetAttribute("str");
                 var_new = Convert.ToBoolean(me.GetAttribute("var_new"));
-                resulter = new Variable.Resulter(me.FirstChild.FirstChild as XmlNode);
+                resulter = new Resulter(me.FirstChild.FirstChild as XmlNode);
                 childsentences = GetSentencesFormXml(me.ChildNodes[1].ChildNodes).ToArray();
             }
             public async override Task Run(Hashtable h)

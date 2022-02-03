@@ -20,6 +20,9 @@ namespace GTWPF_Test
 
             Hide();
 
+            /*
+             * 先加载gasoline代码，然后加载gi和平台代码，最后拉起main函数
+             */
             Stream stream = new FileStream("E:\\projects\\freestudio\\App1\\debug\\App1.gaa", FileMode.Open);
             ZipArchive zipArchive = new ZipArchive(stream);
 
@@ -35,6 +38,8 @@ namespace GTWPF_Test
                 code.Load(zipArchive.GetEntry("App1" + "/source/code.xml").Open());
                 GI.Gasoline.Loadgasxml(code);
             }
+
+            GI.Gasoline.libs.Add("Test", new CompileLibTest());
 
             GTWPF.MainWindow mainWindow = new GTWPF.MainWindow();
             mainWindow.Show();

@@ -2,15 +2,16 @@
 
 namespace GI
 {
+    public interface ILib
+    {
+        Dictionary<string, Variable> myThing { get; set; }
+        Dictionary<string, Variable> otherThing { get; set; }
+
+        List<string> waittoadd { get; set; }
+    }
     public partial class Lib
     {
-        public interface ILib
-        {
-            Dictionary<string, Variable> myThing { get; set; }
-            Dictionary<string, Variable> otherThing { get; set; }
-
-            List<string> waittoadd { get; set; }
-        }
+        
         public class UserLib : ILib
         {
 

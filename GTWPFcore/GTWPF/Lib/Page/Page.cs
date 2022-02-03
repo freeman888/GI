@@ -7,7 +7,7 @@ namespace GTWPF
 {
     partial class WPFLib
     {
-        public class Page_Lib : GI.Lib.ILib
+        public class Page_Lib : GI.ILib
         {
             public Page_Lib()
             {
