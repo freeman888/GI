@@ -10,7 +10,7 @@ namespace GI
     [Attribute.GasType("function")]
     public interface IFunction : IOBJ
     {
-        object IRun(Hashtable xc);
+        object IRun(Dictionary<string,Variable> xc);
         Task<object> IAsyncRun(Hashtable xc);
         string Istr_xcname { get; set; }
         bool Iisreffunction { get; set; }
