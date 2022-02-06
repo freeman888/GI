@@ -35,7 +35,7 @@ namespace GTWPF_Test
                 this.poslib = "Test";
             }
 
-            public async override Task<object> Run(Hashtable xc)
+            public async override Task<object> Run(Dictionary<string,Variable> xc)
             {
 
                 #region usefun_s WriteLine("Hello World gasoline compiled");

@@ -173,7 +173,7 @@ namespace GI
         {
             try
             {
-                Dictionary<string,Variable> variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
+                Dictionary<string,Variable> variable = Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
                 ret = (Variable)function.IRun(variable);
             }
             catch
@@ -186,7 +186,7 @@ namespace GI
         {
             try
             {
-                Dictionary<string,Variable> variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
+                Dictionary<string,Variable> variable = Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
                 return await function.IAsyncRun(variable);
 
             }

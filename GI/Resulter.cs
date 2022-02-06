@@ -70,7 +70,7 @@ namespace GI
                     condition = 4;
                 }
             }
-            public async Task<Variable> Run(Hashtable basehashtable)
+            public async Task<Variable> Run(Dictionary<string,Variable> basehashtable)
             {
                 if (condition == 1)
                 {
@@ -94,7 +94,7 @@ namespace GI
 
                     string xcname = truefunction.Istr_xcname;
 
-                    Hashtable temphashtable;
+                    Dictionary<string,Variable> temphashtable;
                     ArrayList tempavariables = new ArrayList();
                     foreach (Resulter resulter in childresulters)
                     {
@@ -127,7 +127,7 @@ namespace GI
             }
 
 
-            public static Hashtable Setvariablesname(string xcname, ArrayList newvariables, string poslib)
+            public static Dictionary<string,Variable> Setvariablesname(string xcname, ArrayList newvariables, string poslib)
             {
 
 
@@ -156,7 +156,7 @@ namespace GI
 
             }
 
-            public static Hashtable SetvariablesnameByRef(string xcname, ArrayList tempvariables, string poslib)
+            public static Dictionary<string,Variable> SetvariablesnameByRef(string xcname, ArrayList tempvariables, string poslib)
             {
 
                 var hashtable =Variable. GetOwnVariables(poslib);
@@ -176,7 +176,7 @@ namespace GI
                 string[] xc_names = xcname.Split(',');
                 for (int i = 0; i < xc_names.Length; i++)
                 {
-                    hashtable.Add(xc_names[i], tempvariables[i]);
+                    hashtable.Add(xc_names[i], tempvariables[i] as Variable);
                 }
                 return hashtable;
 
