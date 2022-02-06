@@ -81,51 +81,51 @@
 
     </Window.Resources>
     <Border x:Name="border"  Padding="2">
+        
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Background="Transparent" MouseLeftButtonDown="Window_MouseLeftButtonDown">
 
-        <Grid Background="Transparent">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Grid Background="Transparent" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+            <Button Style="{DynamicResource windowbuttonstyle}" WindowChrome.IsHitTestVisibleInChrome="True"  HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="3" Click="Button_Click_3" Name="BackButton" BorderBrush="Transparent">
+                <Image Source="Resources/back1.png" Height="20" Width="20" Stretch="Fill"/>
+            </Button>
+            
+            
+            
+            <Label Content="Console" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" FontSize="16" Name="GasTitle"/>
+            <Button Visibility="Visible" Style="{DynamicResource windowbuttonstyle}" WindowChrome.IsHitTestVisibleInChrome="True"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5" Click="Button_Click"  BorderBrush="Transparent" >
+                <Ellipse Width="15" Height="15" Fill="#FF6556"/>
+            </Button>
 
-                <Button Style="{DynamicResource windowbuttonstyle}" WindowChrome.IsHitTestVisibleInChrome="True"  HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="3" Click="Button_Click_3" Name="BackButton" BorderBrush="Transparent">
-                    <Image Source="Resources/back1.png" Height="20" Width="20" Stretch="Fill"/>
-                </Button>
+            <Button Visibility="Visible" Style="{DynamicResource windowbuttonstyle}" WindowChrome.IsHitTestVisibleInChrome="True"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5,5,27,5" Click="Button_Click_1" BorderBrush="Transparent">
+                <Ellipse Width="15" Height="15" Fill="#FBBC0d"/>
+            </Button>
+            <Button Visibility="Visible" Style="{DynamicResource windowbuttonstyle}" WindowChrome.IsHitTestVisibleInChrome="True"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5,5,49,5" Click ="Button_Click_2" BorderBrush="Transparent">
+                <Ellipse Width="15" Height="15" Fill="#0fD042"/>
+            </Button>
 
-
-
-                <Label Content="Console" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" FontSize="16" Name="GasTitle"/>
-                <Button Visibility="Visible" Style="{DynamicResource windowbuttonstyle}" WindowChrome.IsHitTestVisibleInChrome="True"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5" Click="Button_Click"  BorderBrush="Transparent" >
-                    <Ellipse Width="15" Height="15" Fill="#FF6556"/>
-                </Button>
-
-                <Button Visibility="Visible" Style="{DynamicResource windowbuttonstyle}" WindowChrome.IsHitTestVisibleInChrome="True"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5,5,27,5" Click="Button_Click_1" BorderBrush="Transparent">
-                    <Ellipse Width="15" Height="15" Fill="#FBBC0d"/>
-                </Button>
-                <Button Visibility="Visible" Style="{DynamicResource windowbuttonstyle}" WindowChrome.IsHitTestVisibleInChrome="True"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5,5,49,5" Click ="Button_Click_2" BorderBrush="Transparent">
-                    <Ellipse Width="15" Height="15" Fill="#0fD042"/>
-                </Button>
-
-                <Button Style="{DynamicResource windowbuttonstyle}" WindowChrome.IsHitTestVisibleInChrome="True" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5,5,80,5" Click="ToolButtonClick" Name="ToolButton" Visibility="Visible" Padding="2">
-                    <StackPanel Orientation="Vertical">
-                        <Ellipse Width="3" Height="3" Fill="Black" Margin="1"/>
-                        <Ellipse Width="3" Height="3" Fill="Black" Margin="1"/>
-                        <Ellipse Width="3" Height="3" Fill="Black" Margin="1"/>
-                    </StackPanel>
-                </Button>
-            </Grid>
-
-
-            <Grid Name="NomalPage" Grid.Row="1" Background="White" >
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Name="sys_roll" Background="Black" Foreground="Green">
-                    <StackPanel >
-                        <TextBlock Padding="2" Name="system_outputbox" Text="" FontSize="16" Foreground="Green" LineHeight="10" />
-                    </StackPanel>
-                </ScrollViewer>
-            </Grid>
-
-            <Grid Visibility="Hidden" Grid.Row="1" Name="PageBase" Background="White"/>
+            <Button Style="{DynamicResource windowbuttonstyle}" WindowChrome.IsHitTestVisibleInChrome="True" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="5,5,80,5" Click="ToolButtonClick" Name="ToolButton" Visibility="Visible" Padding="2">
+                <StackPanel Orientation="Vertical">
+                    <Ellipse Width="3" Height="3" Fill="Black" Margin="1"/>
+                    <Ellipse Width="3" Height="3" Fill="Black" Margin="1"/>
+                    <Ellipse Width="3" Height="3" Fill="Black" Margin="1"/>
+                </StackPanel>
+            </Button>
         </Grid>
+
+
+        <Grid Name="NomalPage" Grid.Row="1" Background="White" >
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Name="sys_roll" Background="Black" Foreground="Green">
+                <StackPanel >
+                    <TextBlock Padding="2" Name="system_outputbox" Text="" FontSize="16" Foreground="Green" LineHeight="10" />
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <Grid Visibility="Hidden" Grid.Row="1" Name="PageBase" Background="White"/>
+    </Grid>
     </Border>
 </Window>

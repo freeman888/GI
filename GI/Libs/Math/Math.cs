@@ -136,10 +136,13 @@ namespace GI
                 {
                     Double num1 = Convert.ToDouble(((Variable)xc["numf"]).value);
                     int num2 = Convert.ToInt32(((Variable)xc["nums"]).value);
+                    if (num1 != 0 && num2 == 0)
+                        return new Variable(1);
                     Double ret_num = num1;
                     for (int i = 1; i < num2; i++)
                         ret_num *= num1;
-                    return new Variable(ret_num);
+                     Math.Pow(num1, num2);
+                    return new Variable(Math.Pow(num1, num2));
                 }
             }
 

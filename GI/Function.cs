@@ -58,6 +58,7 @@ namespace GI
         public string IInformation
         { get; set; }
 
+        //继承自function的都是传统函数当然async是false，否则应该继承自afunction
         public bool Iisasync { get { return false; } set { } }
 
         public Task<object> IAsyncRun(Dictionary<string, Variable> xc)
@@ -93,10 +94,6 @@ namespace GI
                 List<Sentence> list = Sentence.GetSentencesFormXml(code.ChildNodes);
 
                 sentences = list.ToArray();
-
-
-
-
             }
 
             public async override Task<object> Run(Dictionary<string,Variable> htxc)

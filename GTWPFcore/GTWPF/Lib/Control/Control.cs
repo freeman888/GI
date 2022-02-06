@@ -5,7 +5,7 @@ namespace GTWPF
 {
     partial class WPFLib
     {
-        public class Control_Lib : GI.Lib.ILib
+        public class Control_Lib : GI.ILib
         {
 
             public Control_Lib()

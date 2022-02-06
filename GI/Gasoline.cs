@@ -27,7 +27,6 @@ namespace GI
         /// 拉起main请单另拉起,加载用户代码请单另加载
         /// </summary>
         /// <param name="heads"></param>
-        /// <param name="codes"></param>
         public static void StartGas(Dictionary<string, ILib> heads)
         {
             //1加载所有通用Lib
