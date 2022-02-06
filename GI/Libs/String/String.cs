@@ -32,7 +32,7 @@ namespace GI
                     str_xcname = "params";
                     poslib = "String";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     var array = Variable.GetTrueVariable<Glist>(xc, "params");
                     string s = "";
@@ -54,7 +54,7 @@ namespace GI
                     str_xcname = "s1,s2";
                     poslib = "String";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     return new Variable(xc.GetVariable<object>("s1").ToString() == xc.GetVariable<object>("s2").ToString());
                 }
@@ -68,7 +68,7 @@ namespace GI
                     str_xcname = "stream";
                     poslib = "String";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "Stream");
                     using (System.IO.StreamReader streamReader = new System.IO.StreamReader(stream))

@@ -30,7 +30,7 @@ namespace GI
                     IInformation = "[gaaname] the gaa(lib) where file exists.\n[filepath] the file path in the gaa";
                 }
 
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     string gaaname = xc.GetCSVariable<object>("gaaname").ToString();
                     string filepath = xc.GetCSVariable<object>("filepath").ToString();
@@ -48,7 +48,7 @@ namespace GI
                     IInformation = "不推荐此方法，平台差异性过大，读取文件，获得stream\nmode:open,creat,append";
                 }
 
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     string filepath = xc.GetCSVariable<object>("filepath").ToString();
                     string mode = xc.GetCSVariable<object>("mode").ToString();
@@ -85,7 +85,7 @@ namespace GI
                     str_xcname = "dpath";
                     poslib = "File";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     string path = xc.GetCSVariable<object>("dpath").ToString();
                     if (GIInfo.Platform == "Mac_Xamarin")
@@ -105,7 +105,7 @@ namespace GI
                     str_xcname = "filepath";
                     poslib = "File";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     var filepath = xc.GetCSVariable<object>("filepath").ToString();
                     if (GIInfo.Platform == "Mac_Xamarin")
@@ -126,7 +126,7 @@ namespace GI
                     poslib = "File";
 
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     var oldpath = xc.GetCSVariable<object>("oldpath").ToString();
                     var newpath = xc.GetCSVariable<object>("newpath").ToString();
@@ -148,7 +148,7 @@ namespace GI
                     str_xcname = "params";
                     poslib = "File";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     var arrayList = Variable.GetTrueVariable<Glist>(xc, "params");
                     List<string> lists = new List<string>();

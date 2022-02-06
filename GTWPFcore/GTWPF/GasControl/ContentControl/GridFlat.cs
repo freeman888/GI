@@ -175,7 +175,7 @@ namespace GTWPF.GasControl.ContentControl
                 poslib = "Control";
             }
 
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "GridFlat");
                 var con = xc.GetCSVariableFromSpeType<UIElement>("con", "Control");
@@ -197,7 +197,7 @@ namespace GTWPF.GasControl.ContentControl
                 poslib = "Control";
 
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
 
             {
                 var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "GridFlat");
@@ -231,7 +231,7 @@ namespace GTWPF.GasControl.ContentControl
                 IInformation = "set the column definition .\n[config(string)]:value ,rate ,auto";
                 str_xcname = "value,config";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var grid = xc.GetCSVariableFromSpeType<GridFlat>("this", "GridFlat");
                 double value = Convert.ToDouble(Variable.GetTrueVariable<object>(xc, "value"));

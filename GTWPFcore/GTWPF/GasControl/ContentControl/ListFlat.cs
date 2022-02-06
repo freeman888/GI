@@ -155,7 +155,7 @@ namespace GTWPF.GasControl.ContentControl
                 poslib = "Control";
             }
 
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "ListFlat");
                 var con = xc.GetCSVariableFromSpeType<UIElement>("con", "Cell");
@@ -175,7 +175,7 @@ namespace GTWPF.GasControl.ContentControl
                 str_xcname = "";
                 poslib = "Control";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var listflat = xc.GetCSVariableFromSpeType<ListFlat>("this", "ListLlat");
                 listflat.Items.Clear();

@@ -143,7 +143,7 @@ namespace GTWPF.GasControl.Page
                 IInformation = "set the control as the content of the page";
                 str_xcname = "control";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "Page");
                 UIElement control = xc.GetCSVariableFromSpeType<UIElement>("control", "Control");
@@ -159,7 +159,7 @@ namespace GTWPF.GasControl.Page
                 IInformation = "set the title of the page";
                 str_xcname = "title";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "Page");
                 string title = Variable.GetTrueVariable<object>(xc, "title").ToString();
@@ -180,7 +180,7 @@ namespace GTWPF.GasControl.Page
                 IInformation = "Add a toolitem to page";
             }
 
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "Page");
                 var text = xc.GetCSVariable<object>("text").ToString();
@@ -199,7 +199,7 @@ namespace GTWPF.GasControl.Page
                 IInformation = "Load a page from xml file";
             }
 
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var page = xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "Page");
                 var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("xmlstream", "Stream");
@@ -237,7 +237,7 @@ namespace GTWPF.GasControl.Page
                 IInformation = "get control by name from page";
             }
 
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 return new Variable(xc.GetCSVariableFromSpeType<GasControl.Page.GasPage>("this", "Page").controls[xc.GetCSVariable<object>("name").ToString()]);
             }

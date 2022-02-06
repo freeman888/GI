@@ -120,7 +120,7 @@ namespace GTWPF.GasControl.Control
                 str_xcname = "params";
             }
 
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var list = xc.GetCSVariable<Glist>("params");
                 string jsfun = list[0].value.IGetCSValue().ToString();

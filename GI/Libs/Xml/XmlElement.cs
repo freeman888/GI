@@ -32,7 +32,7 @@ namespace GI.Libs.Xml
                 str_xcname = "name,value";
             }
 
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var xmlElement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "XmlElement");
                 var name = xc.GetCSVariable<object>("name").ToString();
@@ -49,7 +49,7 @@ namespace GI.Libs.Xml
                 IInformation = "获取属性的值";
                 str_xcname = "name";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var xmlelement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "XmlElement");
                 var name = xc.GetCSVariable<object>("name").ToString();
@@ -64,7 +64,7 @@ namespace GI.Libs.Xml
                 IInformation = "获取子元素，可能返回两种类型.";
                 str_xcname = "index";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var xmlelement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "XmlElement");
                 var name = Convert.ToInt32(xc.GetCSVariable<object>("index"));
@@ -83,7 +83,7 @@ namespace GI.Libs.Xml
                 IInformation = "添加子对象.";
                 str_xcname = "child";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var xmlelement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "XmlElement");
                 var node = xc.GetCSVariable<System.Xml.XmlNode>("child");
@@ -99,7 +99,7 @@ namespace GI.Libs.Xml
                 IInformation = "移除对象.";
                 str_xcname = "child";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var xmlelement = xc.GetCSVariableFromSpeType<System.Xml.XmlElement>("this", "XmlElement");
                 var node = xc.GetCSVariable<System.Xml.XmlNode>("child");

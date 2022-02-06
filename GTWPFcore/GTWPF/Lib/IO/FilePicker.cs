@@ -34,7 +34,7 @@ namespace GTWPF.Lib.IO
                 IInformation = "show the file pick window";
                 str_xcname = "";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var picker = xc.GetCSVariableFromSpeType<FilePicker>("this", "FilePicker");
                 picker.picked = picker.openFileDialog.ShowDialog() == true ? true : false;

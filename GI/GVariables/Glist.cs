@@ -35,7 +35,7 @@ namespace GI
         }
         public string IInformation { get => "to be added"; set => throw new NotImplementedException(); }
 
-        public object IRun(Hashtable xc)
+        public object IRun(Dictionary<string,Variable> xc)
         {
             var param = xc.GetCSVariable<Glist>("params");
             if (param.Count == 1)
@@ -58,7 +58,7 @@ namespace GI
 
         public bool Iisasync { get { return false; } set { } }
 
-        public Task<object> IAsyncRun(Hashtable xc)
+        public Task<object> IAsyncRun(Dictionary<string,Variable> xc)
         {
             throw new Exception();
         }
@@ -108,7 +108,7 @@ namespace GI
 [index(number)]:the index of the object you wanner to get.It starts from 0.
 [return]:the object in the list";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var res = xc.GetCSVariable<Glist>("this")[Convert.ToInt32(xc.GetVariable<object>("index"))];
                 return res;
@@ -123,7 +123,7 @@ namespace GI
                 IInformation = @"add obj to the list";
                 str_xcname = "obj";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var res = xc.GetCSVariable<Glist>("this");
                 res.Add(new Variable((xc["obj"] as Variable).value));
@@ -148,7 +148,7 @@ when three
 [return(number)]:the index of the object in this list";
                 str_xcname = "params";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var param = xc.GetCSVariable<Glist>("params");
 
@@ -202,7 +202,7 @@ when three
                 IInformation = "remove the object from the list";
                 str_xcname = "obj";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var list = xc.GetCSVariableFromSpeType<Glist>("this", "List");
                 var tor = xc["obj"] as Variable;
@@ -237,7 +237,7 @@ when three
                 IInformation = "remove the object of the index from the list";
                 str_xcname = "index";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var res = xc.GetCSVariableFromSpeType<Glist>("list", "List");
                 int i = Convert.ToInt32(xc.GetVariable<object>("index"));

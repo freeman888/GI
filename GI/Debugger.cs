@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -9,7 +10,7 @@ namespace GI
 
     class Debugger
     {
-        public static void Chatwithclient(Hashtable htxc)
+        public static void Chatwithclient(Dictionary<string, Variable> htxc)
         {
             var localIpep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 2590);
             SendMessage("[+]catch a breakpoint,use the command to control your app.send help to get the command help.");

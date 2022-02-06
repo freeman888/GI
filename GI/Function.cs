@@ -11,7 +11,7 @@ namespace GI
     public interface IFunction : IOBJ
     {
         object IRun(Dictionary<string,Variable> xc);
-        Task<object> IAsyncRun(Hashtable xc);
+        Task<object> IAsyncRun(Dictionary<string, Variable> xc);
         string Istr_xcname { get; set; }
         bool Iisreffunction { get; set; }
         string IInformation { get; set; }
@@ -25,7 +25,7 @@ namespace GI
     {
         //实现IFunction
         public string poslib { get; set; }
-        public object IRun(Hashtable xc)
+        public object IRun(Dictionary<string, Variable> xc)
         {
             return Run(xc);
         }
@@ -60,20 +60,14 @@ namespace GI
 
         public bool Iisasync { get { return false; } set { } }
 
-        public Task<object> IAsyncRun(Hashtable xc)
+        public Task<object> IAsyncRun(Dictionary<string, Variable> xc)
         {
             throw new Exception();
         }
 
-        /// <summary>
-        /// 父类
-        /// </summary>
-        public class Head
-        {
-            public virtual void AddFunctions(Dictionary<string, IFunction> h) { }
-        }
+        
 
-        public virtual object Run(Hashtable xc)//父方法
+        public virtual object Run(Dictionary<string, Variable> xc)//父方法
         {
             return new object();
         }
@@ -105,7 +99,7 @@ namespace GI
 
             }
 
-            public async override Task<object> Run(Hashtable htxc)
+            public async override Task<object> Run(Dictionary<string,Variable> htxc)
             {
                 try
                 {
@@ -156,7 +150,7 @@ namespace GI
 
             }
 
-            public override object Run(Hashtable htxc)
+            public override object Run(Dictionary<string,Variable> htxc)
             {
                 try
                 {
@@ -182,7 +176,7 @@ namespace GI
         {
             try
             {
-                Hashtable variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
+                Dictionary<string,Variable> variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
                 ret = (Variable)function.IRun(variable);
             }
             catch
@@ -195,7 +189,7 @@ namespace GI
         {
             try
             {
-                Hashtable variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
+                Dictionary<string,Variable> variable = Variable.Resulter.Setvariablesname(function.Istr_xcname, new ArrayList(variables), function.poslib);
                 return await function.IAsyncRun(variable);
 
             }

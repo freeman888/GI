@@ -24,7 +24,7 @@ namespace GI
             public string IInformation { get; set; }
             public bool Iisasync { get { return true; } set { } }
 
-            public Task<object> IAsyncRun(Hashtable xc)
+            public Task<object> IAsyncRun(Dictionary<string,Variable> xc)
             {
                 return Run(xc);
             }
@@ -47,12 +47,12 @@ namespace GI
                 return IGetType();
             }
 
-            public object IRun(Hashtable xc)
+            public object IRun(Dictionary<string,Variable> xc)
             {
                 return new Variable(0);
             }
 
-            public virtual Task<object> Run(Hashtable xc)
+            public virtual Task<object> Run(Dictionary<string,Variable> xc)
             {
                 return null;
             }

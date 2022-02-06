@@ -41,7 +41,7 @@ namespace GTWPF
                     IInformation = "go to this page";
                     str_xcname = "page";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
 
                     MainWindow mainWindow = MainWindow.MainApp;
@@ -64,7 +64,7 @@ namespace GTWPF
                     IInformation = "use this page as a root page";
                     str_xcname = "page";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
 
                     MainWindow mainWindow = MainWindow.MainApp;
@@ -85,7 +85,7 @@ namespace GTWPF
                     IInformation = "return the last page";
                     str_xcname = "";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     MainWindow mainWindow = MainWindow.MainApp;
                     GasControl.Page.GasPage page = mainWindow.Return();

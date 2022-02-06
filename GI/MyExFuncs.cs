@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Xml;
 
 namespace GI
@@ -11,14 +12,14 @@ namespace GI
                 return "";
             return xmlNode.Attributes[name].InnerText;
         }
-        public static T GetVariable<T>(this Hashtable hashtable, string varname)
+        public static T GetVariable<T>(this Dictionary<string,Variable> hashtable, string varname)
         {
 
             T t = (T)((Variable)hashtable[varname]).value;
             return t;
         }
 
-        public static T GetCSVariable<T>(this Hashtable hashtable, string varname)
+        public static T GetCSVariable<T>(this Dictionary<string,Variable> hashtable, string varname)
         {
             IOBJ io = ((Variable)hashtable[varname]).value;
             return (T)io.IGetCSValue();
@@ -26,7 +27,7 @@ namespace GI
 
         }
 
-        public static T GetCSVariableFromSpeType<T>(this Hashtable hashtable, string varname, string typename)
+        public static T GetCSVariableFromSpeType<T>(this Dictionary<string,Variable> hashtable, string varname, string typename)
         {
             var io = ((Variable)hashtable[varname]).value;
             var a = 10;

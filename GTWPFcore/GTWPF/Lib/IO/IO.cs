@@ -30,7 +30,7 @@ namespace GTWPF
                     IInformation = "[text]:the text to be written to the console page;\nusing this methord to write text to tip user,only write one line and will change line auto.";
 
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     string text = ((Variable)xc["text"]).value.ToString();
 
@@ -49,7 +49,7 @@ namespace GTWPF
                     str_xcname = "text";
                     IInformation = "[text]:the text to be written to the console page;\nusing this methord to write text to tip user.";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     string text = ((Variable)xc["text"]).value.ToString();
                     MainWindow page = MainWindow.MainApp;
@@ -75,7 +75,7 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                     Istr_xcname = "params";
                 }
 
-                public async override Task<object> Run(Hashtable xc)
+                public async override Task<object> Run(Dictionary<string,Variable> xc)
                 {
 
 
@@ -128,7 +128,7 @@ when tap 'cancel' or close the inputwindow , return a empty string";
                     IInformation = "[tip]:the text to be tipped to the user.\nusing this methord to tip user.";
 
                 }
-                public async override Task<object> Run(Hashtable xc)
+                public async override Task<object> Run(Dictionary<string,Variable> xc)
                 {
                     string text = Variable.GetTrueVariable<object>(xc, "tip").ToString();
                     await Task.Run(() =>

@@ -239,7 +239,7 @@ namespace GTWPF.GasControl.ContentControl
                 IInformation = "add a control to this stackflat";
                 str_xcname = "control";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var stackflat = xc.GetCSVariableFromSpeType<StackFlat>("this", "StackFlat");
                 var control = xc.GetCSVariableFromSpeType<UIElement>("control", "Control");

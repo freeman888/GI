@@ -26,7 +26,7 @@ namespace GI
                     IInformation = "httpget methord.";
                     str_xcname = "url,param";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     string url = Variable.GetTrueVariable<object>(xc, "url").ToString();
                     string param = Variable.GetTrueVariable<object>(xc, "param").ToString();
@@ -58,7 +58,7 @@ namespace GI
                     IInformation = "httppost methord";
                     str_xcname = "url,param";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     string url = Variable.GetTrueVariable<object>(xc, "url").ToString();
                     string param = Variable.GetTrueVariable<object>(xc, "param").ToString();
@@ -98,7 +98,7 @@ namespace GI
                     str_xcname = "url,stream";
                     IInformation = "download file from url to stream";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     string url = xc.GetCSVariable<object>("url").ToString();
                     Stream stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "Stream");

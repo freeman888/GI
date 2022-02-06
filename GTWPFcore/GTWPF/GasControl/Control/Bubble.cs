@@ -180,7 +180,7 @@ namespace GTWPF.GasControl.Control
         }
         #region 实现IFunction
 
-        public Task<object> IAsyncRun(Hashtable xc)
+        public Task<object> IAsyncRun(Dictionary<string,Variable> xc)
         {
             throw new Exception();
         }

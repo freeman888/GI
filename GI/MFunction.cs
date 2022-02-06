@@ -49,13 +49,13 @@ namespace GI
             public bool Iisreffunction { get => function.Iisreffunction; set => function.Iisreffunction = value; }
             public string IInformation { get => function.IInformation; set => function.IInformation = value; }
             public bool Iisasync { get => function.Iisasync; set => function.Iisasync = value; }
-            public object IRun(Hashtable xc)
+            public object IRun(Dictionary<string,Variable> xc)
             {
                 xc.Add("this", new Variable(self));
                 return function.IRun(xc);
             }
 
-            public Task<object> IAsyncRun(Hashtable xc)
+            public Task<object> IAsyncRun(Dictionary<string,Variable> xc)
             {
                 xc.Add("this", new Variable(self));
                 return function.IAsyncRun(xc);

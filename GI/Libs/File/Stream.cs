@@ -29,7 +29,7 @@ namespace GI
                 IInformation = "close this stream";
                 str_xcname = "";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var stream = xc.GetCSVariableFromSpeType<Stream>("this", "Stream");
                 stream.Close();
@@ -44,7 +44,7 @@ namespace GI
                 IInformation = "read the text from this stream";
                 str_xcname = "";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var stream = xc.GetCSVariableFromSpeType<Stream>("this", "Stream");
                 StreamReader streamReader = new StreamReader(stream);
@@ -59,7 +59,7 @@ namespace GI
                 IInformation = "write text to this stream";
                 str_xcname = "text";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var stream = xc.GetCSVariableFromSpeType<Stream>("this", "Stream");
                 var text = xc.GetCSVariable<object>("text").ToString();

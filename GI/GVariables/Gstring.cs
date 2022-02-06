@@ -169,7 +169,7 @@ namespace GI
                 str_xcname = "params";
                 poslib = "System";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var list = xc.GetCSVariable<Glist>("params");
                 Gdebug.WriteLine(list.Count.ToString());
@@ -197,7 +197,7 @@ namespace GI
                 IInformation = "";
                 str_xcname = "str";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var list = xc.GetCSVariable<Glist>("params");
                 Gdebug.WriteLine(list.Count.ToString());
@@ -228,7 +228,7 @@ namespace GI
                 str_xcname = "s2";
                 poslib = "System";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 string s1 = Variable.GetTrueVariable<object>(xc, "this").ToString();
                 string s2 = Variable.GetTrueVariable<object>(xc, "s2").ToString();
@@ -250,7 +250,7 @@ namespace GI
                 str_xcname = "s,len";
                 poslib = "System";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 string s1 = Variable.GetTrueVariable<object>(xc, "this").ToString();
                 int s = Convert.ToInt32(Variable.GetTrueVariable<object>(xc, "s"));

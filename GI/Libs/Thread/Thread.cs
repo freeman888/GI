@@ -26,7 +26,7 @@ namespace GI
                     IInformation = "Start a new thread .When not in UI thread ,you cannot change the UI Control";
                     str_xcname = "params";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     var param = xc.GetCSVariable<Glist>("params");
                     var fun = param[0].value;
@@ -54,7 +54,7 @@ namespace GI
                     IInformation = "Sleep ms";
                     str_xcname = "time";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     var time = Convert.ToInt32(xc.GetCSVariable<object>("time"));
                     Thread.Sleep(time);
@@ -64,13 +64,13 @@ namespace GI
             IFunction runonui = new Thread_Function_RunOnUI();
             public class Thread_Function_RunOnUI : Function
             {
-                public static Func<Hashtable, int> runonui;
+                public static Func<Dictionary<string,Variable>, int> runonui;
                 public Thread_Function_RunOnUI()
                 {
                     IInformation = "run on ui thread";
                     str_xcname = "params";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     runonui?.Invoke(xc);
                     return new Variable(0);
@@ -86,7 +86,7 @@ namespace GI
                     Istr_xcname = "params";
                 }
 
-                public async override Task<object> Run(Hashtable xc)
+                public async override Task<object> Run(Dictionary<string,Variable> xc)
                 {
                     var param = xc.GetCSVariable<Glist>("params");
                     var fun = param[0].value;

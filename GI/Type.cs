@@ -82,7 +82,7 @@ namespace GI
 
         internal IGasObjectContainer gasObjectContainer = null;
 
-        public GClass(string type, string parent, Hashtable xc,IFunction ctor)
+        public GClass(string type, string parent, Dictionary<string,Variable> xc,IFunction ctor)
         {
             this.ctor = ctor;
             this.type = type;
@@ -131,7 +131,7 @@ namespace GI
 
     public class GClassWithCVF : GClass, IFunction
     {
-        public GClassWithCVF(string type, string parent, Hashtable xc, Function.New_User_Function new_User_Function,IFunction ctor) : base(type, parent, xc,ctor)
+        public GClassWithCVF(string type, string parent, Dictionary<string,Variable> xc, Function.New_User_Function new_User_Function,IFunction ctor) : base(type, parent, xc,ctor)
         {
             New_User_Function = new_User_Function;
         }
@@ -144,13 +144,13 @@ namespace GI
         public bool Iisasync { get => ((IFunction)New_User_Function).Iisasync; set => ((IFunction)New_User_Function).Iisasync = value; }
         public string poslib { get => ((IFunction)New_User_Function).poslib; set => ((IFunction)New_User_Function).poslib = value; }
 
-        public object IRun(Hashtable xc)
+        public object IRun(Dictionary<string,Variable> xc)
         {
             xc.Add("this", new Variable(this));
             return ((IFunction)New_User_Function).IRun(xc);
         }
 
-        public Task<object> IAsyncRun(Hashtable xc)
+        public Task<object> IAsyncRun(Dictionary<string,Variable> xc)
         {
             xc.Add("this", new Variable(this));
             return ((IFunction)New_User_Function).IAsyncRun(xc);
@@ -175,7 +175,7 @@ namespace GI
         internal Dictionary<string, IFunction> memberfuncs = new Dictionary<string, IFunction>();
         internal IFunction ctor;
 
-        public Func<Hashtable, IOBJ> csctor;
+        public Func<Dictionary<string,Variable>, IOBJ> csctor;
         internal string csstr_xc = "";
         /// <summary>
         /// 为内置类做gas的类模板。不外显的类无法在gasoline中被继承
@@ -234,7 +234,7 @@ namespace GI
         /// </summary>
         /// <param name="xc"></param>
         /// <returns></returns>
-        public object IRun(Hashtable xc)
+        public object IRun(Dictionary<string,Variable> xc)
         {
             IOBJ obj = CreatFromClassTemplate(xc);
             if (obj is GClass @class)
@@ -254,7 +254,7 @@ namespace GI
         /// </summary>
         /// <param name="xc"></param>
         /// <returns></returns>
-        public IOBJ CreatFromClassTemplate(Hashtable xc)
+        public IOBJ CreatFromClassTemplate(Dictionary<string,Variable> xc)
         {
             if (csctor == null)
             {
@@ -265,7 +265,7 @@ namespace GI
                 foreach (var i in membernames) gClass.members.Add(i, new Variable(0));
                 foreach (var i in memberfuncs) gClass.members.Add(i.Key, new Variable(new Function.MFunction(i.Value, gClass)));
                 
-                if (xc.Contains("this"))
+                if (xc.ContainsKey("this"))
                     xc.Remove("this");
                 xc.Add("this", new Variable(gClass));
                 //这儿负责调构造函数，如果有构造函数的话。如果本对象创建自子对象，需要执行子对象的base函数中的参数并设置变量名称放到环境中。
@@ -294,7 +294,7 @@ namespace GI
             set { }
         }
 
-        public Task<object> IAsyncRun(Hashtable xc)
+        public Task<object> IAsyncRun(Dictionary<string,Variable> xc)
         {
             throw new Exceptions.RunException(Exceptions.EXID.未知, "构造函数不允许使用异步");
         }

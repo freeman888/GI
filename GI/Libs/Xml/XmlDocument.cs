@@ -53,7 +53,7 @@ namespace GI.Libs.Xml
                 IInformation = "creat an element from xmldocument";
                 str_xcname = "name";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var xmldocument = xc.GetCSVariableFromSpeType<XmlDocument>("this", "XmlDocument");
                 var name = xc.GetCSVariable<object>("name").ToString();
@@ -69,7 +69,7 @@ namespace GI.Libs.Xml
                 IInformation = "creat comment from xmldocument";
                 str_xcname = "comment";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var xmldocument = xc.GetCSVariableFromSpeType<XmlDocument>("this", "XmlDocument");
                 var comment = xc.GetCSVariable<object>("comment").ToString();
@@ -86,7 +86,7 @@ namespace GI.Libs.Xml
                 IInformation = "save xml file to a stream";
                 str_xcname = "stream";
             }
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var xmld = xc.GetCSVariableFromSpeType<XmlDocument>("this", "XmlDocument");
                 var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "Stream");
@@ -104,7 +104,7 @@ namespace GI.Libs.Xml
 
             }
 
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var xmld = xc.GetCSVariableFromSpeType<XmlDocument>("this", "XmlDocument");
                 var stream = xc.GetCSVariableFromSpeType<System.IO.Stream>("stream", "Stream");
@@ -123,7 +123,7 @@ namespace GI.Libs.Xml
 
             }
 
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var xmld = xc.GetCSVariableFromSpeType<XmlDocument>("this", "XmlDocument");
                 var stream = xc.GetCSVariable<object>("text").ToString();

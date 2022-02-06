@@ -17,9 +17,9 @@ namespace GI
             public string poslib { get; set; }
             string IFunction.Istr_xcname { get => str_xcname; set => str_xcname = value; }
             bool IFunction.Iisreffunction { get => isreffunction; set => isreffunction = value; }
-            public delegate object DRun(Hashtable xc);
+            public delegate object DRun(Dictionary<string,Variable> xc);
             public DRun dRun;
-            public object IRun(Hashtable xc)
+            public object IRun(Dictionary<string,Variable> xc)
             {
                 return (dRun(xc));
             }
@@ -40,7 +40,7 @@ namespace GI
             }
             public bool Iisasync { get { return false; } set { } }
 
-            public Task<object> IAsyncRun(Hashtable xc)
+            public Task<object> IAsyncRun(Dictionary<string,Variable> xc)
             {
                 throw new Exception();
             }

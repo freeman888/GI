@@ -139,7 +139,7 @@ time",
                     IInformation = "get the type of variable";
                     str_xcname = "variable";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     object obj = (xc["variable"] as Variable).value;
                     return new Variable((obj as IOBJ).IGetType());
@@ -154,7 +154,7 @@ time",
                     IInformation = "exit this app";
                     str_xcname = "";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     Environment.Exit(0);
                     return new Variable(0);
@@ -170,7 +170,7 @@ time",
                     str_xcname = "variable";
                     isreffunction = true;
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     (xc["variable"] as Variable).isconst = true;
                     return new Variable(0);
@@ -185,7 +185,7 @@ time",
                     IInformation = "wait the task while not block the current thread";
                 }
 
-                public async override Task<object> Run(Hashtable xc)
+                public async override Task<object> Run(Dictionary<string,Variable> xc)
                 {
                     try
                     {
@@ -206,7 +206,7 @@ time",
                     str_xcname = "task";
                     IInformation = "block the current thread to wait the task done";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     var res = xc.GetCSVariable<Task<Variable>>("task");
                     res.Wait();
@@ -222,7 +222,7 @@ time",
                     str_xcname = "";
                     IInformation = "get the current application path";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     if (GIInfo.Platform == "Mac_Xamarin")
                     {
@@ -245,7 +245,7 @@ time",
                     str_xcname = "";
                     IInformation = "get the current application path";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     if (GIInfo.Platform == "Mac_Xamarin")
                     {
@@ -266,7 +266,7 @@ time",
                     str_xcname = "name";
                     IInformation = "get specific folder of the system";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     var name = xc.GetCSVariable<object>("name").ToString();
                     Environment.SpecialFolder specialFolder;
@@ -303,7 +303,7 @@ time",
                     IInformation = "shell some code in terminal";
                     Istr_xcname = "params";
                 }
-                public async override Task<object> Run(Hashtable xc)
+                public async override Task<object> Run(Dictionary<string,Variable> xc)
                 {
                     var list = xc.GetCSVariable<Glist>("params");
                     string filename = list[0].value.ToString();

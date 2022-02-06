@@ -62,7 +62,7 @@ namespace GI
                     str_xcname = "params";
                     IInformation = "add all the numbers and return the result";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     var arrayList = Variable.GetTrueVariable<Glist>(xc, "params");
                     double ret = 0;
@@ -80,7 +80,7 @@ namespace GI
                     IInformation = "use the first number to subtrack the second number,also subtrack all last number if have";
                     str_xcname = "params";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     var arrayList = Variable.GetTrueVariable<Glist>(xc, "params");
                     double ret = 2 * Convert.ToDouble((arrayList[0] as Variable).value);
@@ -98,7 +98,7 @@ namespace GI
                     IInformation = "multiply all the numbers in params";
                     str_xcname = "params";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
 
                     var arrayList = Variable.GetTrueVariable<Glist>(xc, "params");
@@ -117,7 +117,7 @@ namespace GI
                     IInformation = "devide the first number by the second and return the result";
                     str_xcname = "first,second";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     double l = Convert.ToDouble(Variable.GetTrueVariable<object>(xc, "first"));
                     double r = Convert.ToDouble(Variable.GetTrueVariable<object>(xc, "second"));
@@ -132,7 +132,7 @@ namespace GI
                     IInformation = "Finding the nums-th power of numf";
                     str_xcname = "numf,nums";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     Double num1 = Convert.ToDouble(((Variable)xc["numf"]).value);
                     int num2 = Convert.ToInt32(((Variable)xc["nums"]).value);
@@ -150,7 +150,7 @@ namespace GI
                     IInformation = "Find absolute value";
                     str_xcname = "numf";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     Double num1 = Convert.ToDouble(((Variable)xc["numf"]).value);
                     if (num1 < 0)
@@ -167,7 +167,7 @@ namespace GI
                     IInformation = "return if numf > nums holds";
                     str_xcname = "numf,nums";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     Double num1 = Convert.ToDouble(((Variable)xc["numf"]).value);
                     Double num2 = Convert.ToDouble(((Variable)xc["nums"]).value);
@@ -183,7 +183,7 @@ namespace GI
                     IInformation = "return if numf < nums holds";
                     str_xcname = "numf,nums";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     Double num1 = Convert.ToDouble(((Variable)xc["numf"]).value);
                     Double num2 = Convert.ToDouble(((Variable)xc["nums"]).value);
@@ -199,7 +199,7 @@ namespace GI
                     IInformation = "return if numf >= nums holds";
                     str_xcname = "numf,nums";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     Double num1 = Convert.ToDouble(((Variable)xc["numf"]).value);
                     Double num2 = Convert.ToDouble(((Variable)xc["nums"]).value);
@@ -215,7 +215,7 @@ namespace GI
                     IInformation = "return if numf <= nums holds";
                     str_xcname = "numf,nums";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     Double num1 = Convert.ToDouble(((Variable)xc["numf"]).value);
                     Double num2 = Convert.ToDouble(((Variable)xc["nums"]).value);
@@ -231,7 +231,7 @@ namespace GI
                     IInformation = "return if numf = nums holds";
                     str_xcname = "numf,nums";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     bool ret;
 
@@ -249,7 +249,7 @@ namespace GI
                     IInformation = "return if numf != nums holds";
                     str_xcname = "numf,nums";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     Double num1 = Convert.ToDouble(((Variable)xc["numf"]).value);
                     Double num2 = Convert.ToDouble(((Variable)xc["nums"]).value);
@@ -264,7 +264,7 @@ namespace GI
                     IInformation = "return if numf % nums holds";
                     str_xcname = "numf,nums";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     Double num1 = Convert.ToDouble(((Variable)xc["numf"]).value);
                     Double num2 = Convert.ToDouble(((Variable)xc["nums"]).value);
@@ -280,7 +280,7 @@ namespace GI
                     IInformation = "if input true ,output false;\nif input false,output true";
                     str_xcname = "bool";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     bool b = Convert.ToBoolean(Variable.GetTrueVariable<object>(xc, "bool"));
                     return new Variable(!b);
@@ -294,7 +294,7 @@ namespace GI
                     IInformation = "if b1 is true and b2 is true , return true,or return false";
                     str_xcname = "b1,b2";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     bool b1 = Convert.ToBoolean(Variable.GetTrueVariable<object>(xc, "b1"));
                     bool b2 = Convert.ToBoolean(Variable.GetTrueVariable<object>(xc, "b2"));
@@ -309,7 +309,7 @@ namespace GI
                     IInformation = "if b1 is false and b2 is false then return false ,or return true";
                     str_xcname = "b1,b2";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     bool b1 = Convert.ToBoolean(Variable.GetTrueVariable<object>(xc, "b1"));
                     bool b2 = Convert.ToBoolean(Variable.GetTrueVariable<object>(xc, "b2"));
@@ -324,7 +324,7 @@ namespace GI
                     IInformation = "get an random number from s to e";
                     str_xcname = "s,e";
                 }
-                public override object Run(Hashtable xc)
+                public override object Run(Dictionary<string,Variable> xc)
                 {
                     return new Variable(random.Next(Convert.ToInt32(xc.GetCSVariable<object>("s")), Convert.ToInt32(xc.GetCSVariable<object>("e"))));
                 }

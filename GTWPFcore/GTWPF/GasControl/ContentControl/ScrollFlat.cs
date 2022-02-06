@@ -346,7 +346,7 @@ namespace GTWPF.GasControl.ContentControl
                 IInformation = "";
             }
 
-            public override object Run(Hashtable xc)
+            public override object Run(Dictionary<string,Variable> xc)
             {
                 var grid = xc.GetCSVariableFromSpeType<ScrollFlat>("this", "ScrollFlat");
                 var content = xc.GetCSVariableFromSpeType<UIElement>("control", "Control");

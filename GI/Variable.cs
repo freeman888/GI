@@ -76,7 +76,7 @@ namespace GI
                     condition = 4;
                 }
             }
-            public async Task<Variable> Run(Hashtable basehashtable)
+            public async Task<Variable> Run(Dictionary<string,Variable> basehashtable)
             {
                 if (condition == 1)
                 {
@@ -100,7 +100,7 @@ namespace GI
 
                     string xcname = truefunction.Istr_xcname;
 
-                    Hashtable temphashtable;
+                    Dictionary<string,Variable> temphashtable;
                     ArrayList tempavariables = new ArrayList();
                     foreach (Resulter resulter in childresulters)
                     {
@@ -133,7 +133,7 @@ namespace GI
             }
 
 
-            public static Hashtable Setvariablesname(string xcname, ArrayList newvariables, string poslib)
+            public static Dictionary<string,Variable> Setvariablesname(string xcname, ArrayList newvariables, string poslib)
             {
 
 
@@ -162,7 +162,7 @@ namespace GI
 
             }
 
-            public static Hashtable SetvariablesnameByRef(string xcname, ArrayList tempvariables, string poslib)
+            public static Dictionary<string,Variable> SetvariablesnameByRef(string xcname, ArrayList tempvariables, string poslib)
             {
 
                 var hashtable = GetOwnVariables(poslib);
@@ -182,7 +182,7 @@ namespace GI
                 string[] xc_names = xcname.Split(',');
                 for (int i = 0; i < xc_names.Length; i++)
                 {
-                    hashtable.Add(xc_names[i], tempvariables[i]);
+                    hashtable.Add(xc_names[i], tempvariables[i] as Variable);
                 }
                 return hashtable;
 
@@ -201,15 +201,15 @@ namespace GI
         /// </summary>
         /// <param name="basehashtable">原变量表</param>
         /// <returns>新变量表</returns>
-        public static Hashtable GetOwnVariables(string poslib)
+        public static Dictionary<string,Variable> GetOwnVariables(string poslib)
         {
             if (string.IsNullOrEmpty(poslib))
-                return new Hashtable { { "true", new Variable(true) }, { "false", new Variable(false) } };
+                return new Dictionary<string,Variable> { { "true", new Variable(true) }, { "false", new Variable(false) } };
 
 
             var basehashtable = Gasoline.libs[poslib];
 
-            var hashtable = new Hashtable();
+            var hashtable = new Dictionary<string,Variable>();
             foreach (var inbase in basehashtable.myThing)
                 hashtable.Add(inbase.Key, inbase.Value);
             foreach (var inbase in basehashtable.otherThing)
@@ -217,10 +217,10 @@ namespace GI
             return hashtable;
         }
 
-        public static Hashtable GetOwnVariables(Hashtable basehashtable)
+        public static Dictionary<string,Variable> GetOwnVariables(Dictionary<string,Variable> basehashtable)
         {
-            var hashtable = new Hashtable();
-            foreach (DictionaryEntry inbase in basehashtable)
+            var hashtable = new Dictionary<string,Variable>();
+            foreach (var inbase in basehashtable)
             {
                 hashtable.Add(inbase.Key, inbase.Value);
             }
@@ -230,7 +230,7 @@ namespace GI
 
 
 
-        public static T GetTrueVariable<T>(Hashtable oldhs, string variablename)
+        public static T GetTrueVariable<T>(Dictionary<string,Variable> oldhs, string variablename)
         {
             T t = (T)((Variable)oldhs[variablename]).value;
             return t;

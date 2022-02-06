@@ -66,7 +66,7 @@ namespace GI
             return list;
         }
 
-        public virtual Task Run(Hashtable h) { return null; }
+        public virtual Task Run(Dictionary<string, Variable> h) { return null; }
 
         public string mycode = "";
 
@@ -81,7 +81,7 @@ namespace GI
                 refname = me.GetAttribute("varname");
 
             }
-            public async override Task Run(Hashtable htxc)
+            public async override Task Run(Dictionary<string, Variable> htxc)
             {
                 try
                 {
@@ -105,7 +105,7 @@ namespace GI
 
 
             }
-            public async override Task Run(Hashtable htxc)
+            public async override Task Run(Dictionary<string, Variable> htxc)
             {
                 try
                 {
@@ -133,7 +133,7 @@ namespace GI
                 resulter = new Variable.Resulter(me.FirstChild as XmlNode);
 
             }
-            public async override Task Run(Hashtable htcs)
+            public async override Task Run(Dictionary<string, Variable> htcs)
             {
                 try
                 {
@@ -156,7 +156,7 @@ namespace GI
                 mycode = me.GetAttribute("str");
 
             }
-            public async override Task Run(Hashtable htcs)
+            public async override Task Run(Dictionary<string,Variable> htcs)
             {
                 try
                 {
@@ -179,7 +179,7 @@ namespace GI
                 mycode = me.GetAttribute("str");
 
             }
-            public async override Task Run(Hashtable htcs)
+            public async override Task Run(Dictionary<string,Variable> htcs)
             {
                 try
                 {
@@ -237,11 +237,11 @@ namespace GI
 
 
 
-            public async override Task Run(Hashtable h)
+            public async override Task Run(Dictionary<string,Variable> h)
             {
                 try
                 {
-                    Hashtable hashtable = Variable.GetOwnVariables(h);
+                    Dictionary<string,Variable> hashtable = Variable.GetOwnVariables(h);
                     realif = Convert.ToBoolean((await resulter.Run(h)).value);
                     if (realif)
                     {
@@ -290,7 +290,7 @@ namespace GI
                 resulter = new Variable.Resulter(me.ChildNodes[1] as XmlNode);
                 togive = new Variable.Resulter(me.ChildNodes[0] as XmlNode);
             }
-            public async override Task Run(Hashtable h)
+            public async override Task Run(Dictionary<string,Variable> h)
             {
                 try
                 {
@@ -319,7 +319,7 @@ namespace GI
                 mycode = me.GetAttribute("str");
                 resulter = new Variable.Resulter(me.FirstChild);
             }
-            public async override Task Run(Hashtable h)
+            public async override Task Run(Dictionary<string,Variable> h)
             {
                 try
                 {
@@ -346,15 +346,15 @@ namespace GI
                 resulter = new Variable.Resulter(me.FirstChild.FirstChild as XmlNode);
                 childsentences = Sentence.GetSentencesFormXml(me.ChildNodes[1].ChildNodes).ToArray();
             }
-            public async override Task Run(Hashtable h)
+            public async override Task Run(Dictionary<string,Variable> h)
             {
                 try
                 {
-                    Hashtable hashtable = h;
+                    Dictionary<string,Variable> hashtable = h;
                     bool realif = Convert.ToBoolean((await resulter.Run(hashtable)).value);
                     while (realif)
                     {
-                        Hashtable hh = Variable.GetOwnVariables(hashtable);
+                        Dictionary<string,Variable> hh = Variable.GetOwnVariables(hashtable);
                         foreach (Sentence s in childsentences)
                         {
                             try
@@ -405,11 +405,11 @@ namespace GI
 
 
             }
-            public async override Task Run(Hashtable h)
+            public async override Task Run(Dictionary<string,Variable> h)
             {
                 try
                 {
-                    Hashtable hashtable = Variable.GetOwnVariables(h);
+                    Dictionary<string,Variable> hashtable = Variable.GetOwnVariables(h);
                     try
                     {
                         foreach (var s in trysentences)
@@ -456,17 +456,17 @@ namespace GI
                 resulter = new Variable.Resulter(me.FirstChild.FirstChild as XmlNode);
                 childsentences = GetSentencesFormXml(me.ChildNodes[1].ChildNodes).ToArray();
             }
-            public async override Task Run(Hashtable h)
+            public async override Task Run(Dictionary<string,Variable> h)
             {
                 try
                 {
-                    Hashtable hashtable = Variable.GetOwnVariables(h);
+                    Dictionary<string,Variable> hashtable = Variable.GetOwnVariables(h);
                     Variable ss = await resulter.Run(hashtable);
                     foreach (var item in (ss.value as Glist))
                     {
                         try
                         {
-                            Hashtable nhashtable = Variable.GetOwnVariables(h);
+                            Dictionary<string,Variable> nhashtable = Variable.GetOwnVariables(h);
                             if (var_new)
                                 nhashtable.Add(fzvar, item);
                             else
