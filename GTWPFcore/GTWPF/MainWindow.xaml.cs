@@ -39,6 +39,12 @@ namespace GTWPF
                 toolshowing = false;
             };
         }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized) border.Padding = new Thickness(6);
+            else if (this.WindowState == WindowState.Normal) border.Padding = new Thickness(2);
+        }
         internal void Addtext(string text)
         {
             this.Dispatcher.Invoke(() =>
