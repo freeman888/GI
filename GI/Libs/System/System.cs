@@ -80,6 +80,9 @@ time",
                             case "time":
                                 return new Variable(dateTime.ToLongTimeString());
 
+                            case "ms":
+                            case "millisecond":
+                                return new Variable(dateTime.Millisecond);
                             default:
                                 return null;
                         }

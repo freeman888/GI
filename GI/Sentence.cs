@@ -121,7 +121,6 @@ namespace GI
                     }
                     throw new Exception(ex.Message + Environment.NewLine + "位置:" + mycode);
                 }
-                return;
             }
         }
         public class New_Sentence_Return : Sentence
@@ -259,7 +258,6 @@ namespace GI
                             return;
                         }
                     }
-
                     if (!realif && elsesentences != null)
                     {
                         foreach (Sentence e in elsesentences)
@@ -453,7 +451,7 @@ namespace GI
                 fzvar = me.GetAttribute("var_togive");
                 mycode = me.GetAttribute("str");
                 var_new = Convert.ToBoolean(me.GetAttribute("var_new"));
-                resulter = new Resulter(me.FirstChild.FirstChild as XmlNode);
+                resulter = new Resulter(me.FirstChild.FirstChild);
                 childsentences = GetSentencesFormXml(me.ChildNodes[1].ChildNodes).ToArray();
             }
             public async override Task Run(Dictionary<string,Variable> h)
@@ -462,7 +460,7 @@ namespace GI
                 {
                     Dictionary<string,Variable> hashtable = Variable.GetOwnVariables(h);
                     Variable ss = await resulter.Run(hashtable);
-                    foreach (var item in (ss.value as Glist))
+                    foreach (var item in ss.value as Glist)
                     {
                         try
                         {

@@ -109,29 +109,29 @@ namespace GI
 
     public class GClassWithCVF : GClass, IFunction
     {
-        public GClassWithCVF(string type, string parent, Dictionary<string,Variable> xc, Function.New_User_Function new_User_Function,IFunction ctor) : base(type, parent, xc,ctor)
+        public GClassWithCVF(string type, string parent, Dictionary<string,Variable> xc, IFunction new_User_Function,IFunction ctor) : base(type, parent, xc,ctor)
         {
             New_User_Function = new_User_Function;
         }
 
-        Function.New_User_Function New_User_Function;
+        IFunction New_User_Function;
 
-        public string Istr_xcname { get => ((IFunction)New_User_Function).Istr_xcname; set => ((IFunction)New_User_Function).Istr_xcname = value; }
-        public bool Iisreffunction { get => ((IFunction)New_User_Function).Iisreffunction; set => ((IFunction)New_User_Function).Iisreffunction = value; }
-        public string IInformation { get => ((IFunction)New_User_Function).IInformation; set => ((IFunction)New_User_Function).IInformation = value; }
-        public bool Iisasync { get => ((IFunction)New_User_Function).Iisasync; set => ((IFunction)New_User_Function).Iisasync = value; }
-        public string poslib { get => ((IFunction)New_User_Function).poslib; set => ((IFunction)New_User_Function).poslib = value; }
+        public string Istr_xcname { get => ((IFunction)New_User_Function).Istr_xcname; set => New_User_Function.Istr_xcname = value; }
+        public bool Iisreffunction { get => ((IFunction)New_User_Function).Iisreffunction; set => New_User_Function.Iisreffunction = value; }
+        public string IInformation { get => ((IFunction)New_User_Function).IInformation; set => New_User_Function.IInformation = value; }
+        public bool Iisasync { get => ((IFunction)New_User_Function).Iisasync; set => New_User_Function.Iisasync = value; }
+        public string poslib { get => ((IFunction)New_User_Function).poslib; set => New_User_Function.poslib = value; }
 
         public object IRun(Dictionary<string,Variable> xc)
         {
             xc.Add("this", new Variable(this));
-            return ((IFunction)New_User_Function).IRun(xc);
+            return New_User_Function.IRun(xc);
         }
 
         public Task<object> IAsyncRun(Dictionary<string,Variable> xc)
         {
             xc.Add("this", new Variable(this));
-            return ((IFunction)New_User_Function).IAsyncRun(xc);
+            return New_User_Function.IAsyncRun(xc);
         }
     }
 
@@ -144,17 +144,17 @@ namespace GI
         {
             GType.Sign("Class");
         }
-        internal string classname, parentclassname;
-        internal bool iscvf;
-        internal Function.New_User_Function New_User_Function;
+        public string classname, parentclassname;
+        public bool iscvf;
+        public IFunction CVFFunction;
         public string poslib { get; set; }
         private string targetposlib = "";
-        internal List<string> membernames = new List<string>();
-        internal Dictionary<string, IFunction> memberfuncs = new Dictionary<string, IFunction>();
-        internal IFunction ctor;
+        public List<string> membernames = new List<string>();
+        public Dictionary<string, IFunction> memberfuncs = new Dictionary<string, IFunction>();
+        public IFunction ctor;
 
         public Func<Dictionary<string,Variable>, IOBJ> csctor;
-        internal string csstr_xc = "";
+        public string csstr_xc = "";
         /// <summary>
         /// 为内置类做gas的类模板。不外显的类无法在gasoline中被继承
         /// </summary>
@@ -189,11 +189,11 @@ namespace GI
 
                     Function.New_Creat_Function new_creat_Function = new Function.New_Creat_Function(i, targetposlib);
                     ctor = new_creat_Function;
-                    this.Istr_xcname = new_creat_Function.str_xcname;
+                    Istr_xcname = new_creat_Function.str_xcname;
                 }
                 else if (i.Name == "memfun" && iscvf && i.GetAttribute("funname") == "cvf")
                 {
-                    New_User_Function = new Function.New_User_Function(i, targetposlib);
+                    CVFFunction = new Function.New_User_Function(i, targetposlib);
 
                 }
                 else if (i.Name == "memfun")
@@ -238,7 +238,7 @@ namespace GI
             {
                 //这句话创建对象，交由gclass构造函数负责gas对象构造顺序
                 
-                GClass gClass = iscvf ? new GClassWithCVF(classname, parentclassname, xc, New_User_Function,ctor) : new GClass(classname, parentclassname, xc,ctor);
+                GClass gClass = iscvf ? new GClassWithCVF(classname, parentclassname, xc, CVFFunction,ctor) : new GClass(classname, parentclassname, xc,ctor);
                 
                 foreach (var i in membernames) gClass.members.Add(i, new Variable(0));
                 foreach (var i in memberfuncs) gClass.members.Add(i.Key, new Variable(new Function.MFunction(i.Value, gClass)));

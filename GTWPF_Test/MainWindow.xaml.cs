@@ -36,10 +36,10 @@ namespace GTWPF_Test
             {
                 XmlDocument code = new XmlDocument();
                 code.Load(zipArchive.GetEntry("App1" + "/source/code.xml").Open());
-                GI.Gasoline.Loadgasxml(code);
+                //GI.Gasoline.Loadgasxml(code);
             }
 
-            GI.Gasoline.libs.Add("Test", new CompileLibTest());
+            GI.Gasoline.libs.Add("App1", new NS_App1.Lib_App1());
 
             GTWPF.MainWindow mainWindow = new GTWPF.MainWindow();
             mainWindow.Show();

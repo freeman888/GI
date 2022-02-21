@@ -77,7 +77,7 @@ namespace GI
                     return ret_veriable;
                 }
                 else if (condition == 2)
-                { return (Variable)basehashtable[ret_variablename]; }
+                { return basehashtable[ret_variablename]; }
                 else if (condition == 3)
                 {
                     Variable var_func = await functionresulter.Run(basehashtable);
