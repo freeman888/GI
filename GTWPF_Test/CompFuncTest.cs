@@ -40,13 +40,9 @@ namespace NS_App1
                 try
                 {
                     #region var_s var num = 0;
-                    
                         xc_1.Add("num", new Variable(0));
-                    
-                    
                     #endregion
                     #region getres_s var num = 0;
-                    
                         #region arg num
                         var var_1 = new Variable(0);
                         #endregion
@@ -54,12 +50,9 @@ namespace NS_App1
                         var var_2 = xc_1["num"];
                         #endregion
                         var_2.value = var_1.value;
-                    
                     #endregion
                     #region var_s var i = 1;
-                    
                         xc_1.Add("i", new Variable(0));
-                   
                     #endregion
                     #region getres_s var i = 1;
                     
@@ -141,7 +134,7 @@ namespace NS_App1
                         #endregion
                         //params
                         #region arg var
-                        var var_18 = xc_1["i"];
+                        var var_18 = var_4;
                         #endregion
                         #region arg num
                         var var_19 = new Variable(100000);
@@ -170,7 +163,7 @@ namespace NS_App1
                                     #endregion
                                     //params
                                     #region arg var
-                                    var var_24 = xc_2["num"];
+                                    var var_24 = var_2;
                                     #endregion
                                     #region arg fun
                                     //funname
@@ -286,7 +279,7 @@ namespace NS_App1
                                         var_21 = var_50.IRun(Resulter.Setvariablesname(var_50.Istr_xcname, new ArrayList { var_24, var_25, }, var_50.poslib)) as Variable;
                                     #endregion
                                     #region arg var
-                                    var var_22 = xc_2["num"];
+                                    var var_22 = var_2;
                                     #endregion
                                     var_22.value = var_21.value;
                                 
@@ -340,7 +333,7 @@ namespace NS_App1
                             #endregion
                             //params
                             #region arg var
-                            var var_59 = xc_1["i"];
+                            var var_59 = var_4;
                             #endregion
                             #region arg num
                             var var_60 = new Variable(100000);

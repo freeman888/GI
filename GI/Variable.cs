@@ -12,6 +12,7 @@ namespace GI
 
     public partial class Variable
     {
+        public static Variable NULL = new Variable(0) { isconst = true };
 
         public class BaseResulter:Resulter
         {
